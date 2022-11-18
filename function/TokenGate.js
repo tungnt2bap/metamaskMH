@@ -5,17 +5,33 @@ let web3 = new Web3(window.ethereum)
 
 let accounts = await web3.eth.getAccounts();
 
-const ABIHTC = require("../abis/contracts/TokenHTC.sol/TokenHTC.json")
-const TokenHTC = new web3.eth.Contract(ABIHTC, process.env.TokenHTC)
+const TOKENPRZ_ADDRESS = ''
+const HORSENFT_ADDRESS = ''
+const TRANSPORTER_ADDRESS= ''
+const TOKENHTC_ADDRESS = ''
+const TOKENGATE_ADDRESS = ''
+const TOKENGATE_SERVER_ADDRESS = ''
 
-const ABITokenGate = require("../abis/contracts/TokenGate.sol/TokenGate.json")
-const TokenGate = new web3.eth.Contract(ABITokenGate, process.env.TokenGate)
+const ABIHTC = tokenHTC
+const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS)
+
+const ABITokenGate = TokenGate
+const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS)
+
+const sign = async (message) => {
+    let web3 = new Web3(window.ethereum)
+    let accounts = await web3.eth.getAccounts();
+    console.log("accounts: ", accounts[0]);
+    let signature = await web3.eth.personal.sign(message, accounts[0], '');
+    console.log('sign: ', [accounts, message, signature].join('|'));
+    document.getElementById("p1").innerHTML = "Login success! Copy and go back your game!";
+  }
 
 async function deposit(data){
     //user approve token
-    await TokenHTC.methods.approve(process.env.Transporter, new BigNumber(data.blockchain_amount).toFixed()).send({
+    await TokenHTC.methods.approve(TRANSPORTER_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
         from: accounts[0], 
-        to: process.env.TokenHTC,
+        to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -36,7 +52,7 @@ async function deposit(data){
         s:data.s
     }).send({
         from: accounts[0],
-        to: process.env.TokenGate,
+        to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -50,8 +66,8 @@ async function deposit(data){
 //user withdraw token
 async function withdraw(data){
     await TokenGate.methods.withdraw(data.token).send({
-        from: process.env.TOKENGATE_SERVER_ADDRESS,
-        to: process.env.TokenGate,
+        from: accounts[0],
+        to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -64,9 +80,9 @@ async function withdraw(data){
 
 //server deposit to vault
 async function depositHTCVault(data){
-    await TokenHTC.methods.approve(process.env.Transporter, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: process.env.TOKENGATE_SERVER_ADDRESS,
-        to: process.env.TokenHTC,
+    await TokenHTC.methods.approve(TRANSPORTER_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+        from: accounts[0],
+        to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -77,12 +93,12 @@ async function depositHTCVault(data){
     })
 
     await TokenGate.methods.depositVault(
-        process.env.TOKENGATE_SERVER_ADDRESS, 
-        process.env.TokenHTC, 
+        TOKENGATE_SERVER_ADDRESS, 
+        TOKENHTC_ADDRESS, 
         new BigNumber(data.blockchain_amount).toFixed()
         ).send({
-            from: process.env.TOKENGATE_SERVER_ADDRESS,
-            to: process.env.TokenGate,
+            from: TOKENGATE_SERVER_ADDRESS,
+            to: TOKENGATE_ADDRESS,
             gasLimit: web3.utils.toHex("1000000"),
             gasPrice: await getGasPrice()
         }, function (err, res) {
@@ -94,9 +110,9 @@ async function depositHTCVault(data){
 }
 
 async function withdrawHTCVault(data){
-    await TokenGate.methods.withdrawVault(process.env.TokenHTC, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: process.env.TOKENGATE_SERVER_ADDRESS,
-        to: process.env.TokenGate,
+    await TokenGate.methods.withdrawVault(TOKENHTC_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+        from: TOKENGATE_SERVER_ADDRESS,
+        to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -108,9 +124,9 @@ async function withdrawHTCVault(data){
 }
 
 async function swapVaultHTCtoPRZ(data){
-    await TokenGate.methods.swapVaultHTCtoPRZ(process.env.TokenHTC, process.env.TokenPRZ, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: process.env.TOKENGATE_SERVER_ADDRESS,
-        to: process.env.TokenGate,
+    await TokenGate.methods.swapVaultHTCtoPRZ(TOKENHTC_ADDRESS, TOKENPRZ_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+        from: env.TOKENGATE_SERVER_ADDRESS,
+        to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -120,9 +136,9 @@ async function swapVaultHTCtoPRZ(data){
         }
     })
 
-    await TokenGate.methods.withdrawVault(process.env.TokenPRZ, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: process.env.TOKENGATE_SERVER_ADDRESS,
-        to: process.env.TokenGate,
+    await TokenGate.methods.withdrawVault(TOKENPRZ_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+        from: TOKENGATE_SERVER_ADDRESS,
+        to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -145,7 +161,7 @@ async function claim(data){
         s: data.s
     }).send({
         from: accounts[0],
-        to: process.env.TokenGate,
+        to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     }, function (err, res) {
@@ -176,6 +192,9 @@ window.onload = async () => {
   
     switch(params.get('action'))
     {
+        case "sign":
+            sign(params.get('data'));
+            break;
       case "deposit":
           deposit(JSON.parse(JSON.parse(params.get('data'))));
           break;
