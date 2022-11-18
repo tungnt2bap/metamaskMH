@@ -13,7 +13,7 @@ const sign = async (message) => {
   }
 
 //user lease horse
-async function lease(data){
+async function lease(data, token_id){
     let web3 = new Web3(window.ethereum)
     const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, data.horse_farm_address)
     const HorseNFTContract = new web3.eth.Contract(ABIHorseNFT, HORSENFT_ADDRESS)
@@ -55,7 +55,7 @@ async function lease(data){
 }
 
 //user withdraw horse
-async function withdraw(data){
+async function withdraw(data, token_id){
     let web3 = new Web3(window.ethereum)
     const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, data.horse_farm_address)
     await HorseFarmContract.methods.withdraw({
