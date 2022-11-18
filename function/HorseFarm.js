@@ -1,9 +1,6 @@
-const myURL = new URL('https://web3-73e9a.web.app/?action=depositHTC&data=%7b%0d%0a++%22transporter_address%22%3a+%220x473eFC873090CD75ace402c05987Af5bdc7e8A5e%22%2c%0d%0a++%22owner%22%3a+%220x4A088CEE4598AEbf7CF2a4032876Be1795d99D53%22%2c%0d%0a++%22token%22%3a+%220xD3312D8aA3862088D1A9d660003d7EDe013DdAd3%22%2c%0d%0a++%22in_game_id%22%3a+%22278%22%2c%0d%0a++%22amount%22%3a+1%2c%0d%0a++%22blockchain_amount%22%3a+1000000000000000000%2c%0d%0a++%22nonce%22%3a+%22278-8%22%2c%0d%0a++%22v%22%3a+28%2c%0d%0a++%22r%22%3a+%220xc7232a9b23ba9a1fd99f7110947b998bc2102bc9a8e7f86ee74d0444474a5f60%22%2c%0d%0a++%22s%22%3a+%220x6b65ed321a2413996e0a7c2ecc15bebe86d82af0d7ac147895f989d116982b9d%22%2c%0d%0a++%22block_expired%22%3a+4834447%0d%0a%7d')
-const data = myURL.searchParams.get('data');
-
-const HORSEFARM_ADDRESS = ''
+const ABIHorseFarm = horseFarm
+const ABIHorseNFT = horseNFT
 const HORSENFT_ADDRESS = ''
-const TRANSPORTER_ADDRESS= ''
 
 const sign = async (message) => {
     let web3 = new Web3(window.ethereum)
@@ -17,16 +14,12 @@ const sign = async (message) => {
 
 //user lease horse
 async function lease(data){
-    const ABIHorseFarm = horseFarm
-    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, HORSEFARM_ADDRESS)
-
-    const ABIHorseNFT = horseNFT
+    let web3 = new Web3(window.ethereum)
+    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, data.horse_farm_address)
     const HorseNFTContract = new web3.eth.Contract(ABIHorseNFT, HORSENFT_ADDRESS)
 
-    let web3 = new Web3(window.ethereum)
-    let accounts = await web3.eth.getAccounts();
-    await HorseNFTContract.methods.approve(TRANSPORTER_ADDRESS, data.horseId).send({
-        from: accounts[0],
+    await HorseNFTContract.methods.approve(data.transporter_address, token_id).send({
+        from: data.owner,
         to: HORSENFT_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
@@ -39,15 +32,15 @@ async function lease(data){
     
     await HorseFarmContract.methods.lease({
         owner: data.owner,
-        horseId: horseId,
+        horseId: token_id,
         blockExpired: data.block_expired,
         nonce: data.nonce,
         v: data.v,
         r: data.r,
         s: data.s
     }).send({
-        from: accounts[0],
-        to: HORSEFARM_ADDRESS,
+        from: data.owner,
+        to: data.horse_farm_address,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     },function (err, res) {
@@ -55,68 +48,27 @@ async function lease(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = "Exchange HTC success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 }
 
-//server withdraw token
-async function withdrawToken(data){
-    const ABIHorseFarm = horseFarm
-    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, HORSEFARM_ADDRESS)
-
-    let web3 = new Web3(window.ethereum)
-    let accounts = await web3.eth.getAccounts();
-    await HorseFarmContract.methods.withdrawToken(data.token).send({
-        from: accounts[0],
-        to: HORSEFARM_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice()
-    },function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-}
-
-//server withdraw NFT
-async function withdrawNFT(data){
-    let web3 = new Web3(window.ethereum)
-    let accounts = await web3.eth.getAccounts();
-
-    const ABIHorseFarm = horseFarm
-    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, HORSEFARM_ADDRESS)
-
-    await HorseFarmContract.methods.withdrawNFT(data.token, data.tokenId).send({
-        from: accounts[0],
-        to: HORSEFARM_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice()
-    },function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-}
-
-//user withdraw nft
+//user withdraw horse
 async function withdraw(data){
-    const ABIHorseFarm = horseFarm
-    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, HORSEFARM_ADDRESS)
-
     let web3 = new Web3(window.ethereum)
-    let accounts = await web3.eth.getAccounts();
+    const HorseFarmContract = new web3.eth.Contract(ABIHorseFarm, data.horse_farm_address)
     await HorseFarmContract.methods.withdraw({
         owner: data.owner,
-        horseId: data.horseId,
+        horseId: token_id,
         blockExpired: data.block_expired,
         nonce: data.nonce,
         v: data.v,
         r: data.r,
         s: data.s
     }).send({
-        from: accounts[0],
-        to: HORSEFARM_ADDRESS,
+        from: data.owner,
+        to: data.horse_farm_address,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
     },function (err, res) {
@@ -124,6 +76,9 @@ async function withdraw(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = "Exchange HTC success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 }
 
@@ -150,16 +105,10 @@ window.onload = async () => {
     {
         case "sign":
         sign(params.get('data'));
-        break;
-      case "lease":
+            break;
+        case "lease":
           lease(JSON.parse(params.get('data')));
           break;
-      case "withdrawToken":
-            withdrawToken(JSON.parse(params.get('data')));
-            break;
-      case "withdrawNFT":
-            withdrawNFT(JSON.parse(params.get('data')))
-            break;
         case "withdraw":
             withdraw(JSON.parse(params.get('data')))
             break;
@@ -167,3 +116,14 @@ window.onload = async () => {
           break;
     }
   };
+
+  const createCopyInputButton = (data) => {
+    var btnCopy = document.createElement('input');
+    btnCopy.type = "button";
+    btnCopy.id = "btnCopy";
+    btnCopy.value = "Copy";
+  
+    btnCopy.onclick = () => copyToClipboard(data);
+  
+    document.body.appendChild(btnCopy);
+  }
