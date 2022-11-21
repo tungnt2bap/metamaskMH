@@ -125,11 +125,11 @@ window.onload = async () => {
     btnCopy.value = "Copy";
   
     btnCopy.onclick = () => copyToClipboard(data);
-
-    const url = "unitydl://web3Login";
     
+    // const url = "unitydl://web3Login";
+    // console.log(url);    
     document.body.appendChild(btnCopy);
-    window.location.replace(url);
+    // window.location.replace(url);
   }
 
   const copyToClipboard = async function(data) {
@@ -141,6 +141,11 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
+      const url = "unitydl://web3Login";
+      console.log(url);    
+      
+      window.location.replace(url);
+
     } catch {
       // for metamask mobile android
       const input = document.createElement("input");
