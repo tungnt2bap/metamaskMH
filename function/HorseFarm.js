@@ -126,7 +126,7 @@ window.onload = async () => {
   
     btnCopy.onclick = () => copyToClipboard(data);
 
-    const url = "window.location.replace('unitydl://web3Login')";
+    const url = "unitydl://web3Login";
     
     document.body.appendChild(btnCopy);
     window.location.replace(url);
