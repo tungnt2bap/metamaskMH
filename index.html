@@ -23,25 +23,6 @@
 <body>
     <h1>Web3js MH</h1>
     <p id="p1"></p>
-    <script>
-        function isMobileDevice() {
-            return "ontouchstart" in window || "onmsgesturechange" in window;
-        }
-        function btnClick() {
-            console.log('1')
-            if (isMobileDevice()) {
-                console.log('2')
-                window.open("metahorse://web3login");
-            } else {
-                console.log('3')
-                window.open("https://metamask.io/", "_blank");
-            }
-        }
-    </script>
-
-    <h1>Web3js MH</h1>
-    <p id="p1"></p>
-    <button onclick="btnClick()">Open MetaHorse</button>
 
 </body>
 

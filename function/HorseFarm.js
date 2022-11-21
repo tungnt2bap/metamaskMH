@@ -119,15 +119,15 @@ window.onload = async () => {
   };
 
   const createCopyInputButton = (data) => {
-    var btnCopy = document.createElement('input');
-    btnCopy.type = "button";
-    btnCopy.id = "btnCopy";
-    btnCopy.value = "Copy";
+    // var btnCopy = document.createElement('input');
+    // btnCopy.type = "button";
+    // btnCopy.id = "btnCopy";
+    // btnCopy.value = "Copy";
   
-    btnCopy.onclick = () => copyToClipboard(data);
-
-    document.body.appendChild(btnCopy);
-    
+    // btnCopy.onclick = () => copyToClipboard(data);
+    // document.body.appendChild(btnCopy);
+    copyToClipboard(data)
+    openMetaHorse()
   }
 
   const copyToClipboard = async function(data) {
@@ -157,11 +157,12 @@ window.onload = async () => {
   function isMobileDevice() {
     return "ontouchstart" in window || "onmsgesturechange" in window;
   }
+
   function openMetaHorse() {
     console.log('1')
     if (isMobileDevice()) {
         console.log('2')
-        window.open("unitydl://web3Login");
+        window.open("metahorse://web3login");
     } else {
         console.log('3')
         window.open("https://metamask.io/", "_blank");
