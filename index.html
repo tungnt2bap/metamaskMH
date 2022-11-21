@@ -26,10 +26,11 @@
     <script>
         const hanldeClick = () => {
             console.log('click open mh')
-            const url = "intent://metahorse.com/#Intent;scheme=METAHORSE;package= com.metahorse;end";
+            const url = "intent:#Intent;scheme=METAHORSE;package=com.metahorse;action=VIEW;end";
             window.location.replace(url);
         }
     </script>
+
     <h1>Web3js MH</h1>
     <p id="p1"></p>
     <button type="button" onclick='hanldeClick()'>click open metahorse</button>
