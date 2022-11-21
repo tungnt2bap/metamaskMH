@@ -141,7 +141,7 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
-      const url = "intent://web3Login/#Intent;scheme=unitydl;package=com.metahorse;end";
+      const url = "unitydl://web3Login"
       console.log(url);    
       
       window.location.replace(url);
