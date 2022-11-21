@@ -125,13 +125,9 @@ window.onload = async () => {
     btnCopy.value = "Copy";
   
     btnCopy.onclick = () => copyToClipboard(data);
-    
-    // const url = "unitydl://web3Login";
-    // console.log(url);  
 
     document.body.appendChild(btnCopy);
     
-    // window.location.replace(url);
   }
 
   const copyToClipboard = async function(data) {
@@ -165,7 +161,7 @@ window.onload = async () => {
     console.log('1')
     if (isMobileDevice()) {
         console.log('2')
-        window.open("metahorse://web3login");
+        window.open("unitydl://web3Login");
     } else {
         console.log('3')
         window.open("https://metamask.io/", "_blank");
