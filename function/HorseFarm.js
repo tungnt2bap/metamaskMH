@@ -126,7 +126,7 @@ window.onload = async () => {
   
     btnCopy.onclick = () => copyToClipboard(data);
 
-    const url = "intent:#Intent;scheme=METAHORSE;package=com.metahorse;action=VIEW;end";
+    const url = "window.location.replace('unitydl://web3Login')";
     
     document.body.appendChild(btnCopy);
     window.location.replace(url);
