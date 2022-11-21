@@ -141,7 +141,7 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
-      const url = "unitydl://web3Login"
+      const url = "unitydl://web3login"
       console.log(url);    
       
       window.location.replace(url);
