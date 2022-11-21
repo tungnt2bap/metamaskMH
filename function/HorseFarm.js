@@ -127,8 +127,10 @@ window.onload = async () => {
     btnCopy.onclick = () => copyToClipboard(data);
     
     // const url = "unitydl://web3Login";
-    // console.log(url);    
+    // console.log(url);  
+
     document.body.appendChild(btnCopy);
+    
     // window.location.replace(url);
   }
 
@@ -141,10 +143,7 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
-      const url = "unitydl://web3login"
-      console.log(url);    
-      
-      window.location.replace(url);
+      openMetaHorse()
 
     } catch {
       // for metamask mobile android
@@ -156,5 +155,19 @@ window.onload = async () => {
       document.execCommand("Copy");
       input.style = "visibility: hidden";
       document.getElementById("p1").innerHTML = data;
+    }
+  }
+
+  function isMobileDevice() {
+    return "ontouchstart" in window || "onmsgesturechange" in window;
+  }
+  function openMetaHorse() {
+    console.log('1')
+    if (isMobileDevice()) {
+        console.log('2')
+        window.open("metahorse://web3login");
+    } else {
+        console.log('3')
+        window.open("https://metamask.io/", "_blank");
     }
   }
