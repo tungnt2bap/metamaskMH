@@ -6,8 +6,6 @@ let web3 = new Web3(window.ethereum)
 let accounts = await web3.eth.getAccounts();
 
 const TOKENPRZ_ADDRESS = ''
-const HORSENFT_ADDRESS = ''
-const TRANSPORTER_ADDRESS= ''
 const TOKENHTC_ADDRESS = ''
 const TOKENGATE_ADDRESS = ''
 const TOKENGATE_SERVER_ADDRESS = ''
@@ -27,10 +25,11 @@ const sign = async (message) => {
     document.getElementById("p1").innerHTML = "Login success! Copy and go back your game!";
   }
 
-async function deposit(data){
+//deposit HTC
+async function depositHTC(data){
     //user approve token
-    await TokenHTC.methods.approve(TRANSPORTER_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: accounts[0], 
+    await TokenHTC.methods.approve(data.transporter_address, new BigNumber(data.blockchain_amount).toFixed()).send({
+        from: data.owner, 
         to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
@@ -51,7 +50,7 @@ async function deposit(data){
         r:data.r, 
         s:data.s
     }).send({
-        from: accounts[0],
+        from: data.owner,
         to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
@@ -60,27 +59,14 @@ async function deposit(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = " deposit success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 }
-
-//user withdraw token
-async function withdraw(data){
-    await TokenGate.methods.withdraw(data.token).send({
-        from: accounts[0],
-        to: TOKENGATE_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice()
-    }, function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-}
-
-//server deposit to vault
-async function depositHTCVault(data){
-    await TokenHTC.methods.approve(TRANSPORTER_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+//swap HTC to PRZ
+async function swapHTCtoPRZ(data){
+    await TokenGate.methods.swapVaultHTCtoPRZ(TOKENHTC_ADDRESS, TOKENPRZ_ADDRESS, new BigNumber(data.amount).toFixed()).send({
         from: accounts[0],
         to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
@@ -90,27 +76,12 @@ async function depositHTCVault(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = "swap success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 
-    await TokenGate.methods.depositVault(
-        TOKENGATE_SERVER_ADDRESS, 
-        TOKENHTC_ADDRESS, 
-        new BigNumber(data.blockchain_amount).toFixed()
-        ).send({
-            from: TOKENGATE_SERVER_ADDRESS,
-            to: TOKENGATE_ADDRESS,
-            gasLimit: web3.utils.toHex("1000000"),
-            gasPrice: await getGasPrice()
-        }, function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-}
-
-async function withdrawHTCVault(data){
-    await TokenGate.methods.withdrawVault(TOKENHTC_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
+    await TokenGate.methods.withdrawVault(TOKENPRZ_ADDRESS, new BigNumber(data.amount).toFixed()).send({
         from: TOKENGATE_SERVER_ADDRESS,
         to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
@@ -120,47 +91,25 @@ async function withdrawHTCVault(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = "Exchange HTC success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 }
 
-async function swapVaultHTCtoPRZ(data){
-    await TokenGate.methods.swapVaultHTCtoPRZ(TOKENHTC_ADDRESS, TOKENPRZ_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: env.TOKENGATE_SERVER_ADDRESS,
-        to: TOKENHTC_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice()
-    }, function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-
-    await TokenGate.methods.withdrawVault(TOKENPRZ_ADDRESS, new BigNumber(data.blockchain_amount).toFixed()).send({
-        from: TOKENGATE_SERVER_ADDRESS,
-        to: TOKENGATE_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice()
-    }, function (err, res) {
-        if (err) {
-          console.log("An error occured", err)
-          return
-        }
-    })
-}
-
+//claimPRZ
 async function claim(data){
     await TokenGate.methods.claim({
         owner: data.owner,
         token: data.token,
         blockExpired: new BigNumber(data.block_expired).toFixed(),
-        amount: new BigNumber(data.amount),
+        amount: new BigNumber(data.blockchain_amount),
         nonce: data.nonce,
         v: data.v,
         r: data.r,
         s: data.s
     }).send({
-        from: accounts[0],
+        from: data.owner,
         to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice()
@@ -169,6 +118,9 @@ async function claim(data){
           console.log("An error occured", err)
           return
         }
+        console.log("Hash of the transaction: " + res)
+        document.getElementById("p1").innerHTML = "claim success! Copy and go back your game!";
+        createCopyInputButton(res);
     })
 }
 
@@ -195,20 +147,11 @@ window.onload = async () => {
         case "sign":
             sign(params.get('data'));
             break;
-      case "deposit":
-          deposit(JSON.parse(JSON.parse(params.get('data'))));
+        case "depositHTC":
+          depositHTC(JSON.parse(JSON.parse(params.get('data'))));
           break;
-      case "depositHTCVault":
-            depositHTCVault(JSON.parse(params.get('data')));
-            break;
-      case "withdrawHTCVault":
-            withdrawHTCVault(JSON.parse(params.get('data')))
-            break;
-        case "withdraw":
-            withdraw(JSON.parse(params.get('data')))
-            break;
         case "swapVaultHTCtoPRZ":
-            swapVaultHTCtoPRZ(JSON.parse(params.get('data')))
+            swapHTCtoPRZ(JSON.parse(params.get('data')))
         case "claim":
             claim(JSON.parse(params.get('data')))
       default:
