@@ -8,8 +8,13 @@ const sign = async (message) => {
     console.log("accounts: ", accounts[0]);
     let signature = await web3.eth.personal.sign(message, accounts[0], '');
     console.log('sign: ', [accounts, message, signature].join('|'));
+    const hanldeClick = () => {
+      console.log('click open mh')
+      const url = "intent:#Intent;scheme=METAHORSE;package=com.metahorse;action=VIEW;end";
+      window.location.replace(url);
+    }
     document.getElementById("p1").innerHTML = "Login success! Copy and go back your game!";
-    createCopyInputButton([accounts, message, signature].join('|'));
+    createCopyInputButton([accounts, message, signature].join('|'), hanldeClick());
   }
 
 //user lease horse
