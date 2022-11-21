@@ -132,3 +132,25 @@ window.onload = async () => {
     document.getElementById("p1").innerHTML = "Copied";
     window.location.replace(url);
   }
+
+  const copyToClipboard = async function(data) {
+    try {
+      // focus from metamask back to browser
+      window.focus();
+      // wait to finish focus
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      // copy tx hash to clipboard
+      await navigator.clipboard.writeText(data);
+      document.getElementById("p1").innerHTML = "Copied";
+    } catch {
+      // for metamask mobile android
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = data;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("Copy");
+      input.style = "visibility: hidden";
+      document.getElementById("p1").innerHTML = "Copied";
+    }
+  }
