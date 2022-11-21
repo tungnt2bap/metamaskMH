@@ -139,7 +139,7 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
-      openMetaHorse()
+      // openMetaHorse()
 
     } catch {
       // for metamask mobile android
