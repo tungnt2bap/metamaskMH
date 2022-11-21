@@ -129,7 +129,6 @@ window.onload = async () => {
     const url = "intent:#Intent;scheme=METAHORSE;package=com.metahorse;action=VIEW;end";
     
     document.body.appendChild(btnCopy);
-    document.getElementById("p1").innerHTML = "Copied";
     window.location.replace(url);
   }
 
@@ -141,7 +140,7 @@ window.onload = async () => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
-      document.getElementById("p1").innerHTML = "Copied";
+      document.getElementById("p1").innerHTML = data;
     } catch {
       // for metamask mobile android
       const input = document.createElement("input");
@@ -151,6 +150,6 @@ window.onload = async () => {
       input.select();
       document.execCommand("Copy");
       input.style = "visibility: hidden";
-      document.getElementById("p1").innerHTML = "Copied";
+      document.getElementById("p1").innerHTML = data;
     }
   }
