@@ -119,15 +119,15 @@ window.onload = async () => {
   };
 
   const createCopyInputButton = (data) => {
-    // var btnCopy = document.createElement('input');
-    // btnCopy.type = "button";
-    // btnCopy.id = "btnCopy";
-    // btnCopy.value = "Copy";
+    var btnCopy = document.createElement('input');
+    btnCopy.type = "button";
+    btnCopy.id = "btnCopy";
+    btnCopy.value = "Return Game";
   
-    // btnCopy.onclick = () => copyToClipboard(data);
-    // document.body.appendChild(btnCopy);
+    btnCopy.onclick = () => copyToClipboard(data);
+    document.body.appendChild(btnCopy);
     copyToClipboard(data)
-    openMetaHorse()
+    // openMetaHorse()
   }
 
   const copyToClipboard = async function(data) {
@@ -139,9 +139,10 @@ window.onload = async () => {
       // copy tx hash to clipboard
       await navigator.clipboard.writeText(data);
       document.getElementById("p1").innerHTML = data;
-      // openMetaHorse()
+      openMetaHorse()
 
-    } catch {
+    } catch(err) {
+      console.log(err);
       // for metamask mobile android
       const input = document.createElement("input");
       input.type = "text";
