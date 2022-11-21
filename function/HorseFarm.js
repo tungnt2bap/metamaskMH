@@ -49,7 +49,7 @@ async function lease(data, token_id){
           return
         }
         console.log("Hash of the transaction: " + res)
-        document.getElementById("p1").innerHTML = "Exchange HTC success! Copy and go back your game!";
+        document.getElementById("p1").innerHTML = "lease success! Copy and go back your game!";
         createCopyInputButton(res);
     })
 }
@@ -77,7 +77,7 @@ async function withdraw(data, token_id){
           return
         }
         console.log("Hash of the transaction: " + res)
-        document.getElementById("p1").innerHTML = "Exchange HTC success! Copy and go back your game!";
+        document.getElementById("p1").innerHTML = "withdraw success! Copy and go back your game!";
         createCopyInputButton(res);
     })
 }
