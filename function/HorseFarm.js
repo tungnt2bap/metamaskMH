@@ -162,8 +162,6 @@ const copyToClipboard = async function (data) {
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
     document.getElementById("p1").innerHTML = data;
-
-    // const btnBack = document.getElementById("btn-back");
     openMetaHorse();
   } catch (err) {
     console.log(err);
@@ -176,7 +174,6 @@ const copyToClipboard = async function (data) {
     document.execCommand("Copy");
     input.style = "visibility: hidden";
     document.getElementById("p1").innerHTML = data;
-    // const btnBack = document.getElementById("btn-back");
     openMetaHorse();
   }
 };
