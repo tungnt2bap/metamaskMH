@@ -3,15 +3,23 @@ const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "";
 
 const sign = async (message) => {
-  let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
-  console.log("accounts: ", accounts[0]);
-  let signature = await web3.eth.personal.sign(message, accounts[0], "");
-  console.log("sign: ", [accounts, message, signature].join("|"));
+  try {
+    let web3 = new Web3(window.ethereum);
+    let accounts = await web3.eth.getAccounts();
+    console.log("accounts: ", accounts[0]);
+    let signature = await web3.eth.personal.sign(message, accounts[0], "");
+    console.log("sign: ", [accounts, message, signature].join("|"));
 
-  // document.getElementById("p1").innerHTML =
-  //   "Login success! Copy and go back your game!";
-  createCopyInputButton([accounts, message, signature].join("|"));
+    // document.getElementById("p1").innerHTML =
+    //   "Login success! Copy and go back your game!";
+    createCopyInputButton([accounts, message, signature].join("|"));
+    document.getElementById("title-modal").innerHTML =
+      "You have successfully signed";
+  } catch (err) {
+    console.log(err);
+    createCopyInputButton([400, err.message].join("|"));
+    document.getElementById("title-modal").innerHTML = "sign failed";
+  }
 };
 
 //user lease horse
