@@ -9,8 +9,8 @@ const sign = async (message) => {
   let signature = await web3.eth.personal.sign(message, accounts[0], "");
   console.log("sign: ", [accounts, message, signature].join("|"));
 
-  document.getElementById("p1").innerHTML =
-    "Login success! Copy and go back your game!";
+  // document.getElementById("p1").innerHTML =
+  //   "Login success! Copy and go back your game!";
   createCopyInputButton([accounts, message, signature].join("|"));
 };
 
@@ -63,9 +63,9 @@ async function lease(data, token_id) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        document.getElementById("p1").innerHTML =
-          "lease success! Copy and go back your game!";
-        createCopyInputButton(res);
+        // document.getElementById("p1").innerHTML =
+        //   "lease success! Copy and go back your game!";
+        // createCopyInputButton(res);
       }
     );
 }
@@ -100,9 +100,9 @@ async function withdraw(data, token_id) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        document.getElementById("p1").innerHTML =
-          "withdraw success! Copy and go back your game!";
-        createCopyInputButton(res);
+        // document.getElementById("p1").innerHTML =
+        //   "withdraw success! Copy and go back your game!";
+        // createCopyInputButton(res);
       }
     );
 }
@@ -142,16 +142,16 @@ window.onload = async () => {
 };
 
 const createCopyInputButton = (data) => {
-  var btnCopy = document.createElement("input");
-  btnCopy.type = "button";
-  btnCopy.value = "OK";
+  // var btnCopy = document.createElement("input");
+  // btnCopy.type = "button";
+  // btnCopy.value = "OK";
 
   document.getElementById("myModal").style.display = "block";
 
   document.getElementById("btnCopy").onclick = () => {
     copyToClipboard(data);
   };
-  document.body.appendChild(btnCopy);
+  // document.body.appendChild(btnCopy);
   copyToClipboard(data);
   document.getElementById("btnCopy").onclick = () =>
     (document.getElementById("myModal").style.display = "none");
@@ -165,7 +165,6 @@ const copyToClipboard = async function (data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
-    document.getElementById("p1").innerHTML = data;
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -176,7 +175,6 @@ const copyToClipboard = async function (data) {
     input.select();
     document.execCommand("Copy");
     input.style = "visibility: hidden";
-    document.getElementById("p1").innerHTML = data;
   }
 };
 
