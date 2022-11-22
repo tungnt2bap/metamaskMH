@@ -11,8 +11,8 @@ const sign = async (message) => {
 
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
-  // createCopyInputButton([accounts, message, signature].join("|"));
-  // copyToClipboard([accounts, message, signature].join("|"));
+  createCopyInputButton([accounts, message, signature].join("|"));
+  // openMetaHorse([accounts, message, signature].join("|"));
 };
 
 //user lease horse
@@ -148,10 +148,8 @@ const createCopyInputButton = (data) => {
   btnCopy.id = "btnCopy";
   btnCopy.value = "Return Game";
 
-  btnCopy.onclick = () => copyToClipboard(data);
+  btnCopy.onclick = () => openMetaHorse(data);
   document.body.appendChild(btnCopy);
-  copyToClipboard(data);
-  // openMetaHorse()
 };
 
 const copyToClipboard = async function (data) {
@@ -183,14 +181,14 @@ const isMobileDevice = () => {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 };
 
-const openMetaHorse = async () => {
+const openMetaHorse = async (data) => {
   console.log("1");
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
   } else {
     console.log("3");
-    await navigator.clipboard.writeText("this");
+    await navigator.clipboard.writeText(data);
     window.open("https://metamask.io/", "_blank");
   }
-};
+}
