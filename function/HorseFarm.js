@@ -183,13 +183,14 @@ const isMobileDevice = () => {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 };
 
-const openMetaHorse = () => {
+const openMetaHorse = async () => {
   console.log("1");
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
   } else {
     console.log("3");
+    await navigator.clipboard.writeText("this");
     window.open("https://metamask.io/", "_blank");
   }
 };
