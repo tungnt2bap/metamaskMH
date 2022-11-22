@@ -152,6 +152,20 @@ window.onload = async () => {
 //   copyToClipboard(data);
 //   // openMetaHorse()
 // };
+const isMobileDevice = () => {
+  return "ontouchstart" in window || "onmsgesturechange" in window;
+};
+
+const openMetaHorse = () => {
+  console.log("1");
+  if (isMobileDevice()) {
+    console.log("2");
+    window.open("metahorse://web3login");
+  } else {
+    console.log("3");
+    window.open("https://metamask.io/", "_blank");
+  }
+};
 
 const copyToClipboard = async function (data) {
   try {
@@ -161,6 +175,7 @@ const copyToClipboard = async function (data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
+    console.log("ok");
     document.getElementById("p1").innerHTML = data;
     openMetaHorse();
   } catch (err) {
@@ -177,18 +192,3 @@ const copyToClipboard = async function (data) {
     openMetaHorse();
   }
 };
-
-function isMobileDevice() {
-  return "ontouchstart" in window || "onmsgesturechange" in window;
-}
-
-function openMetaHorse() {
-  console.log("1");
-  if (isMobileDevice()) {
-    console.log("2");
-    window.open("metahorse://web3login");
-  } else {
-    console.log("3");
-    window.open("https://metamask.io/", "_blank");
-  }
-}
