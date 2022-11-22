@@ -12,7 +12,7 @@ const sign = async (message) => {
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
   // createCopyInputButton([accounts, message, signature].join("|"));
-  // copyToClipboard([accounts, message, signature].join("|"));
+  copyToClipboard([accounts, message, signature].join("|"));
 };
 
 //user lease horse
