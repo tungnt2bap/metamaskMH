@@ -12,7 +12,7 @@ const sign = async (message) => {
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
   // createCopyInputButton([accounts, message, signature].join("|"));
-  copyToClipboard([accounts, message, signature].join("|"));
+  // copyToClipboard([accounts, message, signature].join("|"));
 };
 
 //user lease horse
@@ -179,17 +179,21 @@ const copyToClipboard = async function (data) {
   }
 };
 
-const isMobileDevice = () => {
-  return "ontouchstart" in window || "onmsgesturechange" in window;
-};
+console.log('???')
+function isMobileDevice() {
+    return "ontouchstart" in window || "onmsgesturechange" in window;
+}
+function openMetaHorse() {
+    const signLogin = localStorage.getItem('signData');
+    console.log('1')
+    if (isMobileDevice()) {
+        console.log('2')
 
-const openMetaHorse = () => {
-  console.log("1");
-  if (isMobileDevice()) {
-    console.log("2");
-    window.open("metahorse://web3login");
-  } else {
-    console.log("3");
-    window.open("https://metamask.io/", "_blank");
-  }
-};
+        window.open("metahorse://web3login");
+    } else {
+        console.log('3')
+        navigator.clipboard.writeText("this");
+        console.log(4);
+        window.open("https://metamask.io/", "_blank");
+    }
+}
