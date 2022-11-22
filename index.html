@@ -22,19 +22,22 @@
     <link rel="stylesheet" href="styles.css">
 
 <body>
-    <h1>Web3js MH</h1>
-    <button class="btn-back-game" onclick="openMetaHorse()">Back To Game</button>
-    <!-- <button id="myBtn">Open Modal</button> -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <!-- <span class="close">&times;</span> -->
-            <p id="title-modal"> 
-                You have successfully signed.
-            </p>
-            <input type="button" value="OK" id="btnCopy"/>
+   <div class="container">
+        <div class="content">
+            <button class="btn-back-game" onclick="openMetaHorse()">Back To Game</button>
+            <!-- <button id="myBtn">Open Modal</button> -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <p id="title-modal"> 
+                        You have successfully signed.
+                    </p>
+                    <input type="button" value="OK" id="btnCopy"/>
+                </div>
+            </div>
         </div>
-    </div>
+   </div>
 
     <script>
         var modal = document.getElementById("myModal");

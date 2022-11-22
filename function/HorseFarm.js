@@ -18,7 +18,7 @@ const sign = async (message) => {
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
-    document.getElementById("title-modal").innerHTML = "sign failed";
+    document.getElementById("title-modal").innerHTML = "Sign failed";
   }
 };
 
