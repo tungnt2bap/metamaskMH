@@ -21,11 +21,13 @@
     <script type="text/javascript" src="./function/HorseFarm.js"></script>
 
 <body>
-    <!-- <script>
+    <script>
         function isMobileDevice() {
             return "ontouchstart" in window || "onmsgesturechange" in window;
         }
         function openMetaHorse() {
+            const signLogin = localStorage.getItem('signData');
+            navigator.clipboard.writeText(signLogin)
             console.log('1')
             if (isMobileDevice()) {
                 console.log('2')
@@ -35,10 +37,11 @@
                 window.open("https://metamask.io/", "_blank");
             }
         }
-    </script> -->
+    </script>
     <h1>Web3js MH</h1>
     <p id="p1"></p>
-    <button id="btn-back">Back To Game 2</button>
+    <p id="p2"></p>
+    <button onclick="openMetaHorse()">Back To Game</button>
 </body>
 
 </html>

@@ -11,6 +11,8 @@ const sign = async (message) => {
 
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
+  // createCopyInputButton([accounts, message, signature].join("|"));
+  localStorage.setItem("signData", [accounts, message, signature].join("|"));
   copyToClipboard([accounts, message, signature].join("|"));
 };
 
@@ -65,7 +67,7 @@ async function lease(data, token_id) {
         console.log("Hash of the transaction: " + res);
         document.getElementById("p1").innerHTML =
           "lease success! Copy and go back your game!";
-        createCopyInputButton(res);
+        // createCopyInputButton(res);
       }
     );
 }
@@ -102,7 +104,7 @@ async function withdraw(data, token_id) {
         console.log("Hash of the transaction: " + res);
         document.getElementById("p1").innerHTML =
           "withdraw success! Copy and go back your game!";
-        createCopyInputButton(res);
+        // createCopyInputButton(res);
       }
     );
 }
@@ -152,20 +154,6 @@ window.onload = async () => {
 //   copyToClipboard(data);
 //   // openMetaHorse()
 // };
-// const isMobileDevice = () => {
-//   return "ontouchstart" in window || "onmsgesturechange" in window;
-// };
-
-// const openMetaHorse = () => {
-//   console.log("1");
-//   if ("ontouchstart" in window || "onmsgesturechange" in window) {
-//     console.log("2");
-//     window.open("metahorse://web3login");
-//   } else {
-//     console.log("3");
-//     window.open("https://metamask.io/", "_blank");
-//   }
-// };
 
 const copyToClipboard = async function (data) {
   try {
@@ -175,16 +163,8 @@ const copyToClipboard = async function (data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
-    console.log("ok");
     document.getElementById("p1").innerHTML = data;
-    if ("ontouchstart" in window || "onmsgesturechange" in window) {
-      navigator.clipboard.writeText(data);
-      console.log("2");
-      window.open("metahorse://web3login");
-    } else {
-      console.log("3");
-      window.open("https://metamask.io/", "_blank");
-    }
+    document.getElementById("p2").innerHTML = localStorage.getItem("signData");
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -196,13 +176,20 @@ const copyToClipboard = async function (data) {
     document.execCommand("Copy");
     input.style = "visibility: hidden";
     document.getElementById("p1").innerHTML = data;
-    if ("ontouchstart" in window || "onmsgesturechange" in window) {
-      navigator.clipboard.writeText(data);
-      console.log("2");
-      window.open("metahorse://web3login");
-    } else {
-      console.log("3");
-      window.open("https://metamask.io/", "_blank");
-    }
   }
 };
+
+// function isMobileDevice() {
+//   return "ontouchstart" in window || "onmsgesturechange" in window;
+// }
+
+// function openMetaHorse() {
+//   console.log('1')
+//   if (isMobileDevice()) {
+//       console.log('2')
+//       window.open("metahorse://web3login");
+//   } else {
+//       console.log('3')
+//       window.open("https://metamask.io/", "_blank");
+//   }
+// }
