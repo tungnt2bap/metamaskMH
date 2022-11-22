@@ -11,8 +11,7 @@ const sign = async (message) => {
 
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
-  // createCopyInputButton([accounts, message, signature].join("|"));
-  copyToClipboard([accounts, message, signature].join("|"));
+  createCopyInputButton([accounts, message, signature].join("|"));
 };
 
 //user lease horse
@@ -66,7 +65,7 @@ async function lease(data, token_id) {
         console.log("Hash of the transaction: " + res);
         document.getElementById("p1").innerHTML =
           "lease success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton(res);
       }
     );
 }
@@ -103,7 +102,7 @@ async function withdraw(data, token_id) {
         console.log("Hash of the transaction: " + res);
         document.getElementById("p1").innerHTML =
           "withdraw success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton(res);
       }
     );
 }
@@ -142,28 +141,28 @@ window.onload = async () => {
   }
 };
 
-// const createCopyInputButton = (data) => {
-//   var btnCopy = document.createElement("input");
-//   btnCopy.type = "button";
-//   btnCopy.id = "btnCopy";
-//   btnCopy.value = "Return Game";
+const createCopyInputButton = (data) => {
+  var btnCopy = document.createElement("input");
+  btnCopy.type = "button";
+  btnCopy.id = "btnCopy";
+  btnCopy.value = "Return Game";
 
-//   btnCopy.onclick = () => copyToClipboard(data);
-//   document.body.appendChild(btnCopy);
-//   copyToClipboard(data);
-//   // openMetaHorse()
-// };
+  btnCopy.onclick = () => copyToClipboard(data);
+  document.body.appendChild(btnCopy);
+  copyToClipboard(data);
+  // openMetaHorse()
+};
 
 const copyToClipboard = async function (data) {
   try {
     // focus from metamask back to browser
-    // window.focus();
+    window.focus();
     // wait to finish focus
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
     document.getElementById("p1").innerHTML = data;
-    openMetaHorse();
+    // openMetaHorse()
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -175,21 +174,5 @@ const copyToClipboard = async function (data) {
     document.execCommand("Copy");
     input.style = "visibility: hidden";
     document.getElementById("p1").innerHTML = data;
-    openMetaHorse();
-  }
-};
-
-const isMobileDevice = () => {
-  return "ontouchstart" in window || "onmsgesturechange" in window;
-};
-
-const openMetaHorse = () => {
-  console.log("1");
-  if (isMobileDevice()) {
-    console.log("2");
-    window.open("metahorse://web3login");
-  } else {
-    console.log("3");
-    window.open("https://metamask.io/", "_blank");
   }
 };
