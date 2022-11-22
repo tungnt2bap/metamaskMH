@@ -12,7 +12,6 @@ const sign = async (message) => {
   document.getElementById("p1").innerHTML =
     "Login success! Copy and go back your game!";
   createCopyInputButton([accounts, message, signature].join("|"));
-  // openMetaHorse([accounts, message, signature].join("|"));
 };
 
 //user lease horse
@@ -146,10 +145,11 @@ const createCopyInputButton = (data) => {
   var btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
-  btnCopy.value = "Return Game";
+  btnCopy.value = "OK";
 
-  btnCopy.onclick = () => openMetaHorse(data);
+  btnCopy.onclick = () => copyToClipboard(data);
   document.body.appendChild(btnCopy);
+  copyToClipboard(data);
 };
 
 const copyToClipboard = async function (data) {
@@ -160,11 +160,7 @@ const copyToClipboard = async function (data) {
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
-
-    btnCopy.onclick = () => copyToClipboard(data);
-
-    // openMetaHorse()
-    document.createElement("btn-back").onclick = () => openMetaHorse(data);
+    document.getElementById("p1").innerHTML = data;
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -176,22 +172,19 @@ const copyToClipboard = async function (data) {
     document.execCommand("Copy");
     input.style = "visibility: hidden";
     document.getElementById("p1").innerHTML = data;
-    openMetaHorse(data);
   }
 };
 
-const isMobileDevice = () => {
+function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
-};
-
-const openMetaHorse = async (data) => {
+}
+function openMetaHorse() {
   console.log("1");
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
   } else {
     console.log("3");
-    await navigator.clipboard.writeText(data);
     window.open("https://metamask.io/", "_blank");
   }
 }
