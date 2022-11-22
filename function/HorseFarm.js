@@ -144,12 +144,17 @@ window.onload = async () => {
 const createCopyInputButton = (data) => {
   var btnCopy = document.createElement("input");
   btnCopy.type = "button";
-  btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
 
-  btnCopy.onclick = () => copyToClipboard(data);
+  document.getElementById("myModal").style.display = "block";
+
+  document.getElementById("btnCopy").onclick = () => {
+    copyToClipboard(data);
+  };
   document.body.appendChild(btnCopy);
   copyToClipboard(data);
+  document.getElementById("btnCopy").onclick = () =>
+    (document.getElementById("myModal").style.display = "none");
 };
 
 const copyToClipboard = async function (data) {
