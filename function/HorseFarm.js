@@ -1,6 +1,6 @@
 const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
-const HORSENFT_ADDRESS = "";
+const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
 const sign = async (message) => {
   try {
