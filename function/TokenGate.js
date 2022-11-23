@@ -5,9 +5,9 @@ let web3 = new Web3(window.ethereum);
 
 let accounts = await web3.eth.getAccounts();
 
-const TOKENPRZ_ADDRESS = "";
-const TOKENHTC_ADDRESS = "";
-const TOKENGATE_ADDRESS = "";
+const TOKENPRZ_ADDRESS = "0x4dBE394478d3B7E120412e61Bba3E3c8c85a079C";
+const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
+const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "";
 
 const ABIHTC = tokenHTC;
