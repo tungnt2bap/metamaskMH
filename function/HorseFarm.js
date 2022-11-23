@@ -12,7 +12,7 @@ const sign = async (message) => {
 
     // document.getElementById("p1").innerHTML =
     //   "Login success! Copy and go back your game!";
-    createCopyInputButton([accounts, message, signature].join("|"));
+    // createCopyInputButton([accounts, message, signature].join("|"));
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
   } catch (err) {
