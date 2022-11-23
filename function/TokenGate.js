@@ -1,9 +1,4 @@
-require("dotenv").config();
-
-const Web3 = require("web3");
 let web3 = new Web3(window.ethereum);
-
-let accounts = await web3.eth.getAccounts();
 
 const TOKENPRZ_ADDRESS = "0x4dBE394478d3B7E120412e61Bba3E3c8c85a079C";
 const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
@@ -13,17 +8,8 @@ const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 const ABIHTC = tokenHTC;
 const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
 
-const ABITokenGate = TokenGate;
+const ABITokenGate = TokenGateABI;
 const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
-
-const sign = async (message) => {
-  let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
-  console.log("accounts: ", accounts[0]);
-  let signature = await web3.eth.personal.sign(message, accounts[0], "");
-  console.log("sign: ", [accounts, message, signature].join("|"));
-  // document.getElementById("p1").innerHTML = "Login success! Copy and go back your game!";
-};
 
 //deposit HTC
 async function depositHTC(data) {
@@ -80,6 +66,7 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
+  let accounts = await web3.eth.getAccounts();
   await TokenGate.methods
     .swapVaultHTCtoPRZ(
       TOKENHTC_ADDRESS,
@@ -178,11 +165,8 @@ window.onload = async () => {
   console.log(params.get("data"));
 
   switch (params.get("action")) {
-    case "sign":
-      sign(params.get("data"));
-      break;
     case "depositHTC":
-      depositHTC(JSON.parse(JSON.parse(params.get("data"))));
+      depositHTC(JSON.parse(params.get("data")));
       break;
     case "swapVaultHTCtoPRZ":
       swapHTCtoPRZ(JSON.parse(params.get("data")));

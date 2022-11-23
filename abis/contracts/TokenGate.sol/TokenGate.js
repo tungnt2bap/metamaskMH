@@ -1,4 +1,4 @@
-const TokenGate = [
+const TokenGateABI = [
     {
       "anonymous": false,
       "inputs": [
