@@ -32,6 +32,7 @@ async function switchMetamaskNetwork(){
             params: [{ chainId: web3.utils.toHex(chainId) }]
           });
         } catch (err) {
+          console.error(err)
             // This error code indicates that the chain has not been added to MetaMask
           if (err.code === 4902) {
             await window.ethereum.request({
@@ -48,6 +49,7 @@ async function switchMetamaskNetwork(){
           }
         }
       }
+      console.log(2222);
 }
 
 //user lease horse
@@ -300,13 +302,15 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
+  
   if (window.ethereum) {
+    console.log(12);
     await window.ethereum.request({ method: "eth_requestAccounts" });
     window.web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
-
+  await switchMetamaskNetwork()
   const params = new URLSearchParams(window.location.search);
 
   console.log(params);
@@ -314,8 +318,8 @@ window.onload = async () => {
   console.log(params.get("data"));
 
   switch (params.get("action")) {
-    case "switchNetwork":
-      switchMetamaskNetwork();
+    // case "switchNetwork":
+    //   switchMetamaskNetwork()
     case "sign":
       sign(params.get("data"));
       break;
