@@ -22,6 +22,34 @@ const sign = async (message) => {
   }
 };
 
+async function switchMetamaskNetwork(){
+  const chainId = 55 //id testnet
+
+  if (window.ethereum.networkVersion !== chainId) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: web3.utils.toHex(chainId) }]
+          });
+        } catch (err) {
+            // This error code indicates that the chain has not been added to MetaMask
+          if (err.code === 4902) {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainName: 'Spectre Testnet',
+                  chainId: web3.utils.toHex(chainId),
+                  nativeCurrency: { name: 'SPECTRE', decimals: 18, symbol: 'SPC' },
+                  rpcUrls: ['https://testnet.spectre-rpc.io']
+                }
+              ]
+            });
+          }
+        }
+      }
+}
+
 //user lease horse
 async function lease(data, token_id) {
   let web3 = new Web3(window.ethereum);
@@ -135,6 +163,8 @@ window.onload = async () => {
   console.log(params.get("data"));
 
   switch (params.get("action")) {
+    case "switchNetwork":
+      switchMetamaskNetwork();
     case "sign":
       sign(params.get("data"));
       break;
