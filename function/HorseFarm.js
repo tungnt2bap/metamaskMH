@@ -358,6 +358,7 @@ const copyToClipboard = async function (data) {
     // wait to finish focus
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
+    await navigator.clipboard.writeText(null);
     await navigator.clipboard.writeText(data);
   } catch (err) {
     console.log(err);
@@ -375,6 +376,7 @@ const copyToClipboard = async function (data) {
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 }
+
 function openMetaHorse() {
   console.log("1");
   if (isMobileDevice()) {
