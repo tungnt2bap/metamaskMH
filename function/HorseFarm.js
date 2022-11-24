@@ -27,17 +27,14 @@ const copyToClipboard = async function (data) {
 };
 
 const createCopyInputButton = (data) => {
-  var btnCopy = document.createElement("input");
+  const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
 
-  btnCopy.onclick = () => {
-    copyToClipboard(data);
-    document.getElementById("myModal").style.visibility = "hidden";
-  };
+  btnCopy.onclick = () => copyToClipboard(data);
 
-  document.getElementById("btnCopy").appendChild(btnCopy);
+  document.getElementById("btnCopyHiden").appendChild(btnCopy);
 
   document.getElementById("myModal").style.visibility = "visible";
 };
