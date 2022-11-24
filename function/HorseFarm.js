@@ -345,6 +345,7 @@ const createCopyInputButton = (data) => {
 };
 
 const handleClickButtonOK = () => {
+    document.getElementById("p1").innerHTML = dataResult;
     copyToClipboard(dataResult);
     document.getElementById("myModal").style.display = "none";
 }
