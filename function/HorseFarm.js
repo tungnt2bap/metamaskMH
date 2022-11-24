@@ -77,7 +77,9 @@ async function switchMetamaskNetwork() {
 
 //user lease horse
 async function lease(data, token_id) {
+  console.log(data);
   let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -88,7 +90,7 @@ async function lease(data, token_id) {
     .approve(data.transporter_address, token_id)
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: HORSENFT_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -113,7 +115,7 @@ async function lease(data, token_id) {
     })
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: data.horse_farm_address,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -134,6 +136,7 @@ async function lease(data, token_id) {
 //user withdraw horse
 async function withdraw(data, token_id) {
   let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -150,7 +153,7 @@ async function withdraw(data, token_id) {
     })
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: data.horse_farm_address,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -175,6 +178,8 @@ const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 //deposit HTC
 async function depositHTC(data) {
+  let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
 
@@ -188,7 +193,7 @@ async function depositHTC(data) {
     )
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: TOKENHTC_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -214,7 +219,7 @@ async function depositHTC(data) {
     })
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -233,6 +238,7 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
+  let web3 = new Web3(window.ethereum);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -286,6 +292,8 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
+  let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -301,7 +309,7 @@ async function claim(data) {
     })
     .send(
       {
-        from: data.owner,
+        from: accounts[0],
         to: TOKENGATE_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
@@ -347,7 +355,7 @@ window.onload = async () => {
       sign(params.get("data"));
       break;
     case "lease":
-      lease(JSON.parse(params.get("data")));
+      lease(JSON.parse(params.get("data")), 121);
       break;
     case "withdraw":
       withdraw(JSON.parse(params.get("data")));
