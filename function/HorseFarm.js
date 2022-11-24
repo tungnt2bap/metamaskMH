@@ -4,6 +4,28 @@ const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
 var dataResult = "test";
 
+const copyToClipboard = async function (data) {
+  try {
+    // focus from metamask back to browser
+    window.focus();
+    // wait to finish focus
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    // copy tx hash to clipboard
+    await navigator.clipboard.writeText(data);
+  } catch (err) {
+    console.log(err);
+    // for metamask mobile android
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = data;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("copy");
+    input.style = "visibility: hidden";
+    document.getElementById("p2").innerHTML = 111111 + data;
+  }
+};
+
 const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
@@ -13,6 +35,7 @@ const sign = async (message) => {
     dataResult = [accounts, message, signature].join("|");
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
+    copyToClipboard([accounts, message, signature].join("|"));
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
@@ -349,35 +372,12 @@ const handleClickButtonOK = () => {
   document.getElementById("myModal").style.display = "none";
 };
 
-const copyToClipboard = async function (data) {
-  try {
-    // focus from metamask back to browser
-    window.focus();
-    // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    // copy tx hash to clipboard
-    await navigator.clipboard.writeText(data);
-  } catch (err) {
-    console.log(err);
-    // for metamask mobile android
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = data;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand("copy");
-    input.style = "visibility: hidden";
-    document.getElementById("p2").innerHTML = 111111 + data;
-  }
-};
-
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 }
 
 function openMetaHorse() {
   console.log("1");
-  copyToClipboard();
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
