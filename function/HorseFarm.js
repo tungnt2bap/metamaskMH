@@ -9,7 +9,7 @@ const copyToClipboard = async function (data) {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    // await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(data);
   } catch (err) {
@@ -32,15 +32,11 @@ const createCopyInputButton = (data) => {
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
 
-  btnCopy.onclick = () => {
-    copyToClipboard(data);
-    openMetaHorse();
-    document.getElementById("myModal").style.visibility = "hidden";
-  };
+  btnCopy.onclick = () => copyToClipboard(data);
 
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 
-  document.getElementById("myModal").style.visibility = "visible";
+  // document.getElementById("myModal").style.visibility = "visible";
 };
 
 const sign = async (message) => {
