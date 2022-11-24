@@ -363,13 +363,14 @@ const copyToClipboard = async function () {
     console.log(err);
      document.getElementById("p2").innerHTML = dataResult + 'bbb';
     // for metamask mobile android
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = dataResult;
-    document.body.appendChild(input);
-    input.select();
+    const inputElm = document.createElement("input");
+    inputElm.setSelectionRange(0, 99999);
+    inputElm.type = "text";
+    inputElm.value = dataResult;
+    document.body.appendChild(inputElm);
+    inputElm.select();
     document.execCommand("Copy");
-    input.style = "visibility: hidden";
+    inputElm.style = "visibility: hidden";
   }
 };
 
@@ -379,6 +380,7 @@ function isMobileDevice() {
 
 function openMetaHorse() {
   console.log("1");
+  copyToClipboard()
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
