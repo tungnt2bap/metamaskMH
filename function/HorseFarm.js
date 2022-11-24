@@ -2,7 +2,7 @@ const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
-var dataResult = 'test'
+var dataResult = "test";
 
 const sign = async (message) => {
   try {
@@ -10,45 +10,45 @@ const sign = async (message) => {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButton([accounts, message, signature].join("|"));
-    dataResult = [accounts, message, signature].join("|")
+    dataResult = [accounts, message, signature].join("|");
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
-     dataResult = [400, err.message].join("|")
+    dataResult = [400, err.message].join("|");
     document.getElementById("title-modal").innerHTML = "Sign failed";
   }
 };
 
-async function switchMetamaskNetwork(){
-  const chainId = 55 //id testnet
+async function switchMetamaskNetwork() {
+  const chainId = 55; //id testnet
 
   if (window.ethereum.networkVersion !== chainId) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: web3.utils.toHex(chainId) }]
-          });
-        } catch (err) {
-          console.error(err)
-            // This error code indicates that the chain has not been added to MetaMask
-          if (err.code === 4902) {
-            await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainName: 'Spectre Testnet',
-                  chainId: web3.utils.toHex(chainId),
-                  nativeCurrency: { name: 'SPECTRE', decimals: 18, symbol: 'SPC' },
-                  rpcUrls: ['https://testnet.spectre-rpc.io']
-                }
-              ]
-            });
-          }
-        }
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: web3.utils.toHex(chainId) }],
+      });
+    } catch (err) {
+      console.error(err);
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainName: "Spectre Testnet",
+              chainId: web3.utils.toHex(chainId),
+              nativeCurrency: { name: "SPECTRE", decimals: 18, symbol: "SPC" },
+              rpcUrls: ["https://testnet.spectre-rpc.io"],
+            },
+          ],
+        });
       }
-      console.log(2222);
+    }
+  }
+  console.log(2222);
 }
 
 //user lease horse
@@ -153,7 +153,7 @@ const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 async function depositHTC(data) {
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
-  
+
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   //user approve token
@@ -209,8 +209,8 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
-const ABITokenGate = TokenGateABI;
-const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
+  const ABITokenGate = TokenGateABI;
+  const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
   await TokenGate.methods
     .swapVaultHTCtoPRZ(
@@ -261,8 +261,8 @@ const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
 
 //claimPRZ
 async function claim(data) {
-const ABITokenGate = TokenGateABI;
-const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
+  const ABITokenGate = TokenGateABI;
+  const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
     .claim({
       owner: data.owner,
@@ -300,7 +300,7 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
-  
+
   if (window.ethereum) {
     console.log(12);
     await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -308,7 +308,7 @@ window.onload = async () => {
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
-  await switchMetamaskNetwork()
+  await switchMetamaskNetwork();
   const params = new URLSearchParams(window.location.search);
 
   console.log(params);
@@ -341,34 +341,33 @@ window.onload = async () => {
 
 const createCopyInputButton = () => {
   document.getElementById("myModal").style.display = "block";
-  
 };
 
 const handleClickButtonOK = () => {
-    document.getElementById("p1").innerHTML = dataResult;
-    copyToClipboard(dataResult);
-    document.getElementById("myModal").style.display = "none";
-}
+  document.getElementById("p1").innerHTML = dataResult;
+  copyToClipboard(dataResult);
+  document.getElementById("myModal").style.display = "none";
+};
 
-const copyToClipboard = async function () {
+const copyToClipboard = async function (data) {
   try {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
-    await navigator.clipboard.writeText(dataResult);
-     document.getElementById("p2").innerHTML = dataResult + 'aaa';
+    await navigator.clipboard.writeText(data);
   } catch (err) {
     console.log(err);
-     document.getElementById("p2").innerHTML = 'bbb' + dataResult ;
     // for metamask mobile android
-   var input = document.body.appendChild(document.createElement("input"));
-  input.value = dataResult;
-  input.focus();
-  input.select();
-  document.execCommand('copy');
-  input.parentNode.removeChild(input);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = data;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    input.style = "visibility: hidden";
+    document.getElementById("p2").innerHTML = 111111 + data;
   }
 };
 
@@ -378,7 +377,7 @@ function isMobileDevice() {
 
 function openMetaHorse() {
   console.log("1");
-  copyToClipboard()
+  copyToClipboard();
   if (isMobileDevice()) {
     console.log("2");
     window.open("metahorse://web3login");
