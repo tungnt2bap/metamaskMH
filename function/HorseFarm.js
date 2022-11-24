@@ -346,14 +346,11 @@ const createCopyInputButton = () => {
 
 const handleClickButtonOK = () => {
     document.getElementById("p1").innerHTML = "dataResult";
-    copyToClipboard(dataResult);
+     document.getElementById("p2").innerHTML = dataResult;
+    navigator.clipboard.writeText(dataResult);
     document.getElementById("myModal").style.display = "none";
 }
 
-const copyToClipboard = () => {
-  document.getElementById("p2").innerHTML = dataResult;
-  navigator.clipboard.writeText(dataResult);
-};
 
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
