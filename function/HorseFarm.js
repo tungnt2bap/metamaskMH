@@ -2,37 +2,39 @@ const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
-var dataResult = "test";
+let dataResult = "test";
 
-const copyToClipboard = async function (data) {
+const copyToClipboard = async function (dataResult) {
   try {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
     await new Promise((resolve) => setTimeout(resolve, 1000));
     // copy tx hash to clipboard
-    await navigator.clipboard.writeText(data);
+    await navigator.clipboard.writeText(dataResult);
   } catch (err) {
     console.log(err);
     // for metamask mobile android
     const input = document.createElement("input");
     input.type = "text";
-    input.value = data;
+    input.value = dataResult;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
-    document.getElementById("p2").innerHTML = 111111 + data;
   }
 };
 
-const createCopyInputButton = (data) => {
+const createCopyInputButton = (dataResult) => {
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
 
-  btnCopy.onclick = () => copyToClipboard(data);
+  btnCopy.onclick = () => {
+    copyToClipboard(dataResult);
+    document.getElementById("myModal").style.visibility = "hidden";
+  };
 
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 
@@ -378,7 +380,6 @@ window.onload = async () => {
 };
 
 const handleClickButtonOK = () => {
-  document.getElementById("p1").innerHTML = dataResult;
   // copyToClipboard(dataResult);
   document.getElementById("myModal").style = "visibility: hidden";
 };
