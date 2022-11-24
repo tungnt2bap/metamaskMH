@@ -26,6 +26,22 @@ const copyToClipboard = async function (data) {
   }
 };
 
+const createCopyInputButton = (data) => {
+  var btnCopy = document.createElement("input");
+  btnCopy.type = "button";
+  btnCopy.id = "btnCopy";
+  btnCopy.value = "OK";
+
+  btnCopy.onclick = () => {
+    copyToClipboard(data);
+    document.getElementById("myModal").style.visibility = "hidden";
+  };
+
+  document.getElementById("btnCopy").appendChild(btnCopy);
+
+  document.getElementById("myModal").style.visibility = "visible";
+};
+
 const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
@@ -35,13 +51,13 @@ const sign = async (message) => {
     dataResult = [accounts, message, signature].join("|");
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
-    copyToClipboard([accounts, message, signature].join("|"));
+    document.getElementById("myModal").style = "visibility: visible";
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
     dataResult = [400, err.message].join("|");
     document.getElementById("title-modal").innerHTML = "Sign failed";
-    copyToClipboard([400, err.message].join("|"));
+    document.getElementById("myModal").style = "visibility: visible";
   }
 };
 
@@ -363,14 +379,10 @@ window.onload = async () => {
   }
 };
 
-const createCopyInputButton = () => {
-  document.getElementById("myModal").style.display = "block";
-};
-
 const handleClickButtonOK = () => {
   document.getElementById("p1").innerHTML = dataResult;
-  copyToClipboard(dataResult);
-  document.getElementById("myModal").style.display = "none";
+  // copyToClipboard(dataResult);
+  document.getElementById("myModal").style = "visibility: hidden";
 };
 
 function isMobileDevice() {
