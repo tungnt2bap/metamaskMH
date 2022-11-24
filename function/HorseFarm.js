@@ -350,27 +350,9 @@ const handleClickButtonOK = () => {
     document.getElementById("myModal").style.display = "none";
 }
 
-const copyToClipboard = async function () {
-  try {
-    // focus from metamask back to browser
-    window.focus();
-    // wait to finish focus
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-    // copy tx hash to clipboard
-     document.getElementById("p2").innerHTML = dataResult;
-    await navigator.clipboard.writeText(dataResult);
-  } catch (err) {
-    console.log(err);
-     document.getElementById("p2").innerHTML = err;
-    // for metamask mobile android
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = dataResult;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand("Copy");
-    input.style = "visibility: hidden";
-  }
+const copyToClipboard = () => {
+  document.getElementById("p2").innerHTML = dataResult;
+  navigator.clipboard.writeText(dataResult);
 };
 
 function isMobileDevice() {
