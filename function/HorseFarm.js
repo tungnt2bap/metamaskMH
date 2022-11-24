@@ -301,6 +301,7 @@ async function swapHTCtoPRZ(data) {
 
 //claimPRZ
 async function claim(data) {
+  console.log(data);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -309,7 +310,7 @@ async function claim(data) {
       token: data.token,
       blockExpired: new BigNumber(data.block_expired).toFixed(),
       amount: new BigNumber(data.blockchain_amount).toFixed(),
-      nonce: data.nonce,
+      none: data.nonce,
       v: data.v,
       r: data.r,
       s: data.s,
