@@ -339,7 +339,7 @@ window.onload = async () => {
   }
 };
 
-const createCopyInputButton = (data) => {
+const createCopyInputButton = () => {
   document.getElementById("myModal").style.display = "block";
   
 };
@@ -350,7 +350,7 @@ const handleClickButtonOK = () => {
     document.getElementById("myModal").style.display = "none";
 }
 
-const copyToClipboard = async function (data) {
+const copyToClipboard = async function () {
   try {
     // focus from metamask back to browser
     window.focus();
