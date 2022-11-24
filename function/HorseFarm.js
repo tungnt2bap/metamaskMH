@@ -40,6 +40,7 @@ const sign = async (message) => {
     createCopyInputButton([400, err.message].join("|"));
     dataResult = [400, err.message].join("|");
     document.getElementById("title-modal").innerHTML = "Sign failed";
+    copyToClipboard([400, err.message].join("|"));
   }
 };
 
