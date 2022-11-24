@@ -2,17 +2,21 @@ const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
+var dataResult = 'test'
+
 const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButton([accounts, message, signature].join("|"));
+    dataResult = [accounts, message, signature].join("|")
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
+     dataResult = [400, err.message].join("|")
     document.getElementById("title-modal").innerHTML = "Sign failed";
   }
 };
@@ -337,13 +341,13 @@ window.onload = async () => {
 
 const createCopyInputButton = (data) => {
   document.getElementById("myModal").style.display = "block";
-  var buttonCopy = document.getElementById("btnCopy");
-  // document.body.appendChild(btnCopy);
-  buttonCopy.onclick = () => {
-    copyToClipboard(data);
-    document.getElementById("myModal").style.display = "none";
-  };
+  
 };
+
+const handleClickButtonOK = () => {
+    copyToClipboard(dataResult);
+    document.getElementById("myModal").style.display = "none";
+}
 
 const copyToClipboard = async function (data) {
   try {
@@ -352,14 +356,13 @@ const copyToClipboard = async function (data) {
     // wait to finish focus
     await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
-    await navigator.clipboard.writeText(null);
-    await navigator.clipboard.writeText(data);
+    await navigator.clipboard.writeText(dataResult);
   } catch (err) {
     console.log(err);
     // for metamask mobile android
     const input = document.createElement("input");
     input.type = "text";
-    input.value = data;
+    input.value = dataResult;
     document.body.appendChild(input);
     input.select();
     document.execCommand("Copy");
