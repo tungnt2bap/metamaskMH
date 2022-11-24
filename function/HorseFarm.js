@@ -361,16 +361,14 @@ const copyToClipboard = async function () {
      document.getElementById("p2").innerHTML = dataResult + 'aaa';
   } catch (err) {
     console.log(err);
-     document.getElementById("p2").innerHTML = dataResult + 'bbb';
+     document.getElementById("p2").innerHTML = 'bbb' + dataResult ;
     // for metamask mobile android
-    const inputElm = document.createElement("input");
-    inputElm.setSelectionRange(0, 99999);
-    inputElm.type = "text";
-    inputElm.value = dataResult;
-    document.body.appendChild(inputElm);
-    inputElm.select();
-    document.execCommand("Copy");
-    inputElm.style = "visibility: hidden";
+   var input = document.body.appendChild(document.createElement("input"));
+  input.value = dataResult;
+  input.focus();
+  input.select();
+  document.execCommand('copy');
+  input.parentNode.removeChild(input);
   }
 };
 
