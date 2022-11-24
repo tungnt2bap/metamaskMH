@@ -12,6 +12,7 @@ const copyToClipboard = async function (dataResult) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
+    document.getElementById("myModal").style.visibility = "hidden";
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -22,6 +23,7 @@ const copyToClipboard = async function (dataResult) {
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
+    document.getElementById("myModal").style.visibility = "hidden";
   }
 };
 
@@ -31,10 +33,7 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
 
-  btnCopy.onclick = () => {
-    copyToClipboard(dataResult);
-    document.getElementById("myModal").style.visibility = "hidden";
-  };
+  btnCopy.onclick = () => copyToClipboard(dataResult);
 
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 
