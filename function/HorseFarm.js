@@ -345,12 +345,33 @@ const createCopyInputButton = () => {
 };
 
 const handleClickButtonOK = () => {
-    document.getElementById("p1").innerHTML = "dataResult";
-     document.getElementById("p2").innerHTML = dataResult;
-    navigator.clipboard.writeText(dataResult);
+    document.getElementById("p1").innerHTML = dataResult;
+    copyToClipboard(dataResult);
     document.getElementById("myModal").style.display = "none";
 }
 
+const copyToClipboard = async function () {
+  try {
+    // focus from metamask back to browser
+    window.focus();
+    // wait to finish focus
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    // copy tx hash to clipboard
+    await navigator.clipboard.writeText(dataResult);
+     document.getElementById("p2").innerHTML = dataResult + 'aaa';
+  } catch (err) {
+    console.log(err);
+     document.getElementById("p2").innerHTML = dataResult + 'bbb';
+    // for metamask mobile android
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = dataResult;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    input.style = "visibility: hidden";
+  }
+};
 
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
