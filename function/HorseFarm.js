@@ -345,9 +345,9 @@ const createCopyInputButton = (data) => {
 };
 
 const handleClickButtonOK = () => {
-    document.getElementById("p1").innerHTML = dataResult;
-    // copyToClipboard(dataResult);
-    // document.getElementById("myModal").style.display = "none";
+    document.getElementById("p1").innerHTML = "dataResult";
+    copyToClipboard(dataResult);
+    document.getElementById("myModal").style.display = "none";
 }
 
 const copyToClipboard = async function (data) {
@@ -355,11 +355,13 @@ const copyToClipboard = async function (data) {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // await new Promise((resolve) => setTimeout(resolve, 500));
     // copy tx hash to clipboard
+     document.getElementById("p2").innerHTML = dataResult;
     await navigator.clipboard.writeText(dataResult);
   } catch (err) {
     console.log(err);
+     document.getElementById("p2").innerHTML = err;
     // for metamask mobile android
     const input = document.createElement("input");
     input.type = "text";
