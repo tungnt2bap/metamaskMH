@@ -2,60 +2,18 @@ const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
-let dataResult = "test";
-
-const copyToClipboard = async function (dataResult) {
-  try {
-    // focus from metamask back to browser
-    window.focus();
-    // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    // copy tx hash to clipboard
-    await navigator.clipboard.writeText(dataResult);
-    document.getElementById("myModal").style.visibility = "hidden";
-  } catch (err) {
-    console.log(err);
-    // for metamask mobile android
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = dataResult;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand("copy");
-    input.style = "visibility: hidden";
-    document.getElementById("myModal").style.visibility = "hidden";
-  }
-};
-
-const createCopyInputButton = (dataResult) => {
-  const btnCopy = document.createElement("input");
-  btnCopy.type = "button";
-  btnCopy.id = "btnCopy";
-  btnCopy.value = "OK";
-
-  btnCopy.onclick = () => copyToClipboard(dataResult);
-
-  document.getElementById("btnCopyHiden").appendChild(btnCopy);
-
-  // document.getElementById("myModal").style.visibility = "visible";
-};
-
 const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButton([accounts, message, signature].join("|"));
-    dataResult = [accounts, message, signature].join("|");
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
-    document.getElementById("myModal").style = "visibility: visible";
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
-    dataResult = [400, err.message].join("|");
     document.getElementById("title-modal").innerHTML = "Sign failed";
-    document.getElementById("myModal").style = "visibility: visible";
   }
 };
 
@@ -299,7 +257,6 @@ async function swapHTCtoPRZ(data) {
 
 //claimPRZ
 async function claim(data) {
-  console.log(data);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -378,9 +335,36 @@ window.onload = async () => {
   }
 };
 
-const handleClickButtonOK = () => {
-  // copyToClipboard(dataResult);
-  document.getElementById("myModal").style = "visibility: hidden";
+const createCopyInputButton = (data) => {
+  document.getElementById("myModal").style.display = "block";
+  var buttonCopy = document.getElementById("btnCopy");
+  // document.body.appendChild(btnCopy);
+  buttonCopy.onclick = () => {
+    copyToClipboard(data);
+    document.getElementById("myModal").style.display = "none";
+  };
+};
+
+const copyToClipboard = async function (data) {
+  try {
+    // focus from metamask back to browser
+    window.focus();
+    // wait to finish focus
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    // copy tx hash to clipboard
+    await navigator.clipboard.writeText(null);
+    await navigator.clipboard.writeText(data);
+  } catch (err) {
+    console.log(err);
+    // for metamask mobile android
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = data;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand("Copy");
+    input.style = "visibility: hidden";
+  }
 };
 
 function isMobileDevice() {
