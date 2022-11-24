@@ -22,7 +22,6 @@ const copyToClipboard = async function (data) {
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
-    document.getElementById("p2").innerHTML = 111111 + data;
   }
 };
 
@@ -367,7 +366,6 @@ const createCopyInputButton = () => {
 };
 
 const handleClickButtonOK = () => {
-  document.getElementById("p1").innerHTML = dataResult;
   copyToClipboard(dataResult);
   document.getElementById("myModal").style.display = "none";
 };
@@ -377,12 +375,9 @@ function isMobileDevice() {
 }
 
 function openMetaHorse() {
-  console.log("1");
   if (isMobileDevice()) {
-    console.log("2");
     window.open("metahorse://web3login");
   } else {
-    console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
 }
