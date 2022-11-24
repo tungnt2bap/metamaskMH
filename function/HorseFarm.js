@@ -365,7 +365,7 @@ const copyToClipboard = async function (data) {
     input.value = data;
     document.body.appendChild(input);
     input.select();
-    document.execCommand("Copy");
+    document.execCommand("copy");
     input.style = "visibility: hidden";
     document.getElementById("p2").innerHTML = 111111 + data;
   }
