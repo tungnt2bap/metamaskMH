@@ -6,12 +6,7 @@ const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
-    console.log("accounts: ", accounts[0]);
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    console.log("sign: ", [accounts, message, signature].join("|"));
-
-    // document.getElementById("p1").innerHTML =
-    //   "Login success! Copy and go back your game!";
     createCopyInputButton([accounts, message, signature].join("|"));
     document.getElementById("title-modal").innerHTML =
       "You have successfully signed";
@@ -269,7 +264,7 @@ const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
       owner: data.owner,
       token: data.token,
       blockExpired: new BigNumber(data.block_expired).toFixed(),
-      amount: new BigNumber(data.blockchain_amount),
+      amount: new BigNumber(data.blockchain_amount).toFixed(),
       nonce: data.nonce,
       v: data.v,
       r: data.r,
@@ -294,7 +289,6 @@ const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
       }
     );
 }
-
 
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
