@@ -89,6 +89,7 @@ async function lease(data, token_id) {
   console.log(data);
   let web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
+  console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -109,6 +110,7 @@ async function lease(data, token_id) {
           console.log("An error occured", err);
           return;
         }
+        console.log("Hash of the transaction: " + res);
       }
     );
 
@@ -135,9 +137,6 @@ async function lease(data, token_id) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   "lease success! Copy and go back your game!";
-        // createCopyInputButton(res);
       }
     );
 }
@@ -353,9 +352,9 @@ window.onload = async () => {
   await switchMetamaskNetwork();
   const params = new URLSearchParams(window.location.search);
 
-  console.log(params);
-  console.log(params.get("action"));
-  console.log(params.get("data"));
+  // console.log(params);
+  // console.log(params.get("action"));
+  // console.log(params.get("data"));
 
   switch (params.get("action")) {
     // case "switchNetwork":
@@ -364,7 +363,7 @@ window.onload = async () => {
       sign(params.get("data"));
       break;
     case "lease":
-      lease(JSON.parse(params.get("data")), 121);
+      lease(JSON.parse(params.get("data")), 351194);
       break;
     case "withdraw":
       withdraw(JSON.parse(params.get("data")));
