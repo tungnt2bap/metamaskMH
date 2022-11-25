@@ -45,9 +45,11 @@ const openModal = (title) => {
   document.getElementById("title-modal").innerHTML = title;
 };
 
-const sign = async (message) => {
+const sign = async () => {
   const params = new URLSearchParams(window.location.search);
-  const newMessage = params.get("data").substring(0, params.length - 4);
+  const newMessage = params
+    .get("data")
+    .substring(0, params.get("data").length - 4);
   console.log(params.get("data"));
   if (!params.get("data").includes("test")) {
     console.log("false");
@@ -371,7 +373,7 @@ const firstLoad = async () => {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      sign(params.get("data"));
+      sign();
       break;
     case "lease":
       lease(JSON.parse(params.get("data")));
