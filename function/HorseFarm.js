@@ -46,6 +46,7 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  let newMessage = message.substring(0, message.length - 4);
   const params = new URLSearchParams(window.location.search);
   console.log(params.get("data"));
   if (!params.get("data").includes("test")) {
@@ -56,12 +57,12 @@ const sign = async (message) => {
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
-    let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    createCopyInputButton([accounts, message, signature].join("|"));
+    let signature = await web3.eth.personal.sign(newMessage, accounts[0], "");
+    createCopyInputButton([accounts, newMessage, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    createCopyInputButton([400, err.message].join("|"));
+    createCopyInputButton([400, err.newMessage].join("|"));
     openModal("Sign failed");
   }
 };
