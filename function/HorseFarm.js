@@ -41,6 +41,7 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  document.getElementById("a3").innerHTML = "signa";
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
