@@ -399,3 +399,10 @@ function openMetaHorse() {
     window.open("https://metamask.io/", "_blank");
   }
 }
+
+function closeWindow() {
+  window.open(location, "_self");
+  // Close this window
+  window.close();
+  return false;
+}
