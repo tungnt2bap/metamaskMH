@@ -14,9 +14,6 @@ const copyToClipboard = async function (dataResult) {
     await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
-    const remote = require("electron").remote;
-    let w = remote.getCurrentWindow();
-    w.close();
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -27,9 +24,6 @@ const copyToClipboard = async function (dataResult) {
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
-    const remote = require("electron").remote;
-    let w = remote.getCurrentWindow();
-    w.close();
   }
 };
 
@@ -343,8 +337,13 @@ async function claim(data) {
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
+// const abc = () => {
+//   console.log("aaaaaaaaaa");
+//   const params = new URLSearchParams(window.location.search);
+//   document.getElementById("a5").innerHTML = "url" + params;
+// };
 
-window.onload = async () => {
+const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = "url" + params;
