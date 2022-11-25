@@ -7,7 +7,7 @@ const copyToClipboard = async function (dataResult) {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
   } catch (err) {
@@ -41,6 +41,7 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  document.getElementById("a3").innerHTML = "signa";
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
@@ -341,6 +342,7 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
+  document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
   if (window.ethereum) {
     console.log(12);
@@ -356,27 +358,33 @@ window.onload = async () => {
   // console.log(params.get("action"));
   // console.log(params.get("data"));
 
+  document.getElementById("a4").innerHTML = "testttt" + params;
+
   switch (params.get("action")) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      sign(params.get("data"));
-      break;
+      console.log("sign");
+      document.getElementById("a1").innerHTML = "sign";
+      return sign(params.get("data"));
     case "lease":
       lease(JSON.parse(params.get("data")), 351194);
       break;
     case "withdraw":
-      withdraw(JSON.parse(params.get("data")));
-      break;
+      console.log("withdraw");
+      return withdraw(JSON.parse(params.get("data")));
     case "depositHTC":
-      depositHTC(JSON.parse(params.get("data")));
-      break;
+      console.log("depositHTC");
+      document.getElementById("a2").innerHTML = "depositHTC";
+      return depositHTC(JSON.parse(params.get("data")));
     case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(JSON.parse(params.get("data")));
+      console.log("swapVaultHTCtoPRZ");
+      return swapHTCtoPRZ(JSON.parse(params.get("data")));
     case "claim":
-      claim(JSON.parse(params.get("data")));
+      console.log("claim");
+      return claim(JSON.parse(params.get("data")));
     default:
-      break;
+      return;
   }
 };
 
