@@ -345,15 +345,19 @@ window.onload = async () => {
   console.log(123);
   document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
+  const params = new URLSearchParams(window.location.search);
   if (window.ethereum) {
+    document.getElementById("a5").innerHTML = "a555 " + params;
     console.log(12);
     await window.ethereum.request({ method: "eth_requestAccounts" });
     window.web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
+  document.getElementById("a6").innerHTML = "a5111 " + params;
+
   await switchMetamaskNetwork();
-  const params = new URLSearchParams(window.location.search);
+  document.getElementById("a6").innerHTML = "a5222 " + params;
 
   console.log(params);
   console.log(params.get("action"));
