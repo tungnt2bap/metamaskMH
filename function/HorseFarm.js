@@ -46,8 +46,8 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
-  let newMessage = message.substring(0, message.length - 4);
   const params = new URLSearchParams(window.location.search);
+  const newMessage = params.get("data").substring(0, params.length - 4);
   console.log(params.get("data"));
   if (!params.get("data").includes("test")) {
     console.log("false");
@@ -187,7 +187,6 @@ async function withdraw(data) {
       }
     );
 }
-
 
 //TokenGate
 //deposit HTC
