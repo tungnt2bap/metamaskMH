@@ -364,6 +364,9 @@ const firstLoad = async () => {
   switch (params.get("action")) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
+    case "depositHTC":
+      depositHTC(JSON.parse(params.get("data")));
+      break;
     case "sign":
       sign(params.get("data"));
       break;
@@ -372,9 +375,6 @@ const firstLoad = async () => {
       break;
     case "withdraw":
       withdraw(JSON.parse(params.get("data")));
-      break;
-    case "depositHTC":
-      depositHTC(JSON.parse(params.get("data")));
       break;
     case "swapVaultHTCtoPRZ":
       swapHTCtoPRZ(JSON.parse(params.get("data")));
