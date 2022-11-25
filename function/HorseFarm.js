@@ -402,12 +402,5 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
-  window.close();
-}
-
-function closeWindow() {
-  window.open(location, "_self");
-  // Close this window
-  window.close();
-  return false;
+  window.open("google.com", "_self");
 }
