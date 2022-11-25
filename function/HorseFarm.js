@@ -92,6 +92,7 @@ async function switchMetamaskNetwork() {
 //user lease horse
 async function lease(data) {
   console.log(data);
+  console.log(data.token_id);
   let web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
@@ -175,13 +176,12 @@ async function withdraw(data) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   "withdraw success! Copy and go back your game!";
-        // createCopyInputButton(res);
       }
     );
 }
 
+
+//TokenGate
 //deposit HTC
 async function depositHTC(data) {
   let web3 = new Web3(window.ethereum);
