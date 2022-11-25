@@ -46,6 +46,12 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  const params = new URLSearchParams(window.location.search);
+  console.log(params.get("data"));
+  if (!params.get("data").includes("test")) {
+    console.log("false");
+    return;
+  }
   document.getElementById("a3").innerHTML = "signa";
   try {
     let web3 = new Web3(window.ethereum);
@@ -398,6 +404,7 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
+  window.close();
 }
 
 function closeWindow() {
