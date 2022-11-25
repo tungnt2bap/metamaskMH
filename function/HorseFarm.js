@@ -338,8 +338,9 @@ async function getGasPrice() {
 }
 
 window.onload = async () => {
-  console.log(123);
-  // document.getElementById("a3").innerHTML = "aaaaaa3" + params;
+  const params = new URLSearchParams(window.location.search);
+  console.log(params);
+  document.getElementById("a5").innerHTML = "url" + params;
 
   if (window.ethereum) {
     console.log(12);
@@ -349,39 +350,32 @@ window.onload = async () => {
     alert("Please install MetaMask Extension in your browser");
   }
   await switchMetamaskNetwork();
-  const params = new URLSearchParams(window.location.search);
 
-  // console.log(params);
-  // console.log(params.get("action"));
-  // console.log(params.get("data"));
-
-  document.getElementById("a4").innerHTML = "testttt" + params;
+  console.log(params);
+  console.log(params.get("action"));
+  console.log(params.get("data"));
 
   switch (params.get("action")) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      console.log("sign");
-      document.getElementById("a1").innerHTML = "sign";
-      return sign(params.get("data"));
+      sign(params.get("data"));
+      break;
     case "lease":
-      lease(JSON.parse(params.get("data")), 351194);
+      lease(JSON.parse(params.get("data")), 121);
       break;
     case "withdraw":
-      console.log("withdraw");
-      return withdraw(JSON.parse(params.get("data")));
+      withdraw(JSON.parse(params.get("data")));
+      break;
     case "depositHTC":
-      console.log("depositHTC");
-      document.getElementById("a2").innerHTML = "depositHTC";
-      return depositHTC(JSON.parse(params.get("data")));
+      depositHTC(JSON.parse(params.get("data")));
+      break;
     case "swapVaultHTCtoPRZ":
-      console.log("swapVaultHTCtoPRZ");
-      return swapHTCtoPRZ(JSON.parse(params.get("data")));
+      swapHTCtoPRZ(JSON.parse(params.get("data")));
     case "claim":
-      console.log("claim");
-      return claim(JSON.parse(params.get("data")));
+      claim(JSON.parse(params.get("data")));
     default:
-      return;
+      break;
   }
 };
 
