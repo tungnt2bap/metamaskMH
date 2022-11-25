@@ -362,7 +362,7 @@ window.onload = async () => {
       sign(params.get("data"));
       break;
     case "lease":
-      lease(JSON.parse(params.get("data")), 121);
+      lease(JSON.parse(params.get("data")));
       break;
     case "withdraw":
       withdraw(JSON.parse(params.get("data")));
