@@ -342,54 +342,42 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
-  const params = new URLSearchParams(window.location.search);
-
-  document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
   if (window.ethereum) {
-    document.getElementById("a5").innerHTML = "a555 " + params;
     console.log(12);
     await window.ethereum.request({ method: "eth_requestAccounts" });
     window.web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
-  document.getElementById("a6").innerHTML = "a5111 " + params;
-
   await switchMetamaskNetwork();
-  document.getElementById("a6").innerHTML = "a5222 " + params;
+  const params = new URLSearchParams(window.location.search);
 
-  // console.log(params);
-  // console.log(params.get("action"));
-  // console.log(params.get("data"));
-
-  document.getElementById("a4").innerHTML = "testttt" + params;
+  console.log(params);
+  console.log(params.get("action"));
+  console.log(params.get("data"));
 
   switch (params.get("action")) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      console.log("sign");
-      document.getElementById("a1").innerHTML = "sign";
-      return sign(params.get("data"));
+      sign(params.get("data"));
+      break;
     case "lease":
-      lease(JSON.parse(params.get("data")), 351194);
+      lease(JSON.parse(params.get("data")), 121);
       break;
     case "withdraw":
-      console.log("withdraw");
-      return withdraw(JSON.parse(params.get("data")));
+      withdraw(JSON.parse(params.get("data")));
+      break;
     case "depositHTC":
-      console.log("depositHTC");
-      document.getElementById("a2").innerHTML = "depositHTC";
-      return depositHTC(JSON.parse(params.get("data")));
+      depositHTC(JSON.parse(params.get("data")));
+      break;
     case "swapVaultHTCtoPRZ":
-      console.log("swapVaultHTCtoPRZ");
-      return swapHTCtoPRZ(JSON.parse(params.get("data")));
+      swapHTCtoPRZ(JSON.parse(params.get("data")));
     case "claim":
-      console.log("claim");
-      return claim(JSON.parse(params.get("data")));
+      claim(JSON.parse(params.get("data")));
     default:
-      return;
+      break;
   }
 };
 
