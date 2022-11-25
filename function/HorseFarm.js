@@ -341,7 +341,9 @@ async function getGasPrice() {
 }
 
 window.onload = async () => {
-  console.log(123);
+  const params = new URLSearchParams(window.location.search);
+  console.log(params);
+  document.getElementById("a5").innerHTML = "url" + params;
 
   if (window.ethereum) {
     console.log(12);
@@ -351,7 +353,6 @@ window.onload = async () => {
     alert("Please install MetaMask Extension in your browser");
   }
   await switchMetamaskNetwork();
-  const params = new URLSearchParams(window.location.search);
 
   console.log(params);
   console.log(params.get("action"));
