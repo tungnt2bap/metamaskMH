@@ -342,9 +342,10 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
+  const params = new URLSearchParams(window.location.search);
+
   document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
-  const params = new URLSearchParams(window.location.search);
   if (window.ethereum) {
     document.getElementById("a5").innerHTML = "a555 " + params;
     console.log(12);
