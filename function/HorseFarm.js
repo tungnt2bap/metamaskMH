@@ -122,10 +122,12 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
+        createCopyInputButton([401, "Not complete"].join("|"));
+        openModal("You not done yet");
       }
     );
 
@@ -147,10 +149,12 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
+        createCopyInputButton([402, "sucess"].join("|"));
+        openModal("You have successfully approved");
       }
     );
 }
@@ -182,10 +186,12 @@ async function withdraw(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
+        createCopyInputButton([402, "sucess"].join("|"));
+        openModal("You have successfully approved");
       }
     );
 }
@@ -215,9 +221,12 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
+        console.log("Hash of the transaction: " + res);
+        createCopyInputButton([401, "sucess"].join("|"));
+        openModal("You not done yet");
       }
     );
   //user deposit
@@ -241,13 +250,12 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   " deposit success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton([402, "sucess"].join("|"));
+        openModal("You have successfully deposit");
       }
     );
 }
@@ -272,13 +280,12 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   "swap success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton([401, "sucess"].join("|"));
+        openModal("You not done yet");
       }
     );
 
@@ -293,13 +300,12 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   "Exchange HTC success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton([402, "sucess"].join("|"));
+        openModal("You have successfully approved");
       }
     );
 }
@@ -331,13 +337,12 @@ async function claim(data) {
       },
       function (err, res) {
         if (err) {
-          console.log("An error occured", err);
-          return;
+          createCopyInputButton([400,"failed"].join("|"));
+          openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        // document.getElementById("p1").innerHTML =
-        //   "claim success! Copy and go back your game!";
-        // createCopyInputButton(res);
+        createCopyInputButton([402, "sucess"].join("|"));
+        openModal("You have successfully approved");
       }
     );
 }
