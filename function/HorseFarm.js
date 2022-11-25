@@ -410,8 +410,9 @@ function openMetaHorse() {
 }
 
 function closeWindow() {
-  window.open(location, "_self");
+  window.open("google.com", "_self");
   // Close this window
-  window.close();
+  window.open(location + "test");
   return false;
 }
+
