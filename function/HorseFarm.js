@@ -1,6 +1,10 @@
 const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
+const TOKENPRZ_ADDRESS = "0x4dBE394478d3B7E120412e61Bba3E3c8c85a079C";
+const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
+const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
+const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 const copyToClipboard = async function (dataResult) {
   try {
@@ -86,7 +90,7 @@ async function switchMetamaskNetwork() {
 }
 
 //user lease horse
-async function lease(data, token_id) {
+async function lease(data) {
   console.log(data);
   let web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
@@ -98,11 +102,10 @@ async function lease(data, token_id) {
   const HorseNFTContract = new web3.eth.Contract(ABIHorseNFT, HORSENFT_ADDRESS);
 
   await HorseNFTContract.methods
-    .approve(data.transporter_address, token_id)
+    .approve(data.transporter_address, data.token_id)
     .send(
       {
         from: accounts[0],
-        to: HORSENFT_ADDRESS,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
@@ -118,7 +121,7 @@ async function lease(data, token_id) {
   await HorseFarmContract.methods
     .lease({
       owner: data.owner,
-      horseId: token_id,
+      horseId: data.token_id,
       blockExpired: data.block_expired,
       nonce: data.nonce,
       v: data.v,
@@ -128,7 +131,6 @@ async function lease(data, token_id) {
     .send(
       {
         from: accounts[0],
-        to: data.horse_farm_address,
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
@@ -143,7 +145,7 @@ async function lease(data, token_id) {
 }
 
 //user withdraw horse
-async function withdraw(data, token_id) {
+async function withdraw(data) {
   let web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
@@ -153,7 +155,7 @@ async function withdraw(data, token_id) {
   await HorseFarmContract.methods
     .withdraw({
       owner: data.owner,
-      horseId: token_id,
+      horseId: data.token_id,
       blockExpired: data.block_expired,
       nonce: data.nonce,
       v: data.v,
@@ -179,11 +181,6 @@ async function withdraw(data, token_id) {
       }
     );
 }
-
-const TOKENPRZ_ADDRESS = "0x4dBE394478d3B7E120412e61Bba3E3c8c85a079C";
-const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
-const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
-const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 //deposit HTC
 async function depositHTC(data) {
@@ -342,7 +339,7 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
-  document.getElementById("a3").innerHTML = "aaaaaa3" + params;
+  // document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
   if (window.ethereum) {
     console.log(12);
