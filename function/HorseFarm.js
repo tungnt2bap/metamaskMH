@@ -45,26 +45,17 @@ const openModal = (title) => {
   document.getElementById("title-modal").innerHTML = title;
 };
 
-const sign = async () => {
-  const params = new URLSearchParams(window.location.search);
-  const newMessage = params
-    .get("data")
-    .substring(0, params.get("data").length - 4);
-  console.log(params.get("data"));
-  if (!params.get("data").includes("test")) {
-    console.log("false");
-    return;
-  }
+const sign = async (message) => {
   document.getElementById("a3").innerHTML = "signa";
   try {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
-    let signature = await web3.eth.personal.sign(newMessage, accounts[0], "");
-    createCopyInputButton([accounts, newMessage, signature].join("|"));
+    let signature = await web3.eth.personal.sign(message, accounts[0], "");
+    createCopyInputButton([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    createCopyInputButton([400, err.newMessage].join("|"));
+    createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -122,7 +113,7 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -149,7 +140,7 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -186,7 +177,7 @@ async function withdraw(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -221,7 +212,7 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -250,7 +241,7 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -280,7 +271,7 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -300,7 +291,7 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -337,7 +328,7 @@ async function claim(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400,"failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
@@ -378,7 +369,7 @@ const firstLoad = async () => {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      sign();
+      sign(params.get("data"));
       break;
     case "lease":
       lease(JSON.parse(params.get("data")));
