@@ -372,7 +372,7 @@ window.onload = async () => {
       return withdraw(JSON.parse(params.get("data")));
     case "depositHTC":
       console.log("depositHTC");
-      document.getElementById("a1").innerHTML = "depositHTC";
+      document.getElementById("a2").innerHTML = "depositHTC";
       return depositHTC(JSON.parse(params.get("data")));
     case "swapVaultHTCtoPRZ":
       console.log("swapVaultHTCtoPRZ");
