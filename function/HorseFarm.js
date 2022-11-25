@@ -2,28 +2,42 @@ const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
 const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
 
-var dataResult = "test";
-
-const copyToClipboard = async function (data) {
+const copyToClipboard = async function (dataResult) {
   try {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 700));
     // copy tx hash to clipboard
-    await navigator.clipboard.writeText(data);
+    await navigator.clipboard.writeText(dataResult);
   } catch (err) {
     console.log(err);
     // for metamask mobile android
     const input = document.createElement("input");
     input.type = "text";
-    input.value = data;
+    input.value = dataResult;
     document.body.appendChild(input);
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
-    document.getElementById("p2").innerHTML = 111111 + data;
   }
+};
+
+const createCopyInputButton = (dataResult) => {
+  const btnCopy = document.createElement("input");
+  btnCopy.type = "button";
+  btnCopy.id = "btnCopy";
+  btnCopy.value = "OK";
+  btnCopy.onclick = () => {
+    copyToClipboard(dataResult);
+    document.getElementById("myModal").style.visibility = "hidden";
+  };
+  document.getElementById("btnCopyHiden").appendChild(btnCopy);
+};
+
+const openModal = (title) => {
+  document.getElementById("myModal").style.visibility = "visible";
+  document.getElementById("title-modal").innerHTML = title;
 };
 
 const sign = async (message) => {
@@ -32,16 +46,11 @@ const sign = async (message) => {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButton([accounts, message, signature].join("|"));
-    dataResult = [accounts, message, signature].join("|");
-    document.getElementById("title-modal").innerHTML =
-      "You have successfully signed";
-    copyToClipboard([accounts, message, signature].join("|"));
+    openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
     createCopyInputButton([400, err.message].join("|"));
-    dataResult = [400, err.message].join("|");
-    document.getElementById("title-modal").innerHTML = "Sign failed";
-    copyToClipboard([400, err.message].join("|"));
+    openModal("Sign failed");
   }
 };
 
@@ -370,16 +379,6 @@ window.onload = async () => {
     default:
       break;
   }
-};
-
-const createCopyInputButton = () => {
-  document.getElementById("myModal").style.display = "block";
-};
-
-const handleClickButtonOK = () => {
-  document.getElementById("p1").innerHTML = dataResult;
-  copyToClipboard(dataResult);
-  document.getElementById("myModal").style.display = "none";
 };
 
 function isMobileDevice() {
