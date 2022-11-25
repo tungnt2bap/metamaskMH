@@ -14,6 +14,9 @@ const copyToClipboard = async function (dataResult) {
     await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
+    const remote = require("electron").remote;
+    let w = remote.getCurrentWindow();
+    w.close();
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -24,6 +27,9 @@ const copyToClipboard = async function (dataResult) {
     input.select();
     document.execCommand("copy");
     input.style = "visibility: hidden";
+    const remote = require("electron").remote;
+    let w = remote.getCurrentWindow();
+    w.close();
   }
 };
 
@@ -34,9 +40,7 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = () => {
     copyToClipboard(dataResult);
-    const remote = require("electron").remote;
-    let app = remote.app;
-    app.quit();
+
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
