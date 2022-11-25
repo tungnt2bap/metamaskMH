@@ -361,23 +361,27 @@ window.onload = async () => {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
-      sign(params.get("data"));
-      break;
+      console.log("sign");
+      document.getElementById("a1").innerHTML = "sign";
+      return sign(params.get("data"));
     case "lease":
-      lease(JSON.parse(params.get("data")), 121);
-      break;
+      console.log("lease");
+      return lease(JSON.parse(params.get("data")), 121);
     case "withdraw":
-      withdraw(JSON.parse(params.get("data")));
-      break;
+      console.log("withdraw");
+      return withdraw(JSON.parse(params.get("data")));
     case "depositHTC":
-      depositHTC(JSON.parse(params.get("data")));
-      break;
+      console.log("depositHTC");
+      document.getElementById("a1").innerHTML = "depositHTC";
+      return depositHTC(JSON.parse(params.get("data")));
     case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(JSON.parse(params.get("data")));
+      console.log("swapVaultHTCtoPRZ");
+      return swapHTCtoPRZ(JSON.parse(params.get("data")));
     case "claim":
-      claim(JSON.parse(params.get("data")));
+      console.log("claim");
+      return claim(JSON.parse(params.get("data")));
     default:
-      break;
+      return;
   }
 };
 
