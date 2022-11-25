@@ -7,7 +7,7 @@ const copyToClipboard = async function (dataResult) {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
   } catch (err) {
@@ -343,6 +343,7 @@ async function getGasPrice() {
 
 window.onload = async () => {
   console.log(123);
+  document.getElementById("a3").innerHTML = "aaaaaa3" + params;
 
   if (window.ethereum) {
     console.log(12);
