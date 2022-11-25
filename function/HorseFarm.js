@@ -348,14 +348,14 @@ const firstLoad = async () => {
   console.log(params);
   document.getElementById("a5").innerHTML = "url" + params;
 
-  if (window.ethereum) {
-    console.log(12);
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    window.web3 = new Web3(window.ethereum);
-  } else {
-    alert("Please install MetaMask Extension in your browser");
-  }
-  await switchMetamaskNetwork();
+  // if (window.ethereum) {
+  //   console.log(12);
+  //   await window.ethereum.request({ method: "eth_requestAccounts" });
+  //   window.web3 = new Web3(window.ethereum);
+  // } else {
+  //   alert("Please install MetaMask Extension in your browser");
+  // }
+  // await switchMetamaskNetwork();
 
   console.log(params);
   console.log(params.get("action"));
