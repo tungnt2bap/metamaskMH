@@ -357,6 +357,8 @@ window.onload = async () => {
   console.log(params.get("action"));
   console.log(params.get("data"));
 
+  document.getElementById("a4").innerHTML = "testttt" + params;
+
   switch (params.get("action")) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
