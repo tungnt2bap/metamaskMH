@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/8.0.2/bignumber.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
@@ -18,7 +21,7 @@
     <!-- <script type="text/javascript" src="./function/TokenGate.js"></script> -->
     <link rel="stylesheet" href="styles.css">
 
-<body>
+<body onload="firstLoad()">
     <div class="container">
         <div class="content">
             <button class="btn-back-game" onclick="openMetaHorse()">Back To Game</button>
@@ -35,12 +38,13 @@
             </div>
         </div>
       <div style="padding-top: 200px;">
-        <p id="a1"> aa </p>
-        <p id="a2"> aa </p>
+        <button onclick="window.open(location  + 'test')"> click login </button>
+        <p id="a1111" onclick="window.open(location)"> aa23 </p>
+        <p id="a2" onclick="window.close()"> aa111 </p>
         <p id="a3"> aa </p>
         <p id="a4"> aa </p>
         <p id="a5"> aa </p>
-        <p id="a6"> aa </p>
+        <p id="a6"> aa1 </p>
       </div>
     </div>
 

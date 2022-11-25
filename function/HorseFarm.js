@@ -34,6 +34,7 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = () => {
     copyToClipboard(dataResult);
+
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
@@ -45,6 +46,12 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  const params = new URLSearchParams(window.location.search);
+  console.log(params.get("data"));
+  if (!params.get("data").includes("test")) {
+    console.log("false");
+    return;
+  }
   document.getElementById("a3").innerHTML = "signa";
   try {
     let web3 = new Web3(window.ethereum);
@@ -336,8 +343,13 @@ async function claim(data) {
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
+// const abc = () => {
+//   console.log("aaaaaaaaaa");
+//   const params = new URLSearchParams(window.location.search);
+//   document.getElementById("a5").innerHTML = "url" + params;
+// };
 
-window.onload = async () => {
+const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = "url" + params;
@@ -392,4 +404,12 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
+  window.close();
+}
+
+function closeWindow() {
+  window.open(location, "_self");
+  // Close this window
+  window.close();
+  return false;
 }
