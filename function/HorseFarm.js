@@ -347,12 +347,18 @@ async function getGasPrice() {
 // };
 
 const firstLoad = async () => {
-  const clipboard = document.execCommand("paste")
-  document.getElementById("a7").innerHTML = clipboard;
-  console.log('aaaaaaaaa', clipboard)
-  if (clipboard ) {
-    window.open(clipboard, "_self");
-  }
+  navigator.clipboard
+    .readText()
+    .then((clipText) => {
+      document.getElementById("a7").innerText = clipText
+      if (clipText) {
+        window.open(clipText, "_self");
+      }
+    });
+
+  // if (clipboard ) {
+  //   window.open(clipboard, "_self");
+  // }
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = "url" + params;
