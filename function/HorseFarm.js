@@ -34,7 +34,7 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = () => {
     copyToClipboard(dataResult);
-
+    window.open("google.com", "_self");
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
@@ -402,5 +402,5 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
-  window.open("google.com", "_self");
+
 }
