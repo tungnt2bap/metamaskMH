@@ -347,15 +347,8 @@ async function getGasPrice() {
 // };
 
 const firstLoad = async () => {
-  navigator.clipboard
-    .readText()
-    .then((clipText) => {
-      document.getElementById("a7").innerText = clipText
-      if (clipText) {
-        window.open(clipText, "_self");
-      }
-    });
-
+  document.getElementById("a8").innerText = event.clipboardData?.setData('text')
+  document.getElementById("a9").innerText = document.execCommand('paste')
   // if (clipboard ) {
   //   window.open(clipboard, "_self");
   // }
