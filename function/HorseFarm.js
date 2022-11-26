@@ -402,7 +402,6 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
-
 }
 
 const handleClickReplace = () => {
