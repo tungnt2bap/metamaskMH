@@ -34,7 +34,6 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = () => {
     copyToClipboard(dataResult);
-    window.open("google.com", "_self");
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
@@ -393,6 +392,7 @@ function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 }
 
+
 function openMetaHorse() {
   console.log("1");
   if (isMobileDevice()) {
@@ -403,4 +403,8 @@ function openMetaHorse() {
     window.open("https://metamask.io/", "_blank");
   }
 
+}
+
+const handleClickReplace = () => {
+  window.open("google.com", "_self");
 }
