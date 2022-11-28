@@ -112,11 +112,11 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          // createCopyInputButton([400, "failed"].join("|"));
+          openModal("Approve failed");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([401, "Not complete"].join("|"));
+        // createCopyInputButton([401, res].join("|"));
         openModal("You not done yet");
       }
     );
@@ -143,7 +143,7 @@ async function lease(data) {
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, "sucess"].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -180,7 +180,7 @@ async function withdraw(data) {
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, "sucess"].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -211,11 +211,11 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          // createCopyInputButton([400, "failed"].join("|"));
+          openModal("Approve failed");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([401, "sucess"].join("|"));
+        // createCopyInputButton([401, res].join("|"));
         openModal("You not done yet");
       }
     );
@@ -244,7 +244,7 @@ async function depositHTC(data) {
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, "sucess"].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully deposit");
       }
     );
@@ -270,11 +270,11 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          // createCopyInputButton([400, "failed"].join("|"));
+          openModal("Failed");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([401, "sucess"].join("|"));
+        // createCopyInputButton([401, res].join("|"));
         openModal("You not done yet");
       }
     );
@@ -294,7 +294,7 @@ async function swapHTCtoPRZ(data) {
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, "sucess"].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -331,7 +331,7 @@ async function claim(data) {
           openModal("You have successfully approved");
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, "sucess"].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
