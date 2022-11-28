@@ -6,6 +6,8 @@ const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
 const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 const copyToClipboard = async function (dataResult) {
   try {
     // focus from metamask back to browser
@@ -27,7 +29,8 @@ const copyToClipboard = async function (dataResult) {
   }
 };
 
-const createCopyInputButton = (dataResult) => {
+const createCopyInputButton = async (dataResult) => {
+  await delay(10000);
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
