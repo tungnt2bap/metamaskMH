@@ -34,6 +34,7 @@ const createCopyInputButton = (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = () => {
     copyToClipboard(dataResult);
+
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
@@ -347,6 +348,12 @@ async function getGasPrice() {
 // };
 
 const firstLoad = async () => {
+  // document.getElementById("a8").innerText =
+  //   event.clipboardData?.setData("text");
+  // document.getElementById("a9").innerText = document.execCommand("paste");
+
+  // const READ = await navigator?.clipboard?.readText();
+  // document.getElementById("a7").innerHTML = READ;
   // if (clipboard ) {
   //   window.open(clipboard, "_self");
   // }
@@ -404,8 +411,5 @@ function openMetaHorse() {
     console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
-}
-
-const handleClickReplace = () => {
   window.open("google.com", "_self");
-};
+}
