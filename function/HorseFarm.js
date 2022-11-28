@@ -30,7 +30,19 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
-  await delay(10000);
+  await delay(15000);
+  const btnCopy = document.createElement("input");
+  btnCopy.type = "button";
+  btnCopy.id = "btnCopy";
+  btnCopy.value = "OK";
+  btnCopy.onclick = () => {
+    copyToClipboard(dataResult);
+    document.getElementById("myModal").style.visibility = "hidden";
+  };
+  document.getElementById("btnCopyHiden").appendChild(btnCopy);
+};
+
+const createCopyInputButtonWithoutDelay = async (dataResult) => {
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
@@ -53,7 +65,7 @@ const sign = async (message) => {
     let web3 = new Web3(window.ethereum);
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    createCopyInputButton([accounts, message, signature].join("|"));
+    createCopyInputButtonWithoutDelay([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
