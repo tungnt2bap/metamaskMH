@@ -69,7 +69,7 @@ const sign = async (message) => {
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    createCopyInputButton([400, err.message].join("|"));
+    await createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -101,7 +101,6 @@ async function switchMetamaskNetwork() {
       }
     }
   }
-  console.log(2222);
 }
 
 //user lease horse
@@ -152,13 +151,14 @@ async function lease(data) {
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
-      function (err, res) {
+      async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          openModal("Transaction failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -189,13 +189,14 @@ async function withdraw(data) {
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
-      function (err, res) {
+      async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          openModal("Transaction failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -253,13 +254,14 @@ async function depositHTC(data) {
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
-      function (err, res) {
+      async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          openModal("Transaction failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully deposit");
       }
     );
@@ -303,13 +305,14 @@ async function swapHTCtoPRZ(data) {
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
-      function (err, res) {
+      async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          openModal("Transaction failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -340,13 +343,14 @@ async function claim(data) {
         gasLimit: web3.utils.toHex("1000000"),
         gasPrice: await getGasPrice(),
       },
-      function (err, res) {
+      async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("You have successfully approved");
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          openModal("Transaction failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
