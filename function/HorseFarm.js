@@ -6,7 +6,7 @@ const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
 const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const copyToClipboard = async function (dataResult) {
   try {
@@ -155,7 +155,7 @@ async function lease(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Transaction failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         await createCopyInputButton([402, res].join("|"));
@@ -193,7 +193,7 @@ async function withdraw(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Transaction failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         await createCopyInputButton([402, res].join("|"));
@@ -258,7 +258,7 @@ async function depositHTC(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Transaction failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         await createCopyInputButton([402, res].join("|"));
@@ -309,7 +309,7 @@ async function swapHTCtoPRZ(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Transaction failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         await createCopyInputButton([402, res].join("|"));
@@ -347,7 +347,7 @@ async function claim(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Transaction failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         await createCopyInputButton([402, res].join("|"));
@@ -366,6 +366,14 @@ async function getGasPrice() {
 // };
 
 const firstLoad = async () => {
+  let urlTest = "";
+  if (performance.navigation.type != 1) {
+    const params = new URLSearchParams(window.location.search);
+    console.log("aa", performance.navigation);
+    console.log("bbb", params);
+    urlTest = params;
+    document.getElementById("a6").innerHTML = "url" + params.get("data");
+  }
   // if (clipboard ) {
   //   window.open(clipboard, "_self");
   // }
