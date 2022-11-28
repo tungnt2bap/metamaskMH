@@ -347,8 +347,12 @@ async function getGasPrice() {
 // };
 
 const firstLoad = async () => {
-  document.getElementById("a8").innerText = event.clipboardData?.setData('text')
-  document.getElementById("a9").innerText = document.execCommand('paste')
+  document.getElementById("a8").innerText =
+    event.clipboardData?.setData("text");
+  document.getElementById("a9").innerText = document.execCommand("paste");
+
+  const READ = await navigator.clipboard.readText();
+  document.getElementById("a7").innerHTML = READ;
   // if (clipboard ) {
   //   window.open(clipboard, "_self");
   // }
@@ -397,7 +401,6 @@ function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 }
 
-
 function openMetaHorse() {
   console.log("1");
   if (isMobileDevice()) {
@@ -411,4 +414,4 @@ function openMetaHorse() {
 
 const handleClickReplace = () => {
   window.open("google.com", "_self");
-}
+};
