@@ -351,7 +351,7 @@ const firstLoad = async () => {
     event.clipboardData?.setData("text");
   document.getElementById("a9").innerText = document.execCommand("paste");
 
-  const READ = await navigator.clipboard.readText();
+  const READ = await navigator?.clipboard?.readText();
   document.getElementById("a7").innerHTML = READ;
   // if (clipboard ) {
   //   window.open(clipboard, "_self");
