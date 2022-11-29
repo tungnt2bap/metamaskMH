@@ -128,6 +128,7 @@ async function lease(data) {
         if (err) {
           // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
+          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -229,6 +230,7 @@ async function depositHTC(data) {
         if (err) {
           // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -289,6 +291,7 @@ async function swapHTCtoPRZ(data) {
         if (err) {
           // createCopyInputButton([400, "failed"].join("|"));
           openModal("Failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
