@@ -126,7 +126,7 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
           return;
         }
@@ -289,7 +289,7 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Failed");
           return
         }
