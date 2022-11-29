@@ -228,7 +228,7 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
           return
         }
