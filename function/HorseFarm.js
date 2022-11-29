@@ -69,7 +69,7 @@ const sign = async (message) => {
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    await createCopyInputButton([400, err.message].join("|"));
+    await createCopyInputButtonWithoutDelay([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -126,7 +126,7 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Approve failed");
           return;
         }
@@ -228,7 +228,7 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Approve failed");
           return
         }
@@ -289,7 +289,7 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Failed");
           return
         }
