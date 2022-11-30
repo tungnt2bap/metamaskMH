@@ -62,8 +62,7 @@ const openModal = (title) => {
 const sign = async (message) => {
   document.getElementById("a3").innerHTML = "signa";
   try {
-    let web3 = new Web3(window.ethereum);
-    let accounts = await web3.eth.getAccounts();
+    console.log("aaa", accounts);
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButtonWithoutDelay([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
@@ -206,8 +205,7 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(data) {
-  // let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
+  console.log("account", accounts);
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
 
@@ -363,7 +361,11 @@ async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
 
+var web3;
+var accounts;
 const firstLoad = async () => {
+  web3 = new Web3(window.ethereum);
+  accounts = await web3.eth.getAccounts();
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = params;
