@@ -106,8 +106,6 @@ async function switchMetamaskNetwork() {
 async function lease(data) {
   console.log(data);
   console.log(data.token_id);
-  let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -166,8 +164,6 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
-  let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -268,7 +264,6 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
-  let web3 = new Web3(window.ethereum);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -322,8 +317,6 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
-  let web3 = new Web3(window.ethereum);
-  let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -361,13 +354,12 @@ async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
 
-var web3;
-var accounts;
+let web3;
+let accounts;
 const firstLoad = async () => {
+  const params = new URLSearchParams(window.location.search);
   web3 = new Web3(window.ethereum);
   accounts = await web3.eth.getAccounts();
-  const params = new URLSearchParams(window.location.search);
-  console.log(params);
   document.getElementById("a5").innerHTML = params;
 
   if (window.ethereum) {
