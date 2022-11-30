@@ -206,7 +206,7 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(data) {
-  let web3 = new Web3(window.ethereum);
+  // let web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
