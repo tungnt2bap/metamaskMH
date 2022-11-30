@@ -6,6 +6,9 @@ const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
 const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
+let web3;
+let accounts;
+
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const copyToClipboard = async function (dataResult) {
@@ -75,6 +78,8 @@ const sign = async (message) => {
 
 async function switchMetamaskNetwork() {
   const chainId = 55; //id testnet
+
+  console.log("bbbb", web3.utils.toHex(chainId));
 
   if (window.ethereum.networkVersion !== chainId) {
     try {
@@ -354,22 +359,24 @@ async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
 
-let web3;
-let accounts;
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
-  web3 = new Web3(window.ethereum);
-  accounts = await web3.eth.getAccounts();
-  console.log("wwwwwwww", accounts);
-  document.getElementById("a5").innerHTML = params;
+  if (window.ethereum != null) {
+    web3 = new Web3(window.ethereum);
+    try {
+      // Request account access if needed
+      await window.ethereum.enable();
+      // Acccounts now exposed
+      accounts = await web3.eth.getAccounts();
+      console.log("ok", accounts);
+    } catch (error) {
+      // User denied account access...
+      console.log("error", error);
+    }
+  } else {
+    alert("Please install MetaMask Extension in your browser");
+  }
 
-  // if (window.ethereum) {
-  //   console.log(12);
-  //   await window.ethereum.request({ method: "eth_requestAccounts" });
-  //   window.web3 = new Web3(window.ethereum);
-  // } else {
-  //   alert("Please install MetaMask Extension in your browser");
-  // }
   await switchMetamaskNetwork();
 
   console.log(params);
