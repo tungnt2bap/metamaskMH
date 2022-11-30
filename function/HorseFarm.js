@@ -230,7 +230,7 @@ async function depositHTC(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Approve failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -291,7 +291,7 @@ async function swapHTCtoPRZ(data) {
         if (err) {
           createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
           openModal("Failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -362,27 +362,11 @@ async function claim(data) {
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
-// const abc = () => {
-//   console.log("aaaaaaaaaa");
-//   const params = new URLSearchParams(window.location.search);
-//   document.getElementById("a5").innerHTML = "url" + params;
-// };
 
 const firstLoad = async () => {
-  let urlTest = "";
-  if (performance.navigation.type != 1) {
-    const params = new URLSearchParams(window.location.search);
-    console.log("aa", performance.navigation);
-    console.log("bbb", params);
-    urlTest = params;
-    document.getElementById("a6").innerHTML = "url" + params.get("data");
-  }
-  // if (clipboard ) {
-  //   window.open(clipboard, "_self");
-  // }
   const params = new URLSearchParams(window.location.search);
   console.log(params);
-  document.getElementById("a5").innerHTML = "url" + params;
+  document.getElementById("a5").innerHTML = params;
 
   if (window.ethereum) {
     console.log(12);
@@ -426,12 +410,9 @@ function isMobileDevice() {
 }
 
 function openMetaHorse() {
-  console.log("1");
   if (isMobileDevice()) {
-    console.log("2");
     window.open("metahorse://web3login");
   } else {
-    console.log("3");
     window.open("https://metamask.io/", "_blank");
   }
 }
