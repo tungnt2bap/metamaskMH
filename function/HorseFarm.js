@@ -59,43 +59,22 @@ const openModal = (title) => {
   document.getElementById("title-modal").innerHTML = title;
 };
 
-let first = 1;
-let second = 2;
-
-const testLocalStorage = () => {
-  if (second) {
-    console.log("2 get url");
-    first = "abc";
-    second = 0;
-  } else if (first) {
-    console.log("1");
-    second = "abc";
-    first = "";
-  } else {
-    first = "abc";
-  }
-};
-
 const sign = async (message) => {
-  document.getElementById("a3").innerHTML = "signa";
   try {
-    const web3 = new Web3(window.ethereum);
-    accounts = await web3.eth.getAccounts();
-    console.log("aaa", accounts);
+    let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButtonWithoutDelay([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    await createCopyInputButtonWithoutDelay([400, err.message].join("|"));
+    await createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
 
 async function switchMetamaskNetwork() {
   const chainId = 55; //id testnet
-  const web3 = new Web3(window.ethereum);
-  accounts = await web3.eth.getAccounts();
+
   if (window.ethereum.networkVersion !== chainId) {
     try {
       await window.ethereum.request({
@@ -126,9 +105,9 @@ async function switchMetamaskNetwork() {
 async function lease(data) {
   console.log(data);
   console.log(data.token_id);
+  let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
-  const web3 = new Web3(window.ethereum);
-  accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -145,9 +124,8 @@ async function lease(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
-          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -186,6 +164,8 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
+  let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -223,9 +203,7 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(data) {
-  const web3 = new Web3(window.ethereum);
-  accounts = await web3.eth.getAccounts();
-  console.log("account", accounts);
+  let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
 
@@ -246,9 +224,8 @@ async function depositHTC(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
-          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -288,6 +265,7 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
+  let web3 = new Web3(window.ethereum);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -306,9 +284,8 @@ async function swapHTCtoPRZ(data) {
       },
       function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          // createCopyInputButton([400, "failed"].join("|"));
           openModal("Failed");
-          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -341,9 +318,8 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
-  const web3 = new Web3(window.ethereum);
-  accounts = await web3.eth.getAccounts();
-
+  let web3 = new Web3(window.ethereum);
+  let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -380,23 +356,17 @@ async function claim(data) {
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
-
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
-  if (window.ethereum != null) {
-    try {
-      // Request account access if needed
-      await window.ethereum.enable();
-      // Acccounts now exposed
-      console.log("ok", accounts);
-    } catch (error) {
-      // User denied account access...
-      console.log("error", error);
-    }
+  console.log(params);
+  document.getElementById("a5").innerHTML = params;
+
+  if (window.ethereum) {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    window.web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
-
   await switchMetamaskNetwork();
 
   console.log(params);
@@ -441,10 +411,4 @@ function openMetaHorse() {
 
 const handleClickReplace = () => {
   window.open("google.com", "_self");
-};
-
-const getLocalStorage = () => {
-  localStorage.getItem("accounts");
-  console.log(localStorage.getItem("accounts"));
-  document.getElementById("a5").innerHTML = localStorage.getItem("accounts");
 };
