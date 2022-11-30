@@ -363,11 +363,13 @@ const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   if (window.ethereum != null) {
     web3 = new Web3(window.ethereum);
+    accounts = await web3.eth.getAccounts();
+    console.log("web3", web3);
+    localStorage.setItem("accounts", accounts);
     try {
       // Request account access if needed
       await window.ethereum.enable();
       // Acccounts now exposed
-      accounts = await web3.eth.getAccounts();
       console.log("ok", accounts);
     } catch (error) {
       // User denied account access...
@@ -421,4 +423,10 @@ function openMetaHorse() {
 
 const handleClickReplace = () => {
   window.open("google.com", "_self");
+};
+
+const getLocalStorage = () => {
+  localStorage.getItem("accounts");
+  console.log(localStorage.getItem("accounts"));
+  document.getElementById("a5").innerHTML = localStorage.getItem("accounts");
 };
