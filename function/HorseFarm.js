@@ -6,9 +6,6 @@ const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
 const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
-let web3;
-let accounts;
-
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const copyToClipboard = async function (dataResult) {
@@ -62,9 +59,28 @@ const openModal = (title) => {
   document.getElementById("title-modal").innerHTML = title;
 };
 
+let first = 1;
+let second = 2;
+
+const testLocalStorage = () => {
+  if (second) {
+    console.log("2 get url");
+    first = "abc";
+    second = 0;
+  } else if (first) {
+    console.log("1");
+    second = "abc";
+    first = "";
+  } else {
+    first = "abc";
+  }
+};
+
 const sign = async (message) => {
   document.getElementById("a3").innerHTML = "signa";
   try {
+    const web3 = new Web3(window.ethereum);
+    accounts = await web3.eth.getAccounts();
     console.log("aaa", accounts);
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
     createCopyInputButtonWithoutDelay([accounts, message, signature].join("|"));
@@ -78,9 +94,8 @@ const sign = async (message) => {
 
 async function switchMetamaskNetwork() {
   const chainId = 55; //id testnet
-
-  console.log("bbbb", web3.utils.toHex(chainId));
-
+  const web3 = new Web3(window.ethereum);
+  accounts = await web3.eth.getAccounts();
   if (window.ethereum.networkVersion !== chainId) {
     try {
       await window.ethereum.request({
@@ -112,6 +127,8 @@ async function lease(data) {
   console.log(data);
   console.log(data.token_id);
   console.log("account: ", accounts);
+  const web3 = new Web3(window.ethereum);
+  accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
     data.horse_farm_address
@@ -206,6 +223,8 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(data) {
+  const web3 = new Web3(window.ethereum);
+  accounts = await web3.eth.getAccounts();
   console.log("account", accounts);
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
@@ -322,6 +341,9 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
+  const web3 = new Web3(window.ethereum);
+  accounts = await web3.eth.getAccounts();
+
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   await TokenGate.methods
@@ -362,10 +384,6 @@ async function getGasPrice() {
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   if (window.ethereum != null) {
-    web3 = new Web3(window.ethereum);
-    accounts = await web3.eth.getAccounts();
-    console.log("web3", web3);
-    localStorage.setItem("accounts", accounts);
     try {
       // Request account access if needed
       await window.ethereum.enable();
