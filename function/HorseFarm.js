@@ -147,9 +147,6 @@ const checkUrl = () => {
           getLocalStorage("sign")
         )}`
       );
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
     }
     if (newUrl == "depositHTC") {
       location.replace(
@@ -157,10 +154,10 @@ const checkUrl = () => {
           getLocalStorage("depositHTC")
         )}`
       );
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
     }
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 1000);
   } else {
     setLocalStorage(params.get("action"), params.get("data"));
     return;
