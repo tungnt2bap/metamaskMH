@@ -361,6 +361,16 @@ const firstLoad = async () => {
   console.log(params);
   document.getElementById("a5").innerHTML = params;
 
+  if (window.performance) {
+    if (performance.navigation.type == 1) {
+      console.log("aaaaaa");
+      document.getElementById("a6").innerHTML = "reload";
+    } else {
+      console.log("bbbbb");
+      document.getElementById("a6").innerHTML = "load 1";
+    }
+  }
+
   if (window.ethereum) {
     await window.ethereum.request({ method: "eth_requestAccounts" });
     window.web3 = new Web3(window.ethereum);
