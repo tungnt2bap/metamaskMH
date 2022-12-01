@@ -7,6 +7,7 @@ const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+let web3;
 
 const copyToClipboard = async function (dataResult) {
   try {
@@ -60,6 +61,12 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  if (window.ethereum) {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    web3 = new Web3(window.ethereum);
+  } else {
+    alert("Please install MetaMask Extension in your browser");
+  }
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
@@ -105,7 +112,7 @@ async function switchMetamaskNetwork() {
 async function lease(data) {
   console.log(data);
   console.log(data.token_id);
-  let web3 = new Web3(window.ethereum);
+  web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
@@ -164,7 +171,7 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
-  let web3 = new Web3(window.ethereum);
+  web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -265,7 +272,7 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
-  let web3 = new Web3(window.ethereum);
+  web3 = new Web3(window.ethereum);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -318,7 +325,7 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
-  let web3 = new Web3(window.ethereum);
+  web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
@@ -396,24 +403,11 @@ const firstLoad = async () => {
   //     break;
   // }
 };
-
 const handleLogin = async () => {
-  if (window.ethereum) {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    window.web3 = new Web3(window.ethereum);
-  } else {
-    alert("Please install MetaMask Extension in your browser");
-  }
   const params = new URLSearchParams(window.location.search);
   sign(params.get("data"));
 };
 const handleDeposit = async () => {
-  if (window.ethereum) {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    window.web3 = new Web3(window.ethereum);
-  } else {
-    alert("Please install MetaMask Extension in your browser");
-  }
   const params = new URLSearchParams(window.location.search);
   depositHTC(JSON.parse(params.get("data")));
 };
