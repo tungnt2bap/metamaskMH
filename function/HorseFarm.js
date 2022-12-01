@@ -60,10 +60,6 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
-  if (window.ethereum) {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    // window.web3 = new Web3(window.ethereum);
-  }
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
@@ -109,9 +105,6 @@ async function switchMetamaskNetwork() {
 async function lease(data) {
   console.log(data);
   console.log(data.token_id);
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-  }
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
@@ -170,9 +163,6 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-  }
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -273,9 +263,6 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-  }
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -328,9 +315,6 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
-  if (window.ethereum) {
-    window.web3 = new Web3(window.ethereum);
-  }
   let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
@@ -374,8 +358,8 @@ const firstLoad = async () => {
   document.getElementById("a5").innerHTML = params;
 
   if (window.ethereum) {
-    // await window.ethereum.request({ method: "eth_requestAccounts" });
-    window.web3 = new Web3(window.ethereum);
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
   }
