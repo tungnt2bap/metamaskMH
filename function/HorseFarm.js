@@ -155,9 +155,9 @@ const checkUrl = () => {
         )}`
       );
     }
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 1000);
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   } else {
     setLocalStorage(params.get("action"), params.get("data"));
     return;
