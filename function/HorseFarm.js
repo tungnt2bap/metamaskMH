@@ -86,7 +86,7 @@ const checkTimeLocalStorage = () => {
 };
 
 const sign = async (message) => {
-  await window.ethereum.request({ method: "eth_requestAccounts" });
+  // await window.ethereum.request({ method: "eth_requestAccounts" });
   console.log("aaaaaaaaa", message);
 
   const params = new URLSearchParams(window.location.search);
@@ -300,7 +300,7 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(value) {
-  await window.ethereum.request({ method: "eth_requestAccounts" });
+  // await window.ethereum.request({ method: "eth_requestAccounts" });
   const params = new URLSearchParams(window.location.search);
   if (value === handleValueLocalStorage(getLocalStorage("depositHTC"))) {
     if (checkTimeLocalStorage() === "sign") {
@@ -475,7 +475,7 @@ const firstLoad = async () => {
   console.log(params);
   document.getElementById("a5").innerHTML = params;
   if (window.ethereum) {
-    // await window.ethereum.request({ method: "eth_requestAccounts" });
+    await window.ethereum.request({ method: "eth_requestAccounts" });
     web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
