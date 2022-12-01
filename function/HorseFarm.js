@@ -361,16 +361,6 @@ const firstLoad = async () => {
   console.log(params);
   document.getElementById("a5").innerHTML = params;
 
-  if (window.performance) {
-    if (performance.navigation.type == 1) {
-      console.log("aaaaaa");
-      document.getElementById("a6").innerHTML = "reload";
-    } else {
-      console.log("bbbbb");
-      document.getElementById("a6").innerHTML = "load 1";
-    }
-  }
-
   if (window.ethereum) {
     await window.ethereum.request({ method: "eth_requestAccounts" });
     window.web3 = new Web3(window.ethereum);
@@ -407,11 +397,23 @@ const firstLoad = async () => {
   // }
 };
 
-const handleLogin = () => {
+const handleLogin = async () => {
+  if (window.ethereum) {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    window.web3 = new Web3(window.ethereum);
+  } else {
+    alert("Please install MetaMask Extension in your browser");
+  }
   const params = new URLSearchParams(window.location.search);
   sign(params.get("data"));
 };
-const handleDeposit = () => {
+const handleDeposit = async () => {
+  if (window.ethereum) {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    window.web3 = new Web3(window.ethereum);
+  } else {
+    alert("Please install MetaMask Extension in your browser");
+  }
   const params = new URLSearchParams(window.location.search);
   depositHTC(JSON.parse(params.get("data")));
 };
