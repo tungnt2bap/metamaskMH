@@ -105,7 +105,7 @@ async function switchMetamaskNetwork() {
 async function lease(data) {
   console.log(data);
   console.log(data.token_id);
-  let web3 = new Web3(window.ethereum);
+  window.web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
@@ -164,7 +164,7 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
-  let web3 = new Web3(window.ethereum);
+  window.web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -265,7 +265,7 @@ async function depositHTC(data) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
-  let web3 = new Web3(window.ethereum);
+  window.web3 = new Web3(window.ethereum);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -318,7 +318,7 @@ async function swapHTCtoPRZ(data) {
 //claimPRZ
 async function claim(data) {
   console.log(data);
-  let web3 = new Web3(window.ethereum);
+  window.web3 = new Web3(window.ethereum);
   let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
