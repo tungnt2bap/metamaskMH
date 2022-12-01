@@ -67,22 +67,65 @@ const handleValueLocalStorage = (value, key) => {
     return value.slice(0, findText);
   } else {
     const findText = value.indexOf("|");
-    console.log("aaaa", value.slice(findText + 1));
-    return value.slice(findText + 1);
+    console.log("aaaa", value);
+    return parseInt(value.slice(findText + 1));
   }
 };
 
 const checkTimeLocalStorage = () => {
   const sign = getLocalStorage("sign");
   const depositHTC = getLocalStorage("depositHTC");
-  if (
-    handleValueLocalStorage(sign, "time") >
-    handleValueLocalStorage(depositHTC, "time")
-  ) {
-    return "sign";
-  } else {
-    return "depositHTC";
-  }
+  const lease = getLocalStorage("lease");
+  const withdraw = getLocalStorage("withdraw");
+  const swapVaultHTCtoPRZ = getLocalStorage("swapVaultHTCtoPRZ");
+  const claim = getLocalStorage("claim");
+
+  console.log("handleValueLocalStorage", handleValueLocalStorage(sign));
+
+  const timeLocals = [
+    {
+      key: "sign",
+      value: handleValueLocalStorage(sign, "time") || 0,
+      time: handleValueLocalStorage(sign, "time") || 0,
+    },
+    {
+      key: "depositHTC",
+      value: handleValueLocalStorage(depositHTC, "time") || 0,
+      time: handleValueLocalStorage(depositHTC, "time") || 0,
+    },
+    {
+      key: "lease",
+      value: handleValueLocalStorage(lease, "time") || 0,
+      time: handleValueLocalStorage(lease, "time") || 0,
+    },
+    {
+      key: "claim",
+      value: handleValueLocalStorage(claim, "time") || 0,
+      time: handleValueLocalStorage(claim, "time") || 0,
+    },
+    {
+      key: "withdraw",
+      value: handleValueLocalStorage(withdraw, "time") || 0,
+      time: handleValueLocalStorage(withdraw, "time") || 0,
+    },
+    {
+      key: "swapVaultHTCtoPRZ",
+      value: handleValueLocalStorage(swapVaultHTCtoPRZ, "time") || 0,
+      time: handleValueLocalStorage(swapVaultHTCtoPRZ, "time") || 0,
+    },
+  ];
+
+  const max = timeLocals.reduce(function (prev, current) {
+    console.log("test1", prev);
+    return prev.time > current.value ? prev : current;
+  }); //returns object
+
+  //   const filterName = (arr, value) => {
+  //   return arr.filter((item) => item.includes(value));
+  // };
+
+  console.log("timeLocals", max);
+  return max.key;
 };
 
 const sign = async (message) => {
@@ -138,7 +181,6 @@ const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
   const localItems = allStorage();
   const checkDuplicate = filterName(localItems, params.get("data"));
-  console.log("checkDuplicate", checkDuplicate);
   if (checkDuplicate[0]?.length > 0) {
     const newUrl = checkTimeLocalStorage();
     if (newUrl == "sign") {
@@ -152,6 +194,34 @@ const checkUrl = () => {
       location.replace(
         `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
           getLocalStorage("depositHTC")
+        )}`
+      );
+    }
+    if (newUrl == "lease") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=lease&data=${handleValueLocalStorage(
+          getLocalStorage("lease")
+        )}`
+      );
+    }
+    if (newUrl == "claim") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=claim&data=${handleValueLocalStorage(
+          getLocalStorage("claim")
+        )}`
+      );
+    }
+    if (newUrl == "withdraw") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=withdraw&data=${handleValueLocalStorage(
+          getLocalStorage("withdraw")
+        )}`
+      );
+    }
+    if (newUrl == "swapVaultHTCtoPRZ") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=swapVaultHTCtoPRZ&data=${handleValueLocalStorage(
+          getLocalStorage("swapVaultHTCtoPRZ")
         )}`
       );
     }
