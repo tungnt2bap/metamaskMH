@@ -60,6 +60,7 @@ const openModal = (title) => {
 };
 
 const sign = async (message) => {
+  await window.ethereum.request({ method: "eth_requestAccounts" });
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
@@ -201,6 +202,7 @@ async function withdraw(data) {
 //TokenGate
 //deposit HTC
 async function depositHTC(data) {
+  await window.ethereum.request({ method: "eth_requestAccounts" });
   let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
@@ -224,6 +226,7 @@ async function depositHTC(data) {
         if (err) {
           // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
+          return
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -356,9 +359,9 @@ const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = params;
-
+// const accounts = await window.ethereum.request({ method: 'eth_accounts' })
   if (window.ethereum) {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
+    // await window.ethereum.request({ method: "eth_requestAccounts" });
     web3 = new Web3(window.ethereum);
   } else {
     alert("Please install MetaMask Extension in your browser");
