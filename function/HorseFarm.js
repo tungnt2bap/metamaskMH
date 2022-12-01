@@ -143,17 +143,23 @@ const checkUrl = () => {
     const newUrl = checkTimeLocalStorage();
     if (newUrl == "sign") {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${getLocalStorage(
-          "sign"
+        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
+          getLocalStorage("sign")
         )}`
       );
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     }
     if (newUrl == "depositHTC") {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${getLocalStorage(
-          "depositHTC"
+        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
+          getLocalStorage("depositHTC")
         )}`
       );
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     }
   } else {
     setLocalStorage(params.get("action"), params.get("data"));
