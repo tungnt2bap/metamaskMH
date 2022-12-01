@@ -383,28 +383,37 @@ const firstLoad = async () => {
   console.log(params.get("action"));
   console.log(params.get("data"));
 
-  switch (params.get("action")) {
-    // case "switchNetwork":
-    //   switchMetamaskNetwork()
-    case "sign":
-      sign(params.get("data"));
-      break;
-    case "lease":
-      lease(JSON.parse(params.get("data")));
-      break;
-    case "withdraw":
-      withdraw(JSON.parse(params.get("data")));
-      break;
-    case "depositHTC":
-      depositHTC(JSON.parse(params.get("data")));
-      break;
-    case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(JSON.parse(params.get("data")));
-    case "claim":
-      claim(JSON.parse(params.get("data")));
-    default:
-      break;
-  }
+  // switch (params.get("action")) {
+  //   // case "switchNetwork":
+  //   //   switchMetamaskNetwork()
+  //   case "sign":
+  //     sign(params.get("data"));
+  //     break;
+  //   case "lease":
+  //     lease(JSON.parse(params.get("data")));
+  //     break;
+  //   case "withdraw":
+  //     withdraw(JSON.parse(params.get("data")));
+  //     break;
+  //   case "depositHTC":
+  //     depositHTC(JSON.parse(params.get("data")));
+  //     break;
+  //   case "swapVaultHTCtoPRZ":
+  //     swapHTCtoPRZ(JSON.parse(params.get("data")));
+  //   case "claim":
+  //     claim(JSON.parse(params.get("data")));
+  //   default:
+  //     break;
+  // }
+};
+
+const handleLogin = () => {
+  const params = new URLSearchParams(window.location.search);
+  sign(params.get("data"));
+};
+const handleDeposit = () => {
+  const params = new URLSearchParams(window.location.search);
+  depositHTC(JSON.parse(params.get("data")));
 };
 
 function isMobileDevice() {
