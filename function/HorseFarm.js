@@ -59,8 +59,54 @@ const openModal = (title) => {
   document.getElementById("title-modal").innerHTML = title;
 };
 
+const handleValueLocalStorage = (value, key) => {
+  if (!value) return;
+  if (key !== "time") {
+    const findText = value.indexOf("|");
+    console.log("aaaa", value.slice(0, findText));
+    return value.slice(0, findText);
+  } else {
+    const findText = value.indexOf("|");
+    console.log("aaaa", value.slice(findText + 1));
+    return value.slice(findText + 1);
+  }
+};
+
+const checkTimeLocalStorage = () => {
+  const sign = getLocalStorage("sign");
+  const depositHTC = getLocalStorage("depositHTC");
+  if (
+    handleValueLocalStorage(sign, "time") >
+    handleValueLocalStorage(depositHTC, "time")
+  ) {
+    return "sign";
+  } else {
+    return "depositHTC";
+  }
+};
+
 const sign = async (message) => {
   await window.ethereum.request({ method: "eth_requestAccounts" });
+  console.log("aaaaaaaaa", message);
+
+  const params = new URLSearchParams(window.location.search);
+  if (message === handleValueLocalStorage(getLocalStorage("sign"))) {
+    console.log("aaaaaaaaa");
+    if (checkTimeLocalStorage() === "sign") {
+      console.log("aaaaa");
+      params.set("action", "sign");
+      params.set("data", message);
+    }
+    if (checkTimeLocalStorage() === "depositHTC") {
+      console.log("aaaaa");
+      params.set("action", "depositHTC");
+      params.set("data", getLocalStorage("depositHTC"));
+      // location.reload();
+    }
+  } else {
+    console.log("bbbb");
+    setLocalStorage("sign", message);
+  }
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
@@ -71,6 +117,58 @@ const sign = async (message) => {
     await createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
+};
+
+function allStorage() {
+  var values = [],
+    keys = Object.keys(localStorage),
+    i = keys.length;
+
+  while (i--) {
+    values.push(localStorage.getItem(keys[i]));
+  }
+
+  return values;
+}
+const filterName = (arr, value) => {
+  return arr.filter((item) => item.includes(value));
+};
+
+const checkUrl = () => {
+  const params = new URLSearchParams(window.location.search);
+  const localItems = allStorage();
+  const checkDuplicate = filterName(localItems, params.get("data"));
+  console.log("checkDuplicate", checkDuplicate);
+  if (checkDuplicate[0]?.length > 0) {
+    const newUrl = checkTimeLocalStorage();
+    if (newUrl == "sign") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${getLocalStorage(
+          "sign"
+        )}`
+      );
+    }
+    if (newUrl == "depositHTC") {
+      location.replace(
+        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${getLocalStorage(
+          "depositHTC"
+        )}`
+      );
+    }
+  } else {
+    setLocalStorage(params.get("action"), params.get("data"));
+    return;
+  }
+};
+
+const setLocalStorage = (key, value) => {
+  const date = new Date();
+  return localStorage.setItem(key, value + "|" + Date.parse(date));
+};
+
+const getLocalStorage = (key) => {
+  console.log("get", localStorage.getItem("key"));
+  return localStorage.getItem(key);
 };
 
 async function switchMetamaskNetwork() {
@@ -201,8 +299,24 @@ async function withdraw(data) {
 
 //TokenGate
 //deposit HTC
-async function depositHTC(data) {
+async function depositHTC(value) {
   await window.ethereum.request({ method: "eth_requestAccounts" });
+  const params = new URLSearchParams(window.location.search);
+  if (value === handleValueLocalStorage(getLocalStorage("depositHTC"))) {
+    if (checkTimeLocalStorage() === "sign") {
+      params.set("action", "sign");
+      params.set("data", getLocalStorage("sign"));
+      // location.reload();
+    }
+    if (checkTimeLocalStorage() === "depositHTC") {
+      params.set("action", "depositHTC");
+      params.set("data", value);
+    }
+  } else {
+    setLocalStorage("depositHTC", value);
+  }
+
+  const data = JSON.parse(value);
   let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
@@ -226,7 +340,7 @@ async function depositHTC(data) {
         if (err) {
           // createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
-          return
+          return;
         }
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([401, res].join("|"));
@@ -356,10 +470,10 @@ async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
 const firstLoad = async () => {
+  checkUrl();
   const params = new URLSearchParams(window.location.search);
   console.log(params);
   document.getElementById("a5").innerHTML = params;
-// const accounts = await window.ethereum.request({ method: 'eth_accounts' })
   if (window.ethereum) {
     // await window.ethereum.request({ method: "eth_requestAccounts" });
     web3 = new Web3(window.ethereum);
@@ -376,6 +490,7 @@ const firstLoad = async () => {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
     case "sign":
+      // setLocalStorage("sign", params.get("data"));
       sign(params.get("data"));
       break;
     case "lease":
@@ -385,7 +500,8 @@ const firstLoad = async () => {
       withdraw(JSON.parse(params.get("data")));
       break;
     case "depositHTC":
-      depositHTC(JSON.parse(params.get("data")));
+      // setLocalStorage("depositHTC", params.get("data"));
+      depositHTC(params.get("data"));
       break;
     case "swapVaultHTCtoPRZ":
       swapHTCtoPRZ(JSON.parse(params.get("data")));
