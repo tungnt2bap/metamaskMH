@@ -161,11 +161,17 @@ const checkUrl = () => {
   console.log("test 3,", params.get("action"));
   console.log("test 4", parseInt(params.get("current_time")));
   console.log("test 5", checkTimeLocalStorage().time);
-  const timeLocalStorage = checkTimeLocalStorage().time;
+  const timeLocalStorage = parseInt(checkTimeLocalStorage().time);
   const timeURL = parseInt(params.get("current_time"));
   const typeActionURL = params.get("action");
   const typeActionLocalStorage = checkTimeLocalStorage().type;
-  if (timeURL != timeLocalStorage && typeActionURL != typeActionLocalStorage) {
+  if (timeURL != timeLocalStorage) {
+    if (
+      typeActionURL === "sign" &&
+      timeURL === timeLocalStorage &&
+      typeActionURL == typeActionLocalStorage
+    )
+      return;
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
         checkTimeLocalStorage().key
