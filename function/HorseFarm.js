@@ -80,8 +80,6 @@ const checkTimeLocalStorage = () => {
   const swapVaultHTCtoPRZ = getLocalStorage("swapVaultHTCtoPRZ");
   const claim = getLocalStorage("claim");
 
-  console.log("handleValueLocalStorage", handleValueLocalStorage(sign));
-
   const timeLocals = [
     {
       key: "sign",
@@ -116,8 +114,7 @@ const checkTimeLocalStorage = () => {
   ];
 
   const max = timeLocals.reduce(function (prev, current) {
-    console.log("test1", prev);
-    return prev.time > current.value ? prev : current;
+    return parseInt(prev.time) > parseInt(current.value) ? prev : current;
   }); //returns object
 
   //   const filterName = (arr, value) => {
@@ -125,7 +122,7 @@ const checkTimeLocalStorage = () => {
   // };
 
   console.log("timeLocals", max);
-  return max.key;
+  return { key: max.key, time: max.time };
 };
 
 const sign = async (message) => {
@@ -134,11 +131,11 @@ const sign = async (message) => {
 
   const params = new URLSearchParams(window.location.search);
   if (message === handleValueLocalStorage(getLocalStorage("sign"))) {
-    if (checkTimeLocalStorage() === "sign") {
+    if (checkTimeLocalStorage().key === "sign") {
       // params.set("action", "sign");
       // params.set("data", message);
     }
-    if (checkTimeLocalStorage() === "depositHTC") {
+    if (checkTimeLocalStorage().key === "depositHTC") {
       // params.set("action", "depositHTC");
       // params.set("data", getLocalStorage("depositHTC"));
       // location.reload();
@@ -176,66 +173,67 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  const localItems = getAllValueStorage();
-  const checkDuplicate = filterName(localItems, params.get("data"));
+  setLocalStorage(
+    params.get("action"),
+    params.get("data") + "|" + params.get("current_time")
+  );
+  // const localItems = getAllValueStorage();
+  // const checkDuplicate = filterName(localItems, params.get("current_time"));
+  const newUrl = checkTimeLocalStorage();
+  if (newUrl.time == params.get("current_time")) return;
 
-  if (checkDuplicate[0]?.length > 0) {
-    const newUrl = checkTimeLocalStorage();
-
-    if (newUrl == "sign") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
-          getLocalStorage("sign")
-        )}`
-      );
-    }
-    if (newUrl == "depositHTC") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
-          getLocalStorage("depositHTC")
-        )}`
-      );
-    }
-    if (newUrl == "lease") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=lease&data=${handleValueLocalStorage(
-          getLocalStorage("lease")
-        )}`
-      );
-    }
-    if (newUrl == "claim") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=claim&data=${handleValueLocalStorage(
-          getLocalStorage("claim")
-        )}`
-      );
-    }
-    if (newUrl == "withdraw") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=withdraw&data=${handleValueLocalStorage(
-          getLocalStorage("withdraw")
-        )}`
-      );
-    }
-    if (newUrl == "swapVaultHTCtoPRZ") {
-      location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=swapVaultHTCtoPRZ&data=${handleValueLocalStorage(
-          getLocalStorage("swapVaultHTCtoPRZ")
-        )}`
-      );
-    }
-
-    setTimeout(() => {
-      location.reload();
-    }, 600);
-  } else {
-    setLocalStorage(params.get("action"), params.get("data"));
+  if (newUrl.key == "sign") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=sign&data=${handleValueLocalStorage(
+        getLocalStorage("sign")
+      )}`
+    );
   }
+  if (newUrl == "depositHTC") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=depositHTC&data=${handleValueLocalStorage(
+        getLocalStorage("depositHTC")
+      )}`
+    );
+  }
+  if (newUrl == "lease") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=lease&data=${handleValueLocalStorage(
+        getLocalStorage("lease")
+      )}`
+    );
+  }
+  if (newUrl == "claim") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=claim&data=${handleValueLocalStorage(
+        getLocalStorage("claim")
+      )}`
+    );
+  }
+  if (newUrl == "withdraw") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=withdraw&data=${handleValueLocalStorage(
+        getLocalStorage("withdraw")
+      )}`
+    );
+  }
+  if (newUrl == "swapVaultHTCtoPRZ") {
+    location.replace(
+      `http://127.0.0.1:5500/?action=swapVaultHTCtoPRZ&data=${handleValueLocalStorage(
+        getLocalStorage("swapVaultHTCtoPRZ")
+      )}`
+    );
+  }
+  // setTimeout(() => {
+  //   location.reload();
+  // }, 500);
+  // } else {
+  //   setLocalStorage(params.get("action"), params.get("data"));
+  // }
 };
 
 const setLocalStorage = (key, value) => {
-  const date = new Date();
-  return localStorage.setItem(key, value + "|" + Date.parse(date));
+  return localStorage.setItem(key, value);
 };
 
 const getLocalStorage = (key) => {
@@ -384,12 +382,12 @@ async function depositHTC(value) {
   // await window.ethereum.request({ method: "eth_requestAccounts" });
   const params = new URLSearchParams(window.location.search);
   if (value === handleValueLocalStorage(getLocalStorage("depositHTC"))) {
-    if (checkTimeLocalStorage() === "sign") {
+    if (checkTimeLocalStorage().key === "sign") {
       // params.set("action", "sign");
       // params.set("data", getLocalStorage("sign"));
       // location.reload();
     }
-    if (checkTimeLocalStorage() === "depositHTC") {
+    if (checkTimeLocalStorage().key === "depositHTC") {
       // params.set("action", "depositHTC");
       // params.set("data", value);
     }
