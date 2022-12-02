@@ -114,15 +114,16 @@ const checkTimeLocalStorage = () => {
   ];
 
   const max = timeLocals.reduce(function (prev, current) {
-    return parseInt(prev.time) > parseInt(current.value) ? prev : current;
+    return parseInt(prev.time) > parseInt(current.time) ? prev : current;
   }); //returns object
 
+  console.log("test", max);
   //   const filterName = (arr, value) => {
   //   return arr.filter((item) => item.includes(value));
   // };
 
   console.log("timeLocals", max);
-  return { key: max.key, value: max.value, time: max.time };
+  return max;
 };
 
 const sign = async (message) => {
@@ -173,18 +174,19 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  console.log("timeLocalsaa", checkTimeLocalStorage());
-  if (params.get("current_time") == checkTimeLocalStorage().time) {
-    console.log("aaaaaaaaaaaaa");
+  console.log("test 2", checkTimeLocalStorage());
+  console.log("test 3,", params.get("action"));
+  console.log("test 4", parseInt(params.get("current_time")));
+  console.log("test 5", checkTimeLocalStorage().time);
+  if (parseInt(params.get("current_time")) == checkTimeLocalStorage().time) {
+    console.log("test 6");
     return;
   } else {
-    location.replace(
-      `https://tungnt2bap.github.io/metamaskMH/?action=${
-        checkTimeLocalStorage().key
-      }&data=${checkTimeLocalStorage().value}&current_time=${
-        checkTimeLocalStorage().time
-      }`
-    );
+    // location.replace(
+    //   `http://127.0.0.1:5500/?action=${checkTimeLocalStorage().key}&data=${
+    //     checkTimeLocalStorage().value
+    //   }&current_time=${checkTimeLocalStorage().time}`
+    // );
   }
   // const localItems = getAllValueStorage();
   // const checkDuplicate = filterName(localItems, params.get("current_time"));
@@ -574,13 +576,13 @@ async function getGasPrice() {
 
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
+  console.log("test 1", params.get("action"));
   setLocalStorage(
     params.get("action"),
     params.get("data") + "|" + params.get("current_time")
   );
   setTimeout(async () => {
     checkUrl();
-    console.log(params);
     document.getElementById("a5").innerHTML = params;
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -590,7 +592,7 @@ const firstLoad = async () => {
     }
     await switchMetamaskNetwork();
 
-    console.log(params);
+    console.log("test 7", params.get("action"));
     console.log(params.get("action"));
     console.log(params.get("data"));
 
