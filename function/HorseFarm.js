@@ -183,14 +183,14 @@ const checkUrl = () => {
     const newUrl = checkTimeLocalStorage();
     if (newUrl == "sign") {
       location.replace(
-        `http://127.0.0.1:5500/?action=sign&data=${handleValueLocalStorage(
+        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
           getLocalStorage("sign")
         )}`
       );
     }
     if (newUrl == "depositHTC") {
       location.replace(
-        `http://127.0.0.1:5500/?action=depositHTC&data=${handleValueLocalStorage(
+        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
           getLocalStorage("depositHTC")
         )}`
       );
