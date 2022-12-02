@@ -272,12 +272,13 @@ async function switchMetamaskNetwork() {
 }
 
 //user lease horse
-async function lease(data) {
+async function lease(value) {
   if (value !== handleValueLocalStorage(getLocalStorage("lease"))) {
     setLocalStorage("lease", value);
   }
-  console.log(data);
-  console.log(data.token_id);
+  const data = JSON.parse(value);
+  // console.log(data);
+  // console.log(data.token_id);
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
@@ -335,10 +336,12 @@ async function lease(data) {
 }
 
 //user withdraw horse
-async function withdraw(data) {
+async function withdraw(value) {
   if (value !== handleValueLocalStorage(getLocalStorage("withdraw"))) {
     setLocalStorage("withdraw", value);
   }
+
+  const data = JSON.parse(value);
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -456,10 +459,11 @@ async function depositHTC(value) {
     );
 }
 //swap HTC to PRZ
-async function swapHTCtoPRZ(data) {
+async function swapHTCtoPRZ(value) {
   if (value !== handleValueLocalStorage(getLocalStorage("swapVaultHTCtoPRZ"))) {
     setLocalStorage("swapVaultHTCtoPRZ", value);
   }
+  const data = JSON.parse(value);
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -510,11 +514,11 @@ async function swapHTCtoPRZ(data) {
 }
 
 //claimPRZ
-async function claim(data) {
+async function claim(value) {
   if (value !== handleValueLocalStorage(getLocalStorage("claim"))) {
     setLocalStorage("claim", value);
   }
-  console.log(data);
+  const data = JSON.parse(value);
   let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
@@ -577,19 +581,19 @@ const firstLoad = async () => {
       sign(params.get("data"));
       break;
     case "lease":
-      lease(JSON.parse(params.get("data")));
+      lease(params.get("data"));
       break;
     case "withdraw":
-      withdraw(JSON.parse(params.get("data")));
+      withdraw(params.get("data"));
       break;
     case "depositHTC":
       // setLocalStorage("depositHTC", params.get("data"));
       depositHTC(params.get("data"));
       break;
     case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(JSON.parse(params.get("data")));
+      swapHTCtoPRZ(params.get("data"));
     case "claim":
-      claim(JSON.parse(params.get("data")));
+      claim(params.get("data"));
     default:
       break;
   }
