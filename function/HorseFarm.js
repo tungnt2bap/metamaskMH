@@ -622,7 +622,7 @@ const firstLoad = async () => {
       default:
         break;
     }
-  }, 200);
+  }, 300);
 };
 
 function isMobileDevice() {
