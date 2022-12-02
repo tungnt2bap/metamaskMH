@@ -166,12 +166,6 @@ const checkUrl = () => {
   const typeActionURL = params.get("action");
   const typeActionLocalStorage = checkTimeLocalStorage().type;
   if (timeURL != timeLocalStorage) {
-    if (
-      typeActionURL === "sign" &&
-      timeURL === timeLocalStorage &&
-      typeActionURL == typeActionLocalStorage
-    )
-      return;
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
         checkTimeLocalStorage().key
