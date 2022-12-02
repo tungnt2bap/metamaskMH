@@ -163,7 +163,9 @@ const checkUrl = () => {
   console.log("test 5", checkTimeLocalStorage().time);
   const timeLocalStorage = checkTimeLocalStorage().time;
   const timeURL = parseInt(params.get("current_time"));
-  if (timeURL != timeLocalStorage) {
+  const typeActionURL = params.get("action");
+  const typeActionLocalStorage = checkTimeLocalStorage().type;
+  if (timeURL != timeLocalStorage && typeActionURL != typeActionLocalStorage) {
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
         checkTimeLocalStorage().key
