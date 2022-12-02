@@ -85,32 +85,32 @@ const checkTimeLocalStorage = () => {
   const timeLocals = [
     {
       key: "sign",
-      value: handleValueLocalStorage(sign, "time") || 0,
+      value: handleValueLocalStorage(sign) || 0,
       time: handleValueLocalStorage(sign, "time") || 0,
     },
     {
       key: "depositHTC",
-      value: handleValueLocalStorage(depositHTC, "time") || 0,
+      value: handleValueLocalStorage(depositHTC) || 0,
       time: handleValueLocalStorage(depositHTC, "time") || 0,
     },
     {
       key: "lease",
-      value: handleValueLocalStorage(lease, "time") || 0,
+      value: handleValueLocalStorage(lease) || 0,
       time: handleValueLocalStorage(lease, "time") || 0,
     },
     {
       key: "claim",
-      value: handleValueLocalStorage(claim, "time") || 0,
+      value: handleValueLocalStorage(claim) || 0,
       time: handleValueLocalStorage(claim, "time") || 0,
     },
     {
       key: "withdraw",
-      value: handleValueLocalStorage(withdraw, "time") || 0,
+      value: handleValueLocalStorage(withdraw) || 0,
       time: handleValueLocalStorage(withdraw, "time") || 0,
     },
     {
       key: "swapVaultHTCtoPRZ",
-      value: handleValueLocalStorage(swapVaultHTCtoPRZ, "time") || 0,
+      value: handleValueLocalStorage(swapVaultHTCtoPRZ) || 0,
       time: handleValueLocalStorage(swapVaultHTCtoPRZ, "time") || 0,
     },
   ];
@@ -134,16 +134,13 @@ const sign = async (message) => {
 
   const params = new URLSearchParams(window.location.search);
   if (message === handleValueLocalStorage(getLocalStorage("sign"))) {
-    console.log("aaaaaaaaa");
     if (checkTimeLocalStorage() === "sign") {
-      console.log("aaaaa");
-      params.set("action", "sign");
-      params.set("data", message);
+      // params.set("action", "sign");
+      // params.set("data", message);
     }
     if (checkTimeLocalStorage() === "depositHTC") {
-      console.log("aaaaa");
-      params.set("action", "depositHTC");
-      params.set("data", getLocalStorage("depositHTC"));
+      // params.set("action", "depositHTC");
+      // params.set("data", getLocalStorage("depositHTC"));
       // location.reload();
     }
   } else {
@@ -162,7 +159,7 @@ const sign = async (message) => {
   }
 };
 
-function allStorage() {
+function getAllValueStorage() {
   var values = [],
     keys = Object.keys(localStorage),
     i = keys.length;
@@ -179,20 +176,21 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  const localItems = allStorage();
+  const localItems = getAllValueStorage();
   const checkDuplicate = filterName(localItems, params.get("data"));
+  console.log("dup data", checkDuplicate[0]);
   if (checkDuplicate[0]?.length > 0) {
     const newUrl = checkTimeLocalStorage();
     if (newUrl == "sign") {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=sign&data=${handleValueLocalStorage(
           getLocalStorage("sign")
         )}`
       );
     }
     if (newUrl == "depositHTC") {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=depositHTC&data=${handleValueLocalStorage(
           getLocalStorage("depositHTC")
         )}`
       );
@@ -275,6 +273,9 @@ async function switchMetamaskNetwork() {
 
 //user lease horse
 async function lease(data) {
+  if (value !== handleValueLocalStorage(getLocalStorage("lease"))) {
+    setLocalStorage("lease", value);
+  }
   console.log(data);
   console.log(data.token_id);
   let accounts = await web3.eth.getAccounts();
@@ -335,6 +336,9 @@ async function lease(data) {
 
 //user withdraw horse
 async function withdraw(data) {
+  if (value !== handleValueLocalStorage(getLocalStorage("withdraw"))) {
+    setLocalStorage("withdraw", value);
+  }
   let accounts = await web3.eth.getAccounts();
   const HorseFarmContract = new web3.eth.Contract(
     ABIHorseFarm,
@@ -377,13 +381,13 @@ async function depositHTC(value) {
   const params = new URLSearchParams(window.location.search);
   if (value === handleValueLocalStorage(getLocalStorage("depositHTC"))) {
     if (checkTimeLocalStorage() === "sign") {
-      params.set("action", "sign");
-      params.set("data", getLocalStorage("sign"));
+      // params.set("action", "sign");
+      // params.set("data", getLocalStorage("sign"));
       // location.reload();
     }
     if (checkTimeLocalStorage() === "depositHTC") {
-      params.set("action", "depositHTC");
-      params.set("data", value);
+      // params.set("action", "depositHTC");
+      // params.set("data", value);
     }
   } else {
     setLocalStorage("depositHTC", value);
@@ -453,6 +457,9 @@ async function depositHTC(value) {
 }
 //swap HTC to PRZ
 async function swapHTCtoPRZ(data) {
+  if (value !== handleValueLocalStorage(getLocalStorage("swapVaultHTCtoPRZ"))) {
+    setLocalStorage("swapVaultHTCtoPRZ", value);
+  }
   const ABITokenGate = TokenGateABI;
   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
   let accounts = await web3.eth.getAccounts();
@@ -504,6 +511,9 @@ async function swapHTCtoPRZ(data) {
 
 //claimPRZ
 async function claim(data) {
+  if (value !== handleValueLocalStorage(getLocalStorage("claim"))) {
+    setLocalStorage("claim", value);
+  }
   console.log(data);
   let accounts = await web3.eth.getAccounts();
   const ABITokenGate = TokenGateABI;
