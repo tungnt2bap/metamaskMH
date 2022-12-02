@@ -224,9 +224,9 @@ const checkUrl = () => {
       )}`
     );
   }
-  // setTimeout(() => {
-  //   location.reload();
-  // }, 500);
+  setTimeout(() => {
+    location.reload();
+  }, 500);
   // } else {
   //   setLocalStorage(params.get("action"), params.get("data"));
   // }
