@@ -184,13 +184,11 @@ const checkUrl = () => {
     console.log("aaaaaaaaaaaaa");
     return;
   } else {
-    location.replace(
-      `https://tungnt2bap.github.io/metamaskMH/?action=${
-        checkTimeLocalStorage().key
-      }&data=${checkTimeLocalStorage().value}&current_time=${
-        checkTimeLocalStorage().time
-      }`
-    );
+    // location.replace(
+    //   `http://127.0.0.1:5500/?action=${checkTimeLocalStorage().key}&data=${
+    //     checkTimeLocalStorage().value
+    //   }&current_time=${checkTimeLocalStorage().time}`
+    // );
   }
   // const localItems = getAllValueStorage();
   // const checkDuplicate = filterName(localItems, params.get("current_time"));
@@ -625,7 +623,7 @@ const firstLoad = async () => {
       default:
         break;
     }
-  }, 200);
+  }, 600);
 };
 
 function isMobileDevice() {
