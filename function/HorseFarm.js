@@ -173,10 +173,10 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  setLocalStorage(
-    params.get("action"),
-    params.get("data") + "|" + params.get("current_time")
-  );
+  // setLocalStorage(
+  //   params.get("action"),
+  //   params.get("data") + "|" + params.get("current_time")
+  // );
 
   console.log("timeLocalsaa", checkTimeLocalStorage());
 
@@ -577,47 +577,55 @@ async function claim(value) {
 async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
+
 const firstLoad = async () => {
-  checkUrl();
   const params = new URLSearchParams(window.location.search);
-  console.log(params);
-  document.getElementById("a5").innerHTML = params;
-  if (window.ethereum) {
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    web3 = new Web3(window.ethereum);
-  } else {
-    alert("Please install MetaMask Extension in your browser");
-  }
-  await switchMetamaskNetwork();
+  setLocalStorage(
+    params.get("action"),
+    params.get("data") + "|" + params.get("current_time")
+  );
 
-  console.log(params);
-  console.log(params.get("action"));
-  console.log(params.get("data"));
+  setTimeout(async () => {
+    checkUrl();
+    console.log(params);
+    document.getElementById("a5").innerHTML = params;
+    if (window.ethereum) {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      web3 = new Web3(window.ethereum);
+    } else {
+      alert("Please install MetaMask Extension in your browser");
+    }
+    await switchMetamaskNetwork();
 
-  switch (params.get("action")) {
-    // case "switchNetwork":
-    //   switchMetamaskNetwork()
-    case "sign":
-      // setLocalStorage("sign", params.get("data"));
-      sign(params.get("data"));
-      break;
-    case "lease":
-      lease(params.get("data"));
-      break;
-    case "withdraw":
-      withdraw(params.get("data"));
-      break;
-    case "depositHTC":
-      // setLocalStorage("depositHTC", params.get("data"));
-      depositHTC(params.get("data"));
-      break;
-    case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(params.get("data"));
-    case "claim":
-      claim(params.get("data"));
-    default:
-      break;
-  }
+    console.log(params);
+    console.log(params.get("action"));
+    console.log(params.get("data"));
+
+    switch (params.get("action")) {
+      // case "switchNetwork":
+      //   switchMetamaskNetwork()
+      case "sign":
+        // setLocalStorage("sign", params.get("data"));
+        sign(params.get("data"));
+        break;
+      case "lease":
+        lease(params.get("data"));
+        break;
+      case "withdraw":
+        withdraw(params.get("data"));
+        break;
+      case "depositHTC":
+        // setLocalStorage("depositHTC", params.get("data"));
+        depositHTC(params.get("data"));
+        break;
+      case "swapVaultHTCtoPRZ":
+        swapHTCtoPRZ(params.get("data"));
+      case "claim":
+        claim(params.get("data"));
+      default:
+        break;
+    }
+  }, 200);
 };
 
 function isMobileDevice() {
