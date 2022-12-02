@@ -173,22 +173,18 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  // setLocalStorage(
-  //   params.get("action"),
-  //   params.get("data") + "|" + params.get("current_time")
-  // );
-
   console.log("timeLocalsaa", checkTimeLocalStorage());
-
   if (params.get("current_time") == checkTimeLocalStorage().time) {
     console.log("aaaaaaaaaaaaa");
     return;
   } else {
-    // location.replace(
-    //   `http://127.0.0.1:5500/?action=${checkTimeLocalStorage().key}&data=${
-    //     checkTimeLocalStorage().value
-    //   }&current_time=${checkTimeLocalStorage().time}`
-    // );
+    location.replace(
+      `https://tungnt2bap.github.io/metamaskMH/?action=${
+        checkTimeLocalStorage().key
+      }&data=${checkTimeLocalStorage().value}&current_time=${
+        checkTimeLocalStorage().time
+      }`
+    );
   }
   // const localItems = getAllValueStorage();
   // const checkDuplicate = filterName(localItems, params.get("current_time"));
@@ -582,48 +578,45 @@ const firstLoad = async () => {
     params.get("action"),
     params.get("data") + "|" + params.get("current_time")
   );
+  checkUrl();
+  console.log(params);
+  document.getElementById("a5").innerHTML = params;
+  if (window.ethereum) {
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    web3 = new Web3(window.ethereum);
+  } else {
+    alert("Please install MetaMask Extension in your browser");
+  }
+  await switchMetamaskNetwork();
 
-  setTimeout(async () => {
-    checkUrl();
-    console.log(params);
-    document.getElementById("a5").innerHTML = params;
-    if (window.ethereum) {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      web3 = new Web3(window.ethereum);
-    } else {
-      alert("Please install MetaMask Extension in your browser");
-    }
-    await switchMetamaskNetwork();
+  console.log(params);
+  console.log(params.get("action"));
+  console.log(params.get("data"));
 
-    console.log(params);
-    console.log(params.get("action"));
-    console.log(params.get("data"));
-
-    switch (params.get("action")) {
-      // case "switchNetwork":
-      //   switchMetamaskNetwork()
-      case "sign":
-        // setLocalStorage("sign", params.get("data"));
-        sign(params.get("data"));
-        break;
-      case "lease":
-        lease(params.get("data"));
-        break;
-      case "withdraw":
-        withdraw(params.get("data"));
-        break;
-      case "depositHTC":
-        // setLocalStorage("depositHTC", params.get("data"));
-        depositHTC(params.get("data"));
-        break;
-      case "swapVaultHTCtoPRZ":
-        swapHTCtoPRZ(params.get("data"));
-      case "claim":
-        claim(params.get("data"));
-      default:
-        break;
-    }
-  }, 600);
+  switch (params.get("action")) {
+    // case "switchNetwork":
+    //   switchMetamaskNetwork()
+    case "sign":
+      // setLocalStorage("sign", params.get("data"));
+      sign(params.get("data"));
+      break;
+    case "lease":
+      lease(params.get("data"));
+      break;
+    case "withdraw":
+      withdraw(params.get("data"));
+      break;
+    case "depositHTC":
+      // setLocalStorage("depositHTC", params.get("data"));
+      depositHTC(params.get("data"));
+      break;
+    case "swapVaultHTCtoPRZ":
+      swapHTCtoPRZ(params.get("data"));
+    case "claim":
+      claim(params.get("data"));
+    default:
+      break;
+  }
 };
 
 function isMobileDevice() {
