@@ -161,10 +161,9 @@ const checkUrl = () => {
   console.log("test 3,", params.get("action"));
   console.log("test 4", parseInt(params.get("current_time")));
   console.log("test 5", checkTimeLocalStorage().time);
-  if (parseInt(params.get("current_time")) == checkTimeLocalStorage().time) {
-    console.log("test 6");
-    return;
-  } else {
+  const timeLocalStorage = checkTimeLocalStorage().time;
+  const timeURL = parseInt(params.get("current_time"));
+  if (timeURL != timeLocalStorage) {
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
         checkTimeLocalStorage().key
@@ -531,7 +530,3 @@ function openMetaHorse() {
     window.open("https://metamask.io/", "_blank");
   }
 }
-
-const handleClickReplace = () => {
-  window.open("google.com", "_self");
-};
