@@ -178,54 +178,68 @@ const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
   const localItems = getAllValueStorage();
   const checkDuplicate = filterName(localItems, params.get("data"));
-  console.log("dup data", checkDuplicate[0]);
+
   if (checkDuplicate[0]?.length > 0) {
     const newUrl = checkTimeLocalStorage();
-    if (newUrl == "sign") {
+    let flagReplace = false;
+
+    if (newUrl == "sign" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=sign&data=${handleValueLocalStorage(
           getLocalStorage("sign")
         )}`
       );
+      flagReplace = false;
     }
-    if (newUrl == "depositHTC") {
+    if (newUrl == "depositHTC" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=depositHTC&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=depositHTC&data=${handleValueLocalStorage(
           getLocalStorage("depositHTC")
         )}`
       );
+      flagReplace = false;
     }
-    if (newUrl == "lease") {
+    if (newUrl == "lease" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=lease&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=lease&data=${handleValueLocalStorage(
           getLocalStorage("lease")
         )}`
       );
+      flagReplace = false;
     }
-    if (newUrl == "claim") {
+    if (newUrl == "claim" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=claim&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=claim&data=${handleValueLocalStorage(
           getLocalStorage("claim")
         )}`
       );
+      flagReplace = false;
     }
-    if (newUrl == "withdraw") {
+    if (newUrl == "withdraw" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=withdraw&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=withdraw&data=${handleValueLocalStorage(
           getLocalStorage("withdraw")
         )}`
       );
+      flagReplace = false;
     }
-    if (newUrl == "swapVaultHTCtoPRZ") {
+    if (newUrl == "swapVaultHTCtoPRZ" && flagReplace === true) {
       location.replace(
-        `https://tungnt2bap.github.io/metamaskMH/?action=swapVaultHTCtoPRZ&data=${handleValueLocalStorage(
+        `http://127.0.0.1:5500/?action=swapVaultHTCtoPRZ&data=${handleValueLocalStorage(
           getLocalStorage("swapVaultHTCtoPRZ")
         )}`
       );
+      flagReplace = false;
     }
-    setTimeout(() => {
-      location.reload();
-    }, 500);
+
+    // if (flagReplace === true) {
+    //   setTimeout(() => {
+    //     location.reload();
+    //   }, 500);
+    // }
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 500);
   } else {
     setLocalStorage(params.get("action"), params.get("data"));
     return;
