@@ -181,7 +181,6 @@ const checkUrl = () => {
 
   if (checkDuplicate[0]?.length > 0) {
     const newUrl = checkTimeLocalStorage();
-
     if (newUrl == "sign") {
       location.replace(
         `https://tungnt2bap.github.io/metamaskMH/?action=sign&data=${handleValueLocalStorage(
@@ -227,10 +226,9 @@ const checkUrl = () => {
 
     setTimeout(() => {
       location.reload();
-    }, 400);
+    }, 1000);
   } else {
     setLocalStorage(params.get("action"), params.get("data"));
-    return;
   }
 };
 
