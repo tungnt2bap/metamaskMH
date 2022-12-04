@@ -477,10 +477,17 @@ async function getGasPrice() {
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
   console.log("test 1", params.get("action"));
-  setLocalStorage(
-    params.get("action"),
-    params.get("data") + "|" + params.get("current_time")
-  );
+  document.getElementById('a9').innerHTML = parseInt(params.get("current_time"))
+  document.getElementById('a10').innerHTML = parseInt(checkTimeLocalStorage().time)
+  if (parseInt(params.get("current_time")) <= parseInt(checkTimeLocalStorage().time)) {
+    return
+  } else {
+    setLocalStorage(
+        params.get("action"),
+        params.get("data") + "|" + params.get("current_time")
+      );
+  }
+ 
   setTimeout(async () => {
     checkUrl();
     document.getElementById("a5").innerHTML = params;
@@ -520,7 +527,7 @@ const firstLoad = async () => {
       default:
         break;
     }
-  }, 300);
+  }, 600);
 };
 
 function isMobileDevice() {
