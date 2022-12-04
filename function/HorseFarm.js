@@ -480,7 +480,7 @@ const firstLoad = async () => {
   document.getElementById('a9').innerHTML = parseInt(params.get("current_time"))
   document.getElementById('a10').innerHTML = parseInt(checkTimeLocalStorage().time)
   if (parseInt(params.get("current_time")) <= parseInt(checkTimeLocalStorage().time)) {
-    return
+    console.log('aaaaaaaa')
   } else {
     setLocalStorage(
         params.get("action"),
