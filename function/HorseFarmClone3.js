@@ -128,12 +128,6 @@ const checkTimeLocalStorage = () => {
 
 const sign = async (message) => {
   // await window.ethereum.request({ method: "eth_requestAccounts" });
-  if (window.ethereum) {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      web3 = new Web3(window.ethereum);
-    } else {
-      alert("Please install MetaMask Extension in your browser");
-    }
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
@@ -325,12 +319,6 @@ async function withdraw(value) {
 //deposit HTC
 async function depositHTC(value) {
   // await window.ethereum.request({ method: "eth_requestAccounts" });
-   if (window.ethereum) {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      web3 = new Web3(window.ethereum);
-    } else {
-      alert("Please install MetaMask Extension in your browser");
-    }
   const data = JSON.parse(value);
   let accounts = await web3.eth.getAccounts();
   const ABIHTC = tokenHTC;
@@ -486,29 +474,29 @@ async function getGasPrice() {
   return await web3.eth.getGasPrice();
 }
 
-const handleLogin = async (type) => {
+const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
-  // console.log("test 1", params.get("action"));
-  // setLocalStorage(
-  //   params.get("action"),
-  //   params.get("data") + "|" + params.get("current_time")
-  // );
-  // setTimeout(async () => {
-  //   checkUrl();
-  //   document.getElementById("a5").innerHTML = params;
-  //   if (window.ethereum) {
-  //     await window.ethereum.request({ method: "eth_requestAccounts" });
-  //     web3 = new Web3(window.ethereum);
-  //   } else {
-  //     alert("Please install MetaMask Extension in your browser");
-  //   }
-  //   await switchMetamaskNetwork();
+  console.log("test 1", params.get("action"));
+  setLocalStorage(
+    params.get("action"),
+    params.get("data") + "|" + params.get("current_time")
+  );
+  setTimeout(async () => {
+    checkUrl();
+    document.getElementById("a5").innerHTML = params;
+    if (window.ethereum) {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      web3 = new Web3(window.ethereum);
+    } else {
+      alert("Please install MetaMask Extension in your browser");
+    }
+    await switchMetamaskNetwork();
 
-  //   console.log("test 7", params.get("action"));
-  //   console.log(params.get("action"));
-  //   console.log(params.get("data"));
+    console.log("test 7", params.get("action"));
+    console.log(params.get("action"));
+    console.log(params.get("data"));
 
-    switch (type) {
+    switch (params.get("action")) {
       // case "switchNetwork":
       //   switchMetamaskNetwork()
       case "sign":
@@ -532,7 +520,7 @@ const handleLogin = async (type) => {
       default:
         break;
     }
-  // }, 300);
+  }, 300);
 };
 
 function isMobileDevice() {
