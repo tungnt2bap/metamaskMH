@@ -146,6 +146,11 @@ const filterName = (arr, value) => {
 };
 
 const replaceLatestUrl = () => {
+  //  check if ios
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    return;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const timeLocalStorage = parseInt(getLatestValueLocal().time);
   const timeURL = parseInt(params.get("current_time"));
@@ -459,6 +464,7 @@ const firstLoad = async () => {
   document.getElementById("a9").innerHTML = parseInt(
     params.get("current_time")
   );
+  document.getElementById("btn-transaction").innerHTML = getActionUrl();
   document.getElementById("a10").innerHTML = parseInt(
     getLatestValueLocal().time
   );
@@ -481,29 +487,39 @@ const firstLoad = async () => {
       alert("Please install MetaMask Extension in your browser");
     }
     await switchMetamaskNetwork();
-    switch (params.get("action")) {
-      // case "switchNetwork":
-      //   switchMetamaskNetwork()
-      case "sign":
-        // setLocalStorage("sign", params.get("data"));
-        sign(params.get("data"));
-        break;
-      case "lease":
-        lease(params.get("data"));
-        break;
-      case "withdraw":
-        withdraw(params.get("data"));
-        break;
-      case "depositHTC":
-        // setLocalStorage("depositHTC", params.get("data"));
-        depositHTC(params.get("data"));
-        break;
-      case "swapVaultHTCtoPRZ":
-        swapHTCtoPRZ(params.get("data"));
-      case "claim":
-        claim(params.get("data"));
-      default:
-        break;
-    }
   }, 300);
+};
+
+const getActionUrl = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("action");
+};
+
+const handleTransactionMetamask = (type) => {
+  console.log("aaaaaaaaa");
+  const params = new URLSearchParams(window.location.search);
+  switch (type) {
+    // case "switchNetwork":
+    //   switchMetamaskNetwork()
+    case "sign":
+      // setLocalStorage("sign", params.get("data"));
+      sign(params.get("data"));
+      break;
+    case "lease":
+      lease(params.get("data"));
+      break;
+    case "withdraw":
+      withdraw(params.get("data"));
+      break;
+    case "depositHTC":
+      // setLocalStorage("depositHTC", params.get("data"));
+      depositHTC(params.get("data"));
+      break;
+    case "swapVaultHTCtoPRZ":
+      swapHTCtoPRZ(params.get("data"));
+    case "claim":
+      claim(params.get("data"));
+    default:
+      break;
+  }
 };
