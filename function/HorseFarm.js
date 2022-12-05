@@ -72,7 +72,7 @@ const handleValueLocalStorage = (value, key) => {
   }
 };
 
-const checkTimeLocalStorage = () => {
+const getLatestValueLocal = () => {
   const sign = getLocalStorage("sign");
   const depositHTC = getLocalStorage("depositHTC");
   const lease = getLocalStorage("lease");
@@ -151,14 +151,14 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  const timeLocalStorage = parseInt(checkTimeLocalStorage().time);
+  const timeLocalStorage = parseInt(getLatestValueLocal().time);
   const timeURL = parseInt(params.get("current_time"));
   if (timeURL != timeLocalStorage) {
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
-        checkTimeLocalStorage().key
-      }&data=${checkTimeLocalStorage().value}&current_time=${
-        checkTimeLocalStorage().time
+        getLatestValueLocal().key
+      }&data=${getLatestValueLocal().value}&current_time=${
+        getLatestValueLocal().time
       }`
     );
   }
@@ -464,11 +464,10 @@ const firstLoad = async () => {
     params.get("current_time")
   );
   document.getElementById("a10").innerHTML = parseInt(
-    checkTimeLocalStorage().time
+    getLatestValueLocal().time
   );
   if (
-    parseInt(params.get("current_time")) >
-    parseInt(checkTimeLocalStorage().time)
+    parseInt(params.get("current_time")) > parseInt(getLatestValueLocal().time)
   ) {
     setLocalStorage(
       params.get("action"),
