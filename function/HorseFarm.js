@@ -40,16 +40,9 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
-  const btnCopy = document.createElement("input");
-  btnCopy.type = "button";
-  btnCopy.id = "btnCopy";
-  btnCopy.value = "OK";
-  btnCopy.onclick = async () => {
-    await copyToClipboard(dataResult);
-    openMetaHorse();
-    document.getElementById("myModal").style.visibility = "hidden";
-  };
-  document.getElementById("btnCopyHiden").appendChild(btnCopy);
+  await delay(3000);
+  await copyToClipboard(dataResult);
+  openMetaHorse();
 };
 
 const openModal = (title) => {
