@@ -118,7 +118,7 @@ const sign = async (message) => {
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    await createCopyInputButton([400, err.message].join("|"));
+    createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -249,7 +249,7 @@ async function lease(value) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -287,7 +287,7 @@ async function withdraw(value) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -354,7 +354,7 @@ async function depositHTC(value) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully deposit");
       }
     );
@@ -405,7 +405,7 @@ async function swapHTCtoPRZ(value) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -442,7 +442,7 @@ async function claim(value) {
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
