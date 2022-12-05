@@ -7,6 +7,9 @@ const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const isMobileDevice = () => {
+  return "ontouchstart" in window || "onmsgesturechange" in window;
+};
 const openMetaHorse = () => {
   if (isMobileDevice()) {
     window.open("metahorse://web3login");
@@ -43,8 +46,8 @@ const createCopyInputButton = async (dataResult) => {
   btnCopy.value = "OK";
   btnCopy.onclick = async () => {
     await copyToClipboard(dataResult);
-    document.getElementById("myModal").style.visibility = "hidden";
     openMetaHorse();
+    document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 };
@@ -132,7 +135,7 @@ const sign = async (message) => {
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    createCopyInputButtonWithoutDelay([accounts, message, signature].join("|"));
+    createCopyInputButton([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
@@ -516,7 +519,3 @@ const firstLoad = async () => {
     }
   }, 300);
 };
-
-function isMobileDevice() {
-  return "ontouchstart" in window || "onmsgesturechange" in window;
-}
