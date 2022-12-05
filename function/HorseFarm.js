@@ -467,10 +467,8 @@ const firstLoad = async () => {
     getLatestValueLocal().time
   );
   if (
-    parseInt(params.get("current_time")) <= parseInt(getLatestValueLocal().time)
-  ) {
-    console.log("aaaaaaaa");
-  } else {
+    parseInt(params.get("current_time")) > parseInt(getLatestValueLocal().time)
+  ) 
     setLocalStorage(
       params.get("action"),
       params.get("data") + "|" + params.get("current_time")
