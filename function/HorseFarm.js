@@ -30,7 +30,6 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
-  await delay(15000);
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
