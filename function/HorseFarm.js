@@ -13,9 +13,10 @@ const copyToClipboard = async function (dataResult) {
     // focus from metamask back to browser
     window.focus();
     // wait to finish focus
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    // await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
+    openMetaHorse();
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -155,11 +156,9 @@ const replaceLatestUrl = () => {
   const timeURL = parseInt(params.get("current_time"));
   if (timeURL != timeLocalStorage) {
     location.replace(
-      `https://tungnt2bap.github.io/metamaskMH/?action=${
-        getLatestValueLocal().key
-      }&data=${getLatestValueLocal().value}&current_time=${
-        getLatestValueLocal().time
-      }`
+      `http://127.0.0.1:5500/?action=${getLatestValueLocal().key}&data=${
+        getLatestValueLocal().value
+      }&current_time=${getLatestValueLocal().time}`
     );
   }
 };
