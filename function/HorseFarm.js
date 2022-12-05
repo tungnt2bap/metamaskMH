@@ -115,11 +115,11 @@ const sign = async (message) => {
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    createCopyInputButton([accounts, message, signature].join("|"));
+    await createCopyInputButton([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    createCopyInputButton([400, err.message].join("|"));
+    await createCopyInputButton([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -245,12 +245,12 @@ async function lease(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          await createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -283,12 +283,12 @@ async function withdraw(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          await createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -350,12 +350,12 @@ async function depositHTC(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          await createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully deposit");
       }
     );
@@ -401,12 +401,12 @@ async function swapHTCtoPRZ(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          await createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -438,12 +438,12 @@ async function claim(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          await createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        createCopyInputButton([402, res].join("|"));
+        await createCopyInputButton([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
