@@ -52,18 +52,6 @@ const createCopyInputButton = async (dataResult) => {
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 };
 
-const createCopyInputButtonWithoutDelay = async (dataResult) => {
-  const btnCopy = document.createElement("input");
-  btnCopy.type = "button";
-  btnCopy.id = "btnCopy";
-  btnCopy.value = "OK";
-  btnCopy.onclick = () => {
-    copyToClipboard(dataResult);
-    document.getElementById("myModal").style.visibility = "hidden";
-  };
-  document.getElementById("btnCopyHiden").appendChild(btnCopy);
-};
-
 const openModal = (title) => {
   document.getElementById("myModal").style.visibility = "visible";
   document.getElementById("title-modal").innerHTML = title;
@@ -73,11 +61,9 @@ const handleValueLocalStorage = (value, key) => {
   if (!value) return;
   if (key !== "time") {
     const findText = value.indexOf("|");
-    console.log("aaaa", value.slice(0, findText));
     return value.slice(0, findText);
   } else {
     const findText = value.indexOf("|");
-    console.log("aaaa", value);
     return parseInt(value.slice(findText + 1));
   }
 };
@@ -260,7 +246,7 @@ async function lease(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -298,7 +284,7 @@ async function withdraw(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -365,7 +351,7 @@ async function depositHTC(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -416,7 +402,7 @@ async function swapHTCtoPRZ(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -453,7 +439,7 @@ async function claim(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButtonWithoutDelay([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
