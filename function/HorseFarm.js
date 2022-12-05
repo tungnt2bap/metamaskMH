@@ -16,7 +16,6 @@ const copyToClipboard = async function (dataResult) {
     // await new Promise((resolve) => setTimeout(resolve, 300));
     // copy tx hash to clipboard
     await navigator.clipboard.writeText(dataResult);
-    openMetaHorse();
   } catch (err) {
     console.log(err);
     // for metamask mobile android
@@ -36,9 +35,10 @@ const createCopyInputButton = async (dataResult) => {
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
-  btnCopy.onclick = () => {
-    copyToClipboard(dataResult);
+  btnCopy.onclick = async () => {
+    await copyToClipboard(dataResult);
     document.getElementById("myModal").style.visibility = "hidden";
+    openMetaHorse();
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
 };
