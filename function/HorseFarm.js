@@ -50,9 +50,6 @@ const createCopyInputButton = async (dataResult) => {
     document.getElementById("myModal").style.visibility = "hidden";
   };
   document.getElementById("btnCopyHiden").appendChild(btnCopy);
-  await copyToClipboard(dataResult);
-  await delay(3000);
-  openMetaHorse();
 };
 
 const openModal = (title) => {
@@ -124,7 +121,7 @@ const sign = async (message) => {
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    await createCopyInputButton([accounts, message, signature].join("|"));
+    createCopyInputButton([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
@@ -254,7 +251,7 @@ async function lease(value) {
       },
       async function (err, res) {
         if (err) {
-          await createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -292,7 +289,7 @@ async function withdraw(value) {
       },
       async function (err, res) {
         if (err) {
-          await createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -359,7 +356,7 @@ async function depositHTC(value) {
       },
       async function (err, res) {
         if (err) {
-          await createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -410,7 +407,7 @@ async function swapHTCtoPRZ(value) {
       },
       async function (err, res) {
         if (err) {
-          await createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
@@ -447,7 +444,7 @@ async function claim(value) {
       },
       async function (err, res) {
         if (err) {
-          await createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
