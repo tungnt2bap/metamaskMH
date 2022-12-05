@@ -30,6 +30,7 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
+  await delay(10000);
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
@@ -466,8 +467,10 @@ const firstLoad = async () => {
     getLatestValueLocal().time
   );
   if (
-    parseInt(params.get("current_time")) > parseInt(getLatestValueLocal().time)
+    parseInt(params.get("current_time")) <= parseInt(getLatestValueLocal().time)
   ) {
+    console.log("aaaaaaaa");
+  } else {
     setLocalStorage(
       params.get("action"),
       params.get("data") + "|" + params.get("current_time")
