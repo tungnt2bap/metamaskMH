@@ -39,13 +39,12 @@ const copyToClipboard = async function (dataResult) {
   }
 };
 
-const createCopyInputButton = async (dataResult) => {
+const createCopyInputButton = async () => {
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
-  await copyToClipboard(dataResult);
-  btnCopy.onclick = () => {
+  btnCopy.onclick = async () => {
     openMetaHorse();
     document.getElementById("myModal").style.visibility = "hidden";
   };
@@ -121,11 +120,13 @@ const sign = async (message) => {
   try {
     let accounts = await web3.eth.getAccounts();
     let signature = await web3.eth.personal.sign(message, accounts[0], "");
-    createCopyInputButton([accounts, message, signature].join("|"));
+    createCopyInputButton();
+    await copyToClipboard([accounts, message, signature].join("|"));
     openModal("You have successfully signed");
   } catch (err) {
     console.log(err);
-    await createCopyInputButton([400, err.message].join("|"));
+    createCopyInputButton();
+    await copyToClipboard([400, err.message].join("|"));
     openModal("Sign failed");
   }
 };
@@ -251,12 +252,14 @@ async function lease(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton();
+          await copyToClipboard([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton();
+        await copyToClipboard([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -289,12 +292,14 @@ async function withdraw(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton();
+          await copyToClipboard([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton();
+        await copyToClipboard([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -356,12 +361,15 @@ async function depositHTC(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton();
+          await copyToClipboard([400, "failed"].join("|"));
+
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton();
+        await copyToClipboard([402, res].join("|"));
         openModal("You have successfully deposit");
       }
     );
@@ -407,12 +415,14 @@ async function swapHTCtoPRZ(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton();
+          await copyToClipboard([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton();
+        await copyToClipboard([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
@@ -444,12 +454,14 @@ async function claim(value) {
       },
       async function (err, res) {
         if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton();
+          await copyToClipboard([400, "failed"].join("|"));
           openModal("Transaction failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
+        createCopyInputButton();
+        await copyToClipboard([402, res].join("|"));
         openModal("You have successfully approved");
       }
     );
