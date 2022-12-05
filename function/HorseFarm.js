@@ -40,7 +40,18 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
+  const btnCopy = document.createElement("input");
+  btnCopy.type = "button";
+  btnCopy.id = "btnCopy";
+  btnCopy.value = "OK";
+  btnCopy.onclick = async () => {
+    await copyToClipboard(dataResult);
+    openMetaHorse();
+    document.getElementById("myModal").style.visibility = "hidden";
+  };
+  document.getElementById("btnCopyHiden").appendChild(btnCopy);
   await copyToClipboard(dataResult);
+  await delay(3000);
   openMetaHorse();
 };
 
