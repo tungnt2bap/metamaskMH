@@ -44,8 +44,8 @@ const createCopyInputButton = async (dataResult) => {
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
   btnCopy.value = "OK";
-  btnCopy.onclick = async () => {
-    await copyToClipboard(dataResult);
+  await copyToClipboard(dataResult);
+  btnCopy.onclick = () => {
     openMetaHorse();
     document.getElementById("myModal").style.visibility = "hidden";
   };
