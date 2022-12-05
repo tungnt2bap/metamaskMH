@@ -41,9 +41,7 @@ const copyToClipboard = async function (dataResult) {
 
 const createCopyInputButton = async (dataResult) => {
   await copyToClipboard(dataResult);
-  setTimeout(() => {
-    openMetaHorse();
-  }, 3000);
+  openMetaHorse();
 };
 
 const openModal = (title) => {
