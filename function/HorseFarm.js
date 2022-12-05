@@ -116,12 +116,6 @@ const checkTimeLocalStorage = () => {
   const max = timeLocals.reduce(function (prev, current) {
     return parseInt(prev.time) > parseInt(current.time) ? prev : current;
   }); //returns object
-
-  console.log("test", max);
-  //   const filterName = (arr, value) => {
-  //   return arr.filter((item) => item.includes(value));
-  // };
-
   console.log("timeLocals", max);
   return max;
 };
@@ -157,17 +151,9 @@ const filterName = (arr, value) => {
 
 const checkUrl = () => {
   const params = new URLSearchParams(window.location.search);
-  console.log("test 2", checkTimeLocalStorage());
-  console.log("test 3,", params.get("action"));
-  console.log("test 4", parseInt(params.get("current_time")));
-  console.log("test 5", checkTimeLocalStorage().time);
   const timeLocalStorage = parseInt(checkTimeLocalStorage().time);
   const timeURL = parseInt(params.get("current_time"));
-  const typeActionURL = params.get("action");
-  const typeActionLocalStorage = checkTimeLocalStorage().type;
   if (timeURL != timeLocalStorage) {
-    // const timeNow = Date.parse(new Date());
-    // if (timeURL >= timeNow - 10)
     location.replace(
       `https://tungnt2bap.github.io/metamaskMH/?action=${
         checkTimeLocalStorage().key
@@ -219,8 +205,6 @@ async function switchMetamaskNetwork() {
 //user lease horse
 async function lease(value) {
   const data = JSON.parse(value);
-  // console.log(data);
-  // console.log(data.token_id);
   let accounts = await web3.eth.getAccounts();
   console.log("account: ", accounts);
   const HorseFarmContract = new web3.eth.Contract(
@@ -476,18 +460,22 @@ async function getGasPrice() {
 
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
-  console.log("test 1", params.get("action"));
-  document.getElementById('a9').innerHTML = parseInt(params.get("current_time"))
-  document.getElementById('a10').innerHTML = parseInt(checkTimeLocalStorage().time)
-  if (parseInt(params.get("current_time")) <= parseInt(checkTimeLocalStorage().time)) {
-    console.log('aaaaaaaa')
-  } else {
+  document.getElementById("a9").innerHTML = parseInt(
+    params.get("current_time")
+  );
+  document.getElementById("a10").innerHTML = parseInt(
+    checkTimeLocalStorage().time
+  );
+  if (
+    parseInt(params.get("current_time")) >
+    parseInt(checkTimeLocalStorage().time)
+  ) {
     setLocalStorage(
-        params.get("action"),
-        params.get("data") + "|" + params.get("current_time")
-      );
+      params.get("action"),
+      params.get("data") + "|" + params.get("current_time")
+    );
   }
- 
+
   setTimeout(async () => {
     checkUrl();
     document.getElementById("a5").innerHTML = params;
@@ -498,11 +486,6 @@ const firstLoad = async () => {
       alert("Please install MetaMask Extension in your browser");
     }
     await switchMetamaskNetwork();
-
-    console.log("test 7", params.get("action"));
-    console.log(params.get("action"));
-    console.log(params.get("data"));
-
     switch (params.get("action")) {
       // case "switchNetwork":
       //   switchMetamaskNetwork()
@@ -527,7 +510,7 @@ const firstLoad = async () => {
       default:
         break;
     }
-  }, 600);
+  }, 300);
 };
 
 function isMobileDevice() {
