@@ -7,6 +7,13 @@ const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const openMetaHorse = () => {
+  if (isMobileDevice()) {
+    window.open("metahorse://web3login");
+  } else {
+    window.open("https://metamask.io/", "_blank");
+  }
+};
 
 const copyToClipboard = async function (dataResult) {
   try {
@@ -30,7 +37,6 @@ const copyToClipboard = async function (dataResult) {
 };
 
 const createCopyInputButton = async (dataResult) => {
-  await delay(10000);
   const btnCopy = document.createElement("input");
   btnCopy.type = "button";
   btnCopy.id = "btnCopy";
@@ -513,12 +519,4 @@ const firstLoad = async () => {
 
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
-}
-
-function openMetaHorse() {
-  if (isMobileDevice()) {
-    window.open("metahorse://web3login");
-  } else {
-    window.open("https://metamask.io/", "_blank");
-  }
 }
