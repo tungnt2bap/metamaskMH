@@ -165,9 +165,11 @@ const replaceLatestUrl = () => {
   const timeURL = parseInt(params.get("current_time"));
   if (timeURL != timeLocalStorage) {
     location.replace(
-      `http://127.0.0.1:5500/?action=${getLatestValueLocal().key}&data=${
-        getLatestValueLocal().value
-      }&current_time=${getLatestValueLocal().time}`
+      `https://tungnt2bap.github.io/metamaskMH/?action=${
+        getLatestValueLocal().key
+      }&data=${getLatestValueLocal().value}&current_time=${
+        getLatestValueLocal().time
+      }`
     );
   }
 };
