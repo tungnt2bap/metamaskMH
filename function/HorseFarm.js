@@ -1,10 +1,17 @@
 const ABIHorseFarm = horseFarm;
 const ABIHorseNFT = horseNFT;
-const HORSENFT_ADDRESS = "0xb4469839f184aA3d223126d3964B18C59f703D9d";
-const TOKENPRZ_ADDRESS = "0x4dBE394478d3B7E120412e61Bba3E3c8c85a079C";
-const TOKENHTC_ADDRESS = "0xD3312D8aA3862088D1A9d660003d7EDe013DdAd3";
-const TOKENGATE_ADDRESS = "0xcBE266C1169B34638EB34d7B40989310e6434ebd";
+const HORSENFT_ADDRESS = "0x8dB54Bb8bE369cbea3c1270E08Af2D62E549D5F4";
+const TOKENPRZ_ADDRESS = "0x946556cE6A1Dea9C7dD9Ba74B57852fB699e0fB3";
+const TOKENHTC_ADDRESS = "0x2083372751851864B8a448cCe40AaF01ee0aDc3C";
+const TOKENGATE_ADDRESS = "0xF806D36F01898Ed427fD10e93d165CdcdE89d856";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
+const configs = {
+  chainId: 7575,
+  chainName: "Testnet Chain",
+  currencyName: "ADIL",
+  linkRPC: "https://testnet.adil-rpc.io",
+  linkBlockExplorerurls: "https://testnet.adil-scan.io",
+};
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 const isMobileDevice = () => {
@@ -83,7 +90,7 @@ const getLatestValueLocal = () => {
       time: handleValueLocalStorage(sign, "time") || 0,
     },
     {
-      key: "depositHTC",
+      key: "depositMARE",
       value: handleValueLocalStorage(depositHTC) || 0,
       time: handleValueLocalStorage(depositHTC, "time") || 0,
     },
@@ -175,13 +182,11 @@ const getLocalStorage = (key) => {
 };
 
 async function switchMetamaskNetwork() {
-  const chainId = 55; //id testnet
-
-  if (window.ethereum.networkVersion !== chainId) {
+  if (window.ethereum.networkVersion !== configs.chainId) {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: web3.utils.toHex(chainId) }],
+        params: [{ chainId: web3.utils.toHex(configs.chainId) }],
       });
     } catch (err) {
       console.error(err);
@@ -191,10 +196,14 @@ async function switchMetamaskNetwork() {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainName: "Spectre Testnet",
-              chainId: web3.utils.toHex(chainId),
-              nativeCurrency: { name: "SPECTRE", decimals: 18, symbol: "SPC" },
-              rpcUrls: ["https://testnet.spectre-rpc.io"],
+              chainName: configs.chainName,
+              chainId: web3.utils.toHex(configs.chainId),
+              nativeCurrency: {
+                name: configs.chainName,
+                decimals: 18,
+                symbol: configs.currencyName,
+              },
+              rpcUrls: [configs.linkRPC],
             },
           ],
         });
@@ -511,7 +520,7 @@ const handleTransactionMetamask = (type) => {
     case "withdraw":
       withdraw(params.get("data"));
       break;
-    case "depositHTC":
+    case "depositMARE":
       // setLocalStorage("depositHTC", params.get("data"));
       depositHTC(params.get("data"));
       break;
