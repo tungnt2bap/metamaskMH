@@ -13,6 +13,14 @@ const configs = {
   linkBlockExplorerurls: "https://testnet.adil-scan.io",
 };
 
+const ACTIONS = {
+  sign: "sign",
+  lease: "lease",
+  withdraw: "withdraw",
+  depositMARE: "depositMARE",
+  claim: "claim",
+};
+
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 const isMobileDevice = () => {
   return "ontouchstart" in window || "onmsgesturechange" in window;
@@ -76,43 +84,37 @@ const handleValueLocalStorage = (value, key) => {
 };
 
 const getLatestValueLocal = () => {
-  const sign = getLocalStorage("sign");
-  const depositHTC = getLocalStorage("depositMARE");
-  const lease = getLocalStorage("lease");
-  const withdraw = getLocalStorage("withdraw");
-  const swapVaultHTCtoPRZ = getLocalStorage("swapVaultHTCtoPRZ");
-  const claim = getLocalStorage("claim");
+  const sign = getLocalStorage(ACTIONS.sign);
+  const depositHTC = getLocalStorage(ACTIONS.depositMARE);
+  const lease = getLocalStorage(ACTIONS.lease);
+  const withdraw = getLocalStorage(ACTIONS.withdraw);
+  const claim = getLocalStorage(ACTIONS.claim);
 
   const timeLocals = [
     {
-      key: "sign",
+      key: ACTIONS.sign,
       value: handleValueLocalStorage(sign) || 0,
       time: handleValueLocalStorage(sign, "time") || 0,
     },
     {
-      key: "depositMARE",
+      key: ACTIONS.depositMARE,
       value: handleValueLocalStorage(depositHTC) || 0,
       time: handleValueLocalStorage(depositHTC, "time") || 0,
     },
     {
-      key: "lease",
+      key: ACTIONS.lease,
       value: handleValueLocalStorage(lease) || 0,
       time: handleValueLocalStorage(lease, "time") || 0,
     },
     {
-      key: "claim",
+      key: ACTIONS.claim,
       value: handleValueLocalStorage(claim) || 0,
       time: handleValueLocalStorage(claim, "time") || 0,
     },
     {
-      key: "withdraw",
+      key: ACTIONS.withdraw,
       value: handleValueLocalStorage(withdraw) || 0,
       time: handleValueLocalStorage(withdraw, "time") || 0,
-    },
-    {
-      key: "swapVaultHTCtoPRZ",
-      value: handleValueLocalStorage(swapVaultHTCtoPRZ) || 0,
-      time: handleValueLocalStorage(swapVaultHTCtoPRZ, "time") || 0,
     },
   ];
 
@@ -505,28 +507,27 @@ const getActionUrl = () => {
 };
 
 const handleTransactionMetamask = (type) => {
-  console.log("aaaaaaaaa");
   const params = new URLSearchParams(window.location.search);
   switch (type) {
     // case "switchNetwork":
     //   switchMetamaskNetwork()
-    case "sign":
+    case ACTIONS.sign:
       // setLocalStorage("sign", params.get("data"));
       sign(params.get("data"));
       break;
-    case "lease":
+    case ACTIONS.lease:
       lease(params.get("data"));
       break;
-    case "withdraw":
+    case ACTIONS.withdraw:
       withdraw(params.get("data"));
       break;
-    case "depositMARE":
+    case ACTIONS.depositMARE:
       // setLocalStorage("depositHTC", params.get("data"));
       depositHTC(params.get("data"));
       break;
     // case "swapVaultHTCtoPRZ":
     //   swapHTCtoPRZ(params.get("data"));
-    case "claim":
+    case ACTIONS.claim:
       claim(params.get("data"));
     default:
       break;
