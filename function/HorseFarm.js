@@ -376,56 +376,56 @@ async function depositHTC(value) {
     );
 }
 //swap HTC to PRZ
-async function swapHTCtoPRZ(value) {
-  const data = JSON.parse(value);
-  const ABITokenGate = TokenGateABI;
-  const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
-  let accounts = await web3.eth.getAccounts();
-  await TokenGate.methods
-    .swapVaultHTCtoPRZ(
-      TOKENHTC_ADDRESS,
-      TOKENPRZ_ADDRESS,
-      new BigNumber(data.amount).toFixed()
-    )
-    .send(
-      {
-        from: accounts[0],
-        to: TOKENHTC_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice(),
-      },
-      function (err, res) {
-        if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
-          openModal("Failed");
-        }
-        console.log("Hash of the transaction: " + res);
-        // createCopyInputButton([401, res].join("|"));
-        openModal("You not done yet");
-      }
-    );
+// async function swapHTCtoPRZ(value) {
+//   const data = JSON.parse(value);
+//   const ABITokenGate = TokenGateABI;
+//   const TokenGate = new web3.eth.Contract(ABITokenGate, TOKENGATE_ADDRESS);
+//   let accounts = await web3.eth.getAccounts();
+//   await TokenGate.methods
+//     .swapVaultHTCtoPRZ(
+//       TOKENHTC_ADDRESS,
+//       TOKENPRZ_ADDRESS,
+//       new BigNumber(data.amount).toFixed()
+//     )
+//     .send(
+//       {
+//         from: accounts[0],
+//         to: TOKENHTC_ADDRESS,
+//         gasLimit: web3.utils.toHex("1000000"),
+//         gasPrice: await getGasPrice(),
+//       },
+//       function (err, res) {
+//         if (err) {
+//           // createCopyInputButton([400, "failed"].join("|"));
+//           openModal("Failed");
+//         }
+//         console.log("Hash of the transaction: " + res);
+//         // createCopyInputButton([401, res].join("|"));
+//         openModal("You not done yet");
+//       }
+//     );
 
-  await TokenGate.methods
-    .withdrawVault(TOKENPRZ_ADDRESS, new BigNumber(data.amount).toFixed())
-    .send(
-      {
-        from: TOKENGATE_SERVER_ADDRESS,
-        to: TOKENGATE_ADDRESS,
-        gasLimit: web3.utils.toHex("1000000"),
-        gasPrice: await getGasPrice(),
-      },
-      async function (err, res) {
-        if (err) {
-          createCopyInputButton([400, "failed"].join("|"));
-          openModal("Transaction failed");
-          return;
-        }
-        console.log("Hash of the transaction: " + res);
-        await createCopyInputButton([402, res].join("|"));
-        openModal("You have successfully approved");
-      }
-    );
-}
+//   await TokenGate.methods
+//     .withdrawVault(TOKENPRZ_ADDRESS, new BigNumber(data.amount).toFixed())
+//     .send(
+//       {
+//         from: TOKENGATE_SERVER_ADDRESS,
+//         to: TOKENGATE_ADDRESS,
+//         gasLimit: web3.utils.toHex("1000000"),
+//         gasPrice: await getGasPrice(),
+//       },
+//       async function (err, res) {
+//         if (err) {
+//           createCopyInputButton([400, "failed"].join("|"));
+//           openModal("Transaction failed");
+//           return;
+//         }
+//         console.log("Hash of the transaction: " + res);
+//         await createCopyInputButton([402, res].join("|"));
+//         openModal("You have successfully approved");
+//       }
+//     );
+// }
 
 //claimPRZ
 async function claim(value) {
@@ -487,7 +487,7 @@ const firstLoad = async () => {
   }
 
   setTimeout(async () => {
-    replaceLatestUrl();
+    // replaceLatestUrl();
     document.getElementById("a5").innerHTML = params;
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -524,8 +524,8 @@ const handleTransactionMetamask = (type) => {
       // setLocalStorage("depositHTC", params.get("data"));
       depositHTC(params.get("data"));
       break;
-    case "swapVaultHTCtoPRZ":
-      swapHTCtoPRZ(params.get("data"));
+    // case "swapVaultHTCtoPRZ":
+    //   swapHTCtoPRZ(params.get("data"));
     case "claim":
       claim(params.get("data"));
     default:
