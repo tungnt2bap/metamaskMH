@@ -487,7 +487,7 @@ const firstLoad = async () => {
   }
 
   setTimeout(async () => {
-    replaceLatestUrl();
+    // replaceLatestUrl();
     document.getElementById("a5").innerHTML = params;
     if (window.ethereum) {
       await window.ethereum.request({ method: "eth_requestAccounts" });
