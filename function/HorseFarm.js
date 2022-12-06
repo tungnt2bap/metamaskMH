@@ -315,7 +315,7 @@ async function depositHTC(value) {
   // await window.ethereum.request({ method: "eth_requestAccounts" });
   const data = JSON.parse(value);
   let accounts = await web3.eth.getAccounts();
-  const ABIHTC = tokenHTC;
+  const ABIHTC = TokenMARE;
   const TokenHTC = new web3.eth.Contract(ABIHTC, TOKENHTC_ADDRESS);
 
   const ABITokenGate = TokenGateABI;
