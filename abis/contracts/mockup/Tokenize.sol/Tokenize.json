@@ -44,7 +44,7 @@
         "type": "address"
       }
     ],
-    "name": "addWhitelistSpcToToken",
+    "name": "addWhitelistAdilToToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -70,7 +70,7 @@
         "type": "address"
       }
     ],
-    "name": "addWhitelistTokenToSpcOwner",
+    "name": "addWhitelistTokenToAdilOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -98,7 +98,7 @@
         "type": "address"
       }
     ],
-    "name": "claimPRZ",
+    "name": "claimEMAS",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -147,7 +147,7 @@
   },
   {
     "inputs": [],
-    "name": "getSPCPrice",
+    "name": "getADILPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -251,7 +251,7 @@
         "type": "address"
       }
     ],
-    "name": "ownerSwapTokenToSPC",
+    "name": "ownerSwapTokenToADIL",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -277,7 +277,7 @@
         "type": "address"
       }
     ],
-    "name": "removeWhitelistSpcToToken",
+    "name": "removeWhitelistAdilToToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -303,7 +303,7 @@
         "type": "address"
       }
     ],
-    "name": "removeWhitelistTokenToSpcOwner",
+    "name": "removeWhitelistTokenToAdilOwner",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -362,7 +362,7 @@
         "type": "address"
       }
     ],
-    "name": "setHTCAddress",
+    "name": "setMAREAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -375,7 +375,7 @@
         "type": "address"
       }
     ],
-    "name": "setPRZAddress",
+    "name": "setEMASAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -388,7 +388,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setSPCPrice",
+    "name": "setADILPrice",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -457,7 +457,7 @@
         "type": "address"
       }
     ],
-    "name": "swapPRZToCCT",
+    "name": "swapEMASToCCT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -475,7 +475,7 @@
         "type": "uint256"
       }
     ],
-    "name": "swapSPCToToken",
+    "name": "swapADILToToken",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -544,7 +544,7 @@
         "type": "address"
       }
     ],
-    "name": "whitelist_spc_to_token",
+    "name": "whitelist_adil_to_token",
     "outputs": [
       {
         "internalType": "bool",
@@ -563,7 +563,7 @@
         "type": "address"
       }
     ],
-    "name": "whitelist_token_to_spc",
+    "name": "whitelist_token_to_adil",
     "outputs": [
       {
         "internalType": "bool",
@@ -582,7 +582,7 @@
         "type": "address"
       }
     ],
-    "name": "whitelist_token_to_spc_owner",
+    "name": "whitelist_token_to_adil_owner",
     "outputs": [
       {
         "internalType": "bool",
@@ -601,7 +601,7 @@
         "type": "uint256"
       }
     ],
-    "name": "withdrawSPC",
+    "name": "withdrawADIL",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

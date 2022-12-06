@@ -709,7 +709,7 @@
         "type": "uint256"
       }
     ],
-    "name": "swapVaultHTCtoPRZ",
+    "name": "swapVaultMAREtoEMAS",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
