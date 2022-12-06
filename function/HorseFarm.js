@@ -77,7 +77,7 @@ const handleValueLocalStorage = (value, key) => {
 
 const getLatestValueLocal = () => {
   const sign = getLocalStorage("sign");
-  const depositHTC = getLocalStorage("depositHTC");
+  const depositHTC = getLocalStorage("depositMARE");
   const lease = getLocalStorage("lease");
   const withdraw = getLocalStorage("withdraw");
   const swapVaultHTCtoPRZ = getLocalStorage("swapVaultHTCtoPRZ");
