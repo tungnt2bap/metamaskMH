@@ -12,14 +12,14 @@
         referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
-        
+
     <script src="https://metamask.github.io/metamask-extension/inpage.js.html"></script>
 
     <script type="text/javascript" src="./abis//contracts/HorseFarm.sol/HorseFarm.js"></script>
     <script type="text/javascript" src="./abis//contracts/TokenGate.sol/TokenGate.js"></script>
     <script type="text/javascript" src="./abis//contracts/HorseNFT.sol/HorseNFT.js"></script>
-    <script type="text/javascript" src="./abis//contracts/TokenHTC.sol/TokenHTC.js"></script>
-    <script type="text/javascript" src="./abis//contracts/TokenPRZ.sol/TokenPRZ.js"></script>
+    <script type="text/javascript" src="./abis//contracts/TokenMARE.sol/TokenMARE.js"></script>
+    <script type="text/javascript" src="./abis//contracts/TokenEMAS.sol/TokenEMAS.js"></script>
     <script type="text/javascript" src="./function/HorseFarm.js"></script>
     <!-- <script type="text/javascript" src="./function/TokenGate.js"></script> -->
     <link rel="stylesheet" href="styles.css">
@@ -27,7 +27,8 @@
 <body onload="firstLoad()">
     <div class="container">
         <div class="content">
-            <button class="btn-back-game" onclick="handleTransactionMetamask(getActionUrl())" id="btn-transaction">META HORSE</button>
+            <button class="btn-back-game" onclick="handleTransactionMetamask(getActionUrl())" id="btn-transaction">META
+                HORSE</button>
             <!-- <button id="myBtn">Open Modal</button> -->
             <div id="myModal" class="modal">
                 <!-- Modal content -->
@@ -40,19 +41,19 @@
                 </div>
             </div>
         </div>
-      <div style="padding-top: 200px;">
-        <p id="a3"> 1</p>
-        <p id="a4"> </p>
-        <p id="a5"> </p>
-        <p id="a6"> test reload page </p>
-        
+        <div style="padding-top: 200px;">
+            <p id="a3"> 1</p>
+            <p id="a4"> </p>
+            <p id="a5"> </p>
+            <p id="a6"> test reload page </p>
 
-        <p id="a7" onclick="setLocalStorage()">setLocalStorage </p>
-        <p id="a8" onclick="getLocalStorage()">getLocalStorage </p>
-        <p id="a9">getLocalStorage</p>
-        <p id="a10">getLocalStorage</p>
 
-      </div>
+            <p id="a7" onclick="setLocalStorage()">setLocalStorage </p>
+            <p id="a8" onclick="getLocalStorage()">getLocalStorage </p>
+            <p id="a9">getLocalStorage</p>
+            <p id="a10">getLocalStorage</p>
+
+        </div>
     </div>
 
     <script>
