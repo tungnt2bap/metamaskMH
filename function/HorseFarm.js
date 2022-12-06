@@ -7,7 +7,7 @@ const TOKENGATE_ADDRESS = "0xF806D36F01898Ed427fD10e93d165CdcdE89d856";
 const TOKENGATE_SERVER_ADDRESS = "0xC4A6ac15220c5366EA2f8a045FEc2ACD81269652";
 const configs = {
   chainId: 7575,
-  chainName: "Testnet Chain",
+  chainName: "ADIL Chain",
   currencyName: "ADIL",
   linkRPC: "https://testnet.adil-rpc.io",
   linkBlockExplorerurls: "https://testnet.adil-scan.io",
