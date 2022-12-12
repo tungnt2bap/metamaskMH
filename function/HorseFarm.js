@@ -189,11 +189,11 @@ async function switchMetamaskNetwork() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: web3.utils.configs.chainId }],
+        params: [{ chainId: web3.utils.toHex(configs.chainId || "7575") }],
       });
     } catch (err) {
       document.getElementById("a12").innerHTML = err;
-      console.error(err);
+      console.log(err);
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
