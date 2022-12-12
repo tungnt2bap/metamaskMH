@@ -187,15 +187,15 @@ async function switchMetamaskNetwork() {
   document.getElementById("a11").innerHTML = window.ethereum.networkVersion;
   if (window.ethereum.networkVersion !== configs.chainId) {
     try {
-      document.getElementById("a12").innerHTML = web3.utils.toString(
+      document.getElementById("a12").innerHTML = web3.utils.toHex(
         configs.chainId
       );
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: web3.utils.toString(configs.chainId) }],
+        params: [{ chainId: web3.utils.toHex(configs.chainId) }],
       });
     } catch (err) {
-      document.getElementById("a13").innerHTML = toString(err?.code);
+      document.getElementById("a13").innerHTML = err?.code;
       console.error(err);
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
@@ -204,7 +204,7 @@ async function switchMetamaskNetwork() {
           params: [
             {
               chainName: configs.chainName,
-              chainId: web3.utils.toString(configs.chainId),
+              chainId: web3.utils.toHex(configs.chainId),
               nativeCurrency: {
                 name: configs.chainName,
                 decimals: 18,
