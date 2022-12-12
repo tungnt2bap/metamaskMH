@@ -9,8 +9,8 @@ const configs = {
   chainId: 7575,
   chainName: "ADIL Chain",
   currencyName: "ADIL",
-  linkRPC: "https://testnet.adil-rpc.io",
-  linkBlockExplorerurls: "https://testnet.adil-scan.io",
+  linkRPC: "https://testnet.adilchain-rpc.io",
+  linkBlockExplorerurls: "https://testnet.adilchain-scan.io",
 };
 
 const ACTIONS = {
