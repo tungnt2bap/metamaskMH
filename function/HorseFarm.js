@@ -198,7 +198,10 @@ async function switchMetamaskNetwork() {
       document.getElementById("a13").innerHTML = JSON.stringify(err?.code);
       console.error(err);
       // This error code indicates that the chain has not been added to MetaMask
-      if (JSON.stringify(err?.code) === (4902 || -32603)) {
+      if (
+        JSON.stringify(err?.code) == 4902 ||
+        JSON.stringify(err?.code) == -32603
+      ) {
         await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [
