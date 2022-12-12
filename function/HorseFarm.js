@@ -184,13 +184,19 @@ const getLocalStorage = (key) => {
 };
 
 async function switchMetamaskNetwork() {
+  document.getElementById("a11").innerHTML = window.ethereum.networkVersion;
   if (window.ethereum.networkVersion !== configs.chainId) {
     try {
+      document.getElementById("a12").innerHTML = {
+        chainId: web3.utils.toHex(configs.chainId),
+      };
+
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: web3.utils.toHex(configs.chainId) }],
       });
     } catch (err) {
+      document.getElementById("a13").innerHTML = err;
       console.error(err);
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
