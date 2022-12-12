@@ -189,7 +189,7 @@ async function switchMetamaskNetwork() {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: web3.utils.toHex(configs.chainId) }],
+        params: [{ chainId: web3.utils.configs.chainId }],
       });
     } catch (err) {
       document.getElementById("a12").innerHTML = err;
