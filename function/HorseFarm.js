@@ -191,7 +191,7 @@ async function switchMetamaskNetwork() {
         params: [{ chainId: web3.utils.toHex(configs.chainId) }],
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
@@ -436,8 +436,6 @@ const firstLoad = async () => {
     );
   }
 
-  await switchMetamaskNetwork();
-
   setTimeout(async () => {
     replaceLatestUrl();
     document.getElementById("a5").innerHTML = params;
@@ -447,6 +445,7 @@ const firstLoad = async () => {
     } else {
       alert("Please install MetaMask Extension in your browser");
     }
+    await switchMetamaskNetwork();
   }, 300);
 };
 
