@@ -243,13 +243,11 @@ async function lease(value) {
       },
       function (err, res) {
         if (err) {
-          document.getElementById("a9").innerHTML = [400, err.message].join(
-            "|"
-          );
+          document.getElementById("a9").innerHTML = err;
           // createCopyInputButton([400, err.message].join("|"));
           openModal("Approve failed");
         }
-        document.getElementById("a10").innerHTML = [400, res].join("|");
+        document.getElementById("a10").innerHTML = res;
         console.log("Hash of the transaction: " + res);
         // createCopyInputButton([400, err.message].join("|"));
         openModal("You not done yet");
