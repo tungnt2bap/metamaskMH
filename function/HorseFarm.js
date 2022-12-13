@@ -246,7 +246,7 @@ async function lease(value) {
           document.getElementById("a9").innerHTML = [400, err.message].join(
             "|"
           );
-          createCopyInputButton([400, err.message].join("|"));
+          // createCopyInputButton([400, err.message].join("|"));
           openModal("Approve failed");
         }
         document.getElementById("a10").innerHTML = [400, res].join("|");
@@ -432,13 +432,13 @@ async function getGasPrice() {
 
 const firstLoad = async () => {
   const params = new URLSearchParams(window.location.search);
-  document.getElementById("a9").innerHTML = parseInt(
-    params.get("current_time")
-  );
+  // document.getElementById("a9").innerHTML = parseInt(
+  //   params.get("current_time")
+  // );
   document.getElementById("btn-transaction").innerHTML = getActionUrl();
-  document.getElementById("a10").innerHTML = parseInt(
-    getLatestValueLocal().time
-  );
+  // document.getElementById("a10").innerHTML = parseInt(
+  //   getLatestValueLocal().time
+  // );
   if (
     parseInt(params.get("current_time")) > parseInt(getLatestValueLocal().time)
   ) {
