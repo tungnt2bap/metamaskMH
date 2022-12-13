@@ -246,6 +246,7 @@ async function lease(value) {
           document.getElementById("a9").innerHTML = err;
           // createCopyInputButton([400, err.message].join("|"));
           openModal("Approve failed");
+          return;
         }
         document.getElementById("a10").innerHTML = res;
         console.log("Hash of the transaction: " + res);
