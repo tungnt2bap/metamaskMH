@@ -243,11 +243,11 @@ async function lease(value) {
       },
       function (err, res) {
         if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
         }
         console.log("Hash of the transaction: " + res);
-        // createCopyInputButton([401, res].join("|"));
+        createCopyInputButton([401, res].join("|"));
         openModal("You not done yet");
       }
     );
@@ -345,12 +345,12 @@ async function depositHTC(value) {
       },
       function (err, res) {
         if (err) {
-          // createCopyInputButton([400, "failed"].join("|"));
+          createCopyInputButton([400, "failed"].join("|"));
           openModal("Approve failed");
           return;
         }
         console.log("Hash of the transaction: " + res);
-        // createCopyInputButton([401, res].join("|"));
+        createCopyInputButton([401, res].join("|"));
         openModal("You not done yet");
       }
     );
